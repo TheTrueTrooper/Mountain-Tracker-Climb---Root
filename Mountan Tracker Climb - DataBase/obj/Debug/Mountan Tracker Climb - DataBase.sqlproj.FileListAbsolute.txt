@@ -7,3 +7,4 @@ C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tr
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\refactor.xml
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\postdeploy.sql
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\predeploy.sql
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Mountan Tracker Climb - DataBase.sqlprojAssemblyReference.cache

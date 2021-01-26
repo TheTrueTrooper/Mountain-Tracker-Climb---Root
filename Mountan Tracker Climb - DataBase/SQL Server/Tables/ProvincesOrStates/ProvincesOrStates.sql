@@ -5,5 +5,5 @@
 
 	[ID] SMALLINT NOT NULL PRIMARY KEY, 
     [EngishFullName] VARCHAR(100) NOT NULL, 
-    [RegionCode] CHAR(2) NOT NULL
+    [RegionCode] CHAR(2) NOT NULL, 
 )

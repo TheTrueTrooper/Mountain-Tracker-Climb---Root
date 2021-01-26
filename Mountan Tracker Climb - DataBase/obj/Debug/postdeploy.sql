@@ -9,6 +9,10 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
+--Clear Data to have a clean table for repopulation
+delete ProvincesOrStates where 1=1
+delete Countries where 1=1
 --Adding data to the Countires table
 --insert all of the data
 INSERT INTO Countries ([ID], [EngishFullName], [CountryCode])
@@ -264,6 +268,14 @@ VALUES
 ( 248, 'Zimbabwe', 'ZW');
 GO
 
+if(exists(select ID from Countries where [EngishFullName] = 'Zimbabwe' and [CountryCode] = 'ZW'))
+	print 'Countries successfully populated'
+else
+begin
+	print 'Countries unsuccessfully populated'
+	raiserror('Countries unsuccessfully populated', 20, -1) with log
+end
+GO
 --Add [ProvincesOrStates]
 --Add Provinces for Canada
 Declare @CountryCode as TinyInt
@@ -283,4 +295,77 @@ VALUES
 ( 10, 'Yukon', 'YT', @CountryCode),
 ( 11, 'Northwest Territories', 'NT', @CountryCode),
 ( 12, 'Nunavut', 'NU', @CountryCode);
+
+if(exists(select ID from [ProvincesOrStates] where [EngishFullName] = 'Nunavut' and [RegionCode] = 'NU' and @CountryCode = [CountryID]))
+	print 'Canadain Prov successfully populated'
+else
+begin
+	print 'Canadain Prov unsuccessfully populated'
+	raiserror('Canadain Prov unsuccessfully populated', 20, -1) with log
+end
+GO
+
+--Add States for US
+Declare @CountryCode as TinyInt
+select @CountryCode = ID from Countries where CountryCode = 'US'
+INSERT INTO [ProvincesOrStates] ([ID], [EngishFullName], [RegionCode], [CountryID])
+VALUES 
+( 13, 'Alabama', 'AL', @CountryCode),
+( 14, 'Alaska', 'AK', @CountryCode),
+( 15, 'Arizona', 'AZ', @CountryCode),
+( 16, 'Arkansas', 'AR', @CountryCode),
+( 17, 'California', 'CA', @CountryCode),
+( 18, 'Colorado', 'CO', @CountryCode),
+( 19, 'Connecticut', 'CT', @CountryCode),
+( 20, 'Delaware', 'DE', @CountryCode),
+( 21, 'Florida', 'FL', @CountryCode),
+( 22, 'Georgia', 'GA', @CountryCode),
+( 23, 'Hawaii', 'HI', @CountryCode),
+( 24, 'Idaho', 'ID', @CountryCode),
+( 25, 'Illinois', 'IL', @CountryCode),
+( 26, 'Indiana', 'IN', @CountryCode),
+( 27, 'Iowa', 'IA', @CountryCode),
+( 28, 'Kansas', 'KS', @CountryCode),
+( 29, 'Kentucky', 'KY', @CountryCode),
+( 30, 'Louisiana', 'LA', @CountryCode),
+( 31, 'Maine', 'ME', @CountryCode),
+( 32, 'Maryland', 'MD', @CountryCode),
+( 33, 'Massachusetts', 'MA', @CountryCode),
+( 34, 'Michigan', 'MI', @CountryCode),
+( 35, 'Minnesota', 'MN', @CountryCode),
+( 36, 'Mississippi', 'MS', @CountryCode),
+( 37, 'Missouri', 'MO', @CountryCode),
+( 38, 'Montana', 'MT', @CountryCode),
+( 39, 'Nebraska', 'NE', @CountryCode),
+( 40, 'Nevada', 'NV', @CountryCode),
+( 41, 'New Hampshire', 'NH', @CountryCode),
+( 42, 'New Jersey', 'NJ', @CountryCode),
+( 43, 'New Mexico', 'NM', @CountryCode),
+( 44, 'New York', 'NY', @CountryCode),
+( 45, 'North Carolina', 'NC', @CountryCode),
+( 46, 'North Dakota', 'ND', @CountryCode),
+( 47, 'Ohio', 'OH', @CountryCode),
+( 48, 'Oklahoma', 'OK', @CountryCode),
+( 49, 'Oregon', 'OR', @CountryCode),
+( 50, 'Pennsylvania', 'PA', @CountryCode),
+( 51, 'Rhode Island', 'RI', @CountryCode),
+( 52, 'South Carolina', 'SC', @CountryCode),
+( 53, 'South Dakota', 'SD', @CountryCode),
+( 54, 'Tennessee', 'TN', @CountryCode),
+( 55, 'Texas', 'TX', @CountryCode),
+( 56, 'Utah', 'UT', @CountryCode),
+( 57, 'Vermont', 'VT', @CountryCode),
+( 58, 'Virginia', 'VA', @CountryCode),
+( 59, 'Washington', 'WA', @CountryCode),
+( 60, 'West Virginia', 'WV', @CountryCode),
+( 61, 'Wisconsin', 'WI', @CountryCode),
+( 62, 'Wyoming', 'WY', @CountryCode);
+
+if(exists(select ID from [ProvincesOrStates] where [EngishFullName] = 'Wyoming' and [RegionCode] = 'WY' and @CountryCode = [CountryID]))
+	print 'US States successfully populated'
+else
+begin
+	print 'US States unsuccessfully populated'
+	raiserror('US States unsuccessfully populated', 20, -1) with log
+end
 GO
