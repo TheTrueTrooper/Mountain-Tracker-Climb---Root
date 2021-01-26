@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Mountan_Tracker_Climb___DataBase</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{422b2caf-73a5-4222-942f-fa6a71b7f114}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Mountan_Tracker_Climb___DataBase</RootNamespace>
+    <AssemblyName>Mountan_Tracker_Climb___DataBase</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="SQL Server" />
+    <Folder Include="Scripts" />
+    <Folder Include="Utilities" />
+    <Folder Include="SQL Server\Tables" />
+    <Folder Include="SQL Server\StoredProcedures" />
+    <Folder Include="SQL Server\Views" />
+    <Folder Include="SQL Server\Triggers" />
+    <Folder Include="SQL Server\Tables\Countries" />
+    <Folder Include="SQL Server\Tables\ProvincesOrStates" />
+    <Folder Include="SQL Server\Tables\Regions" />
+    <Folder Include="SQL Server\Tables\Districts" />
+    <Folder Include="SQL Server\Tables\Mountains" />
+    <Folder Include="SQL Server\Tables\MountainZones" />
+    <Folder Include="SQL Server\Tables\ZoneAreas" />
+    <Folder Include="SQL Server\Tables\ClimbingWalls" />
+    <Folder Include="SQL Server\Tables\RockClimbingRoutes" />
+    <Folder Include="Scripts\PostDeployment" />
+    <Folder Include="Scripts\PreDeployment" />
+    <Folder Include="SQL Server\Tables\IceClimbingRoutes" />
+    <Folder Include="SQL Server\Tables\BoulderingRoutes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="SQL Server\Tables\Countries\Countries.sql" />
+    <Build Include="SQL Server\Tables\ProvincesOrStates\ProvincesOrStates.sql" />
+    <Build Include="SQL Server\Tables\Regions\Regions.sql" />
+    <Build Include="SQL Server\Tables\Districts\Districts.sql" />
+    <Build Include="SQL Server\Tables\Mountains\Mountains.sql" />
+    <Build Include="SQL Server\Tables\MountainZones\DistrictZones.sql" />
+    <Build Include="SQL Server\Tables\ZoneAreas\ZoneAreas.sql" />
+    <Build Include="SQL Server\Tables\ClimbingWalls\ClimbingWalls.sql" />
+    <Build Include="SQL Server\Tables\RockClimbingRoutes\RockClimbingRoutes.sql" />
+    <Build Include="SQL Server\Tables\BoulderingRoutes\BoulderingRoutes.sql" />
+    <Build Include="SQL Server\Tables\IceClimbingRoutes\IceClimbingRoutes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Mountan Tracker Climb - DataBase.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\PostDeployment\Script.PostDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Scripts\PreDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
+</Project>

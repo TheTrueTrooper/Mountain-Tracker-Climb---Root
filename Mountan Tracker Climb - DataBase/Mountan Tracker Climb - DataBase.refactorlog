@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="768c3eed-81ca-464b-a6f2-2c656f7b79c9" ChangeDateTime="01/25/2021 02:23:27">
+    <Property Name="ElementName" Value="[dbo].[Countries].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Countries]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FullEngishName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fd028ae3-e9ff-4241-ad23-0f5768fa1e7b" ChangeDateTime="01/25/2021 02:24:17">
+    <Property Name="ElementName" Value="[dbo].[Countries].[FullEngishName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Countries]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EngishFullName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="68c53efd-3ccd-4494-a13c-555ca77cbded" ChangeDateTime="01/25/2021 02:24:56">
+    <Property Name="ElementName" Value="[dbo].[Countries].[Alisis]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Countries]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="alias" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b9aba68c-85f5-4111-a5bf-6dbef2073e7d" ChangeDateTime="01/25/2021 02:25:04">
+    <Property Name="ElementName" Value="[dbo].[Countries].[alias]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Countries]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Alias" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="767b2f32-f4c0-463a-bf40-6c8d0a7bb61a" ChangeDateTime="01/25/2021 02:29:56">
+    <Property Name="ElementName" Value="[dbo].[ProvincesOrStates].[[EngishFullName]]]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ProvincesOrStates]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EngishFullName" />
+  </Operation>
+</Operations>
