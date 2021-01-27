@@ -108,12 +108,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Mountain Tracker Climb - API\Mountain Tracker Climb - API.csproj">
-      <Project>{DFC32409-DF35-4CFE-96A2-0FF9E2A0EA70}</Project>
-      <Name>Mountain Tracker Climb - API</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

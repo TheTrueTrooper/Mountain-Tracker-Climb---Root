@@ -1,10 +1,10 @@
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\bin\Debug\Mountan Tracker Climb - DataBase.dacpac
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\bin\Debug\Mountan_Tracker_Climb___DataBase.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\bin\Debug\Mountan_Tracker_Climb___DataBase.pdb
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Mountan_Tracker_Climb___DataBase.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Mountan_Tracker_Climb___DataBase.pdb
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Mountan Tracker Climb - DataBase.sqlprojAssemblyReference.cache
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Model.xml
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\refactor.xml
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\postdeploy.sql
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\predeploy.sql
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Mountan Tracker Climb - DataBase.sqlprojAssemblyReference.cache
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Mountan_Tracker_Climb___DataBase.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountan Tracker Climb - DataBase\obj\Debug\Mountan_Tracker_Climb___DataBase.pdb
