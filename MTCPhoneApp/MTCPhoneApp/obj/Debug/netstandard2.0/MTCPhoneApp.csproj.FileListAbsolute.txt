@@ -17,3 +17,4 @@ C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneAp
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp\obj\Debug\netstandard2.0\MTCPhoneApp.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp\obj\Debug\netstandard2.0\ref\MTCPhoneApp.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp\obj\Debug\netstandard2.0\MTCPhoneApp.pdb
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp\obj\Debug\netstandard2.0\Views\RockWallRouteDetail.xaml.g.cs

@@ -1,18 +1,25 @@
 ﻿CREATE TABLE [dbo].[RockClimbingRoutes]
 (
+--data normalized out
 	[ClimbingWallID] INT NOT NULL,
 	CONSTRAINT [FK_RockClimbingRoutes_ClimbingWalls] FOREIGN KEY ([ClimbingWallID]) REFERENCES [ClimbingWalls]([ID]),
 
+	[TypeID] TINYINT NOT NULL,
+	CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingTypes] FOREIGN KEY ([TypeID]) REFERENCES [RockWallClimbingTypes]([ID]),
+
+	[DifficultyID] TINYINT NOT NULL,
+	CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingDifficulties] FOREIGN KEY ([DifficultyID]) REFERENCES [RockWallClimbingDifficulties]([ID]),
+
+	--[Gear] TINYINT NOT NULL,* - * so needs a linking table as RockClimbingRoutesGearLinkingTable
+
+	--Normalized Data
 	[ID] INT NOT NULL PRIMARY KEY, 
     [EngishFullName] VARCHAR(100) NOT NULL, 
     [RouteCode] CHAR(10) NOT NULL,
 	[RouteWallNumber] INT NOT NULL,
-	[Difficulty] TINYINT NOT NULL,
 	[Rating] TINYINT NOT NULL,
 	[HieghtInMeters] FLOAT NOT NULL,
 	[HieghtInFeet] As 3.28084 * [HieghtInMeters],
-	[Type] TINYINT NOT NULL,
-	[Gear] TINYINT NOT NULL,
 	[Anchors] TINYINT NOT NULL,
 	[NumberOfPitch] TINYINT NOT NULL, 
 	[FirstAscent] VARCHAR(100) NOT NULL DEFAULT 'Unknown', --Could be unknown

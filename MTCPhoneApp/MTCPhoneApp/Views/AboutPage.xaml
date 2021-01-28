@@ -4,7 +4,7 @@
              x:Class="MTCPhoneApp.Views.AboutPage"
              xmlns:vm="clr-namespace:MTCPhoneApp.ViewModels"
              Title="{Binding Title}">
-    
+    <!--{Binding Title}-->
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>

@@ -7,20 +7,27 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="Primary">#000000</Color>
+            <Style TargetType="StackLayout">
+                <Setter Property="BackgroundColor" Value="#2F2F1F"></Setter>
+                <Setter Property="Padding" Value="10"></Setter>
+            </Style>
+            <Style TargetType="Label" BasedOn="StackLayout">
+                <Setter Property="TextColor" Value="Green"></Setter>
+            </Style>
             <Style TargetType="Button">
-                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="TextColor" Value="Green"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    <Setter Property="BackgroundColor" Value="Black" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                    <Setter Property="BackgroundColor" Value="#1F1F1F" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>

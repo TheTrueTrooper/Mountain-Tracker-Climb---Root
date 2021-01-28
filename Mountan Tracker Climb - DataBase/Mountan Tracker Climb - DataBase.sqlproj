@@ -77,6 +77,10 @@
     <Folder Include="Scripts\PreDeployment" />
     <Folder Include="SQL Server\Tables\IceClimbingRoutes" />
     <Folder Include="SQL Server\Tables\BoulderingRoutes" />
+    <Folder Include="SQL Server\Tables\Gear" />
+    <Folder Include="SQL Server\Tables\RockWallClimbingTypes" />
+    <Folder Include="SQL Server\Tables\RockWallClimbingDifficulties" />
+    <Folder Include="SQL Server\Tables\GearTypes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SQL Server\Tables\Countries\Countries.sql" />
@@ -90,6 +94,11 @@
     <Build Include="SQL Server\Tables\RockClimbingRoutes\RockClimbingRoutes.sql" />
     <Build Include="SQL Server\Tables\BoulderingRoutes\BoulderingRoutes.sql" />
     <Build Include="SQL Server\Tables\IceClimbingRoutes\IceClimbingRoutes.sql" />
+    <Build Include="SQL Server\Tables\RockClimbingRoutes\RockClimbingRoutesGearLinkingTable.sql" />
+    <Build Include="SQL Server\Tables\Gear\Gear.sql" />
+    <Build Include="SQL Server\Tables\RockWallClimbingTypes\RockWallClimbingTypes.sql" />
+    <Build Include="SQL Server\Tables\RockWallClimbingDifficulties\RockWallClimbingDifficulties.sql" />
+    <Build Include="SQL Server\Tables\GearTypes\GearTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Mountan Tracker Climb - DataBase.refactorlog" />
