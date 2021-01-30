@@ -14,14 +14,14 @@
 
 	--Normalized Data
 	[ID] INT NOT NULL PRIMARY KEY, 
-    [EngishFullName] VARCHAR(100) NOT NULL, 
+    [EnglishFullName] VARCHAR(100) NOT NULL, 
     [RouteCode] CHAR(10) NOT NULL,
 	[RouteWallNumber] INT NOT NULL,
 	[Rating] TINYINT NOT NULL,
 	[HieghtInMeters] FLOAT NOT NULL,
 	[HieghtInFeet] As 3.28084 * [HieghtInMeters],
-	[Anchors] TINYINT NOT NULL,
-	[NumberOfPitch] TINYINT NOT NULL, 
+	--[Anchors] TINYINT NOT NULL,
+	[NumberOfPitchs] TINYINT NOT NULL, 
 	[FirstAscent] VARCHAR(100) NOT NULL DEFAULT 'Unknown', --Could be unknown
 	[FirstFreeAscent] VARCHAR(100) NOT NULL DEFAULT 'Unknown', 
 	[SunAM] BIT NOT NULL DEFAULT 0, --bools for could haves
@@ -47,5 +47,8 @@
 	[Power] BIT NOT NULL DEFAULT 0,
 	[PockSlashHole] BIT NOT NULL DEFAULT 0,
 	[Crimpy] BIT NOT NULL DEFAULT 0,
-	[SeatStart] BIT NOT NULL DEFAULT 0,
+	[SeatStart] BIT NOT NULL DEFAULT 0, 
+    [Picture360] VARCHAR(100) NULL,
+	[Picture3603D] VARCHAR(100) NULL,
+	[MoutainInfo] VARCHAR(1000) NULL
 )

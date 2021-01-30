@@ -7,8 +7,6 @@ namespace MTCPhoneApp.Models
 	public class ClimbingRoute
     {
 		public int RouteID { get; set; }
-		//[ClimbingWallID] INT NOT NULL,
-		//CONSTRAINT[FK_RockClimbingRoutes_ClimbingWalls] FOREIGN KEY([ClimbingWallID]) REFERENCES[ClimbingWalls] ([ID]),
 		public RockWallClimbingType WallType { get; set; }
 		public string EnglishFullName { get; set; }
 		public string RouteCode { get; set; }

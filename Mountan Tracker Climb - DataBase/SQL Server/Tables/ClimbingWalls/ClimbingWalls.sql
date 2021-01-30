@@ -7,6 +7,6 @@
 	CONSTRAINT [FK_ClimbingWalls_Mountains] FOREIGN KEY ([MountainID]) REFERENCES [Mountains]([ID]),
 
 	[ID] INT NOT NULL PRIMARY KEY, 
-    [EngishFullName] VARCHAR(100) NOT NULL, 
+    [EnglishFullName] VARCHAR(100) NOT NULL, 
     [WallCode] CHAR(10) NOT NULL
 )

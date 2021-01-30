@@ -61,7 +61,6 @@
     <Folder Include="Scripts" />
     <Folder Include="Utilities" />
     <Folder Include="SQL Server\Tables" />
-    <Folder Include="SQL Server\StoredProcedures" />
     <Folder Include="SQL Server\Views" />
     <Folder Include="SQL Server\Triggers" />
     <Folder Include="SQL Server\Tables\Countries" />
@@ -81,6 +80,8 @@
     <Folder Include="SQL Server\Tables\RockWallClimbingTypes" />
     <Folder Include="SQL Server\Tables\RockWallClimbingDifficulties" />
     <Folder Include="SQL Server\Tables\GearTypes" />
+    <Folder Include="Scripts\Utility" />
+    <Folder Include="SQL Server\Tables\GearSizes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SQL Server\Tables\Countries\Countries.sql" />
@@ -98,7 +99,9 @@
     <Build Include="SQL Server\Tables\Gear\Gear.sql" />
     <Build Include="SQL Server\Tables\RockWallClimbingTypes\RockWallClimbingTypes.sql" />
     <Build Include="SQL Server\Tables\RockWallClimbingDifficulties\RockWallClimbingDifficulties.sql" />
-    <Build Include="SQL Server\Tables\GearTypes\GearTypes.sql" />
+    <Build Include="SQL Server\Tables\GearTypes\GearClimbingTypes.sql" />
+    <Build Include="SQL Server\Tables\Gear\GearLinkingTableForGearType.sql" />
+    <Build Include="SQL Server\Tables\GearSizes\GearSizes.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Mountan Tracker Climb - DataBase.refactorlog" />
@@ -108,5 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\PreDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Utility\RunAndDebugScript.sql" />
   </ItemGroup>
 </Project>

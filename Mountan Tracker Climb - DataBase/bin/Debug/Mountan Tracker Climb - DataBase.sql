@@ -51,444 +51,26 @@ GO
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
---reset the table for data by deleting old data to make a clean alter
+--reset the table for data by deleting old data to make a clean alter\
+--Gear drill down reset
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearLinkingTableForGearType') AND Type = N'U')
+	delete GearLinkingTableForGearType where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutesGearLinkingTable') AND Type = N'U')
+	delete RockClimbingRoutesGearLinkingTable where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearSizes') AND Type = N'U')
+	delete GearSizes where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Gear') AND Type = N'U')
+	delete Gear where 1=1
+--Gear Climbing types drill woen rest
+--GearLinkingTableForGearType handled in gear reset
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Gear') AND Type = N'U')
+	delete GearClimbingTypes where 1=1
+--Wall drill down reset
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.ProvincesOrStates') AND Type = N'U')
 	delete ProvincesOrStates where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Countries') AND Type = N'U')
 	delete Countries where 1=1
 GO
-
-GO
-/*
-The column [dbo].[RockClimbingRoutes].[Difficulty] is being dropped, data loss could occur.
-
-The column [dbo].[RockClimbingRoutes].[Gear] is being dropped, data loss could occur.
-
-The column [dbo].[RockClimbingRoutes].[Type] is being dropped, data loss could occur.
-
-The column [dbo].[RockClimbingRoutes].[DifficultyID] on table [dbo].[RockClimbingRoutes] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
-
-The column [dbo].[RockClimbingRoutes].[TypeID] on table [dbo].[RockClimbingRoutes] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
-*/
-
-IF EXISTS (select top 1 1 from [dbo].[RockClimbingRoutes])
-    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__First__440B1D61];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__First__44FF419A];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__SunAM__45F365D3];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__SunPM__46E78A0C];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Filte__47DBAE45];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Sunny__48CFD27E];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Shady__49C3F6B7];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Dries__4AB81AF0];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__DryIn__4BAC3F29];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Windy__4CA06362];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Climb__4D94879B];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Climb__4E88ABD4];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Climb__4F7CD00D];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Climb__5070F446];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__RockF__5165187F];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Seepa__52593CB8];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Stick__534D60F1];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Runou__5441852A];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Reach__5535A963];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimbi__Dyno__5629CD9C];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Pumpy__571DF1D5];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Techy__5812160E];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Power__59063A47];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__PockS__59FA5E80];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__Crimp__5AEE82B9];
-
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [DF__RockClimb__SeatS__5BE2A6F2];
-
-
-GO
-PRINT N'Dropping [dbo].[FK_RockClimbingRoutes_ClimbingWalls]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] DROP CONSTRAINT [FK_RockClimbingRoutes_ClimbingWalls];
-
-
-GO
-PRINT N'Starting rebuilding table [dbo].[RockClimbingRoutes]...';
-
-
-GO
-BEGIN TRANSACTION;
-
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-
-SET XACT_ABORT ON;
-
-CREATE TABLE [dbo].[tmp_ms_xx_RockClimbingRoutes] (
-    [ClimbingWallID]           INT           NOT NULL,
-    [TypeID]                   TINYINT       NOT NULL,
-    [DifficultyID]             TINYINT       NOT NULL,
-    [ID]                       INT           NOT NULL,
-    [EngishFullName]           VARCHAR (100) NOT NULL,
-    [RouteCode]                CHAR (10)     NOT NULL,
-    [RouteWallNumber]          INT           NOT NULL,
-    [Rating]                   TINYINT       NOT NULL,
-    [HieghtInMeters]           FLOAT (53)    NOT NULL,
-    [HieghtInFeet]             AS            3.28084 * [HieghtInMeters],
-    [Anchors]                  TINYINT       NOT NULL,
-    [NumberOfPitch]            TINYINT       NOT NULL,
-    [FirstAscent]              VARCHAR (100) DEFAULT 'Unknown' NOT NULL,
-    [FirstFreeAscent]          VARCHAR (100) DEFAULT 'Unknown' NOT NULL,
-    [SunAM]                    BIT           DEFAULT 0 NOT NULL,
-    [SunPM]                    BIT           DEFAULT 0 NOT NULL,
-    [Filtered]                 BIT           DEFAULT 0 NOT NULL,
-    [Sunny]                    BIT           DEFAULT 0 NOT NULL,
-    [Shady]                    BIT           DEFAULT 0 NOT NULL,
-    [DriesFast]                BIT           DEFAULT 0 NOT NULL,
-    [DryInRain]                BIT           DEFAULT 0 NOT NULL,
-    [Windy]                    BIT           DEFAULT 0 NOT NULL,
-    [ClimbAnglesHaveSlabs]     BIT           DEFAULT 0 NOT NULL,
-    [ClimbAnglesHaveVerticals] BIT           DEFAULT 0 NOT NULL,
-    [ClimbAnglesHaveOverHangs] BIT           DEFAULT 0 NOT NULL,
-    [ClimbAnglesHaveRoofs]     BIT           DEFAULT 0 NOT NULL,
-    [RockFalls]                BIT           DEFAULT 0 NOT NULL,
-    [Seepage]                  BIT           DEFAULT 0 NOT NULL,
-    [StickClip]                BIT           DEFAULT 0 NOT NULL,
-    [Runout]                   BIT           DEFAULT 0 NOT NULL,
-    [Reachy]                   BIT           DEFAULT 0 NOT NULL,
-    [Dyno]                     BIT           DEFAULT 0 NOT NULL,
-    [Pumpy]                    BIT           DEFAULT 0 NOT NULL,
-    [Techy]                    BIT           DEFAULT 0 NOT NULL,
-    [Power]                    BIT           DEFAULT 0 NOT NULL,
-    [PockSlashHole]            BIT           DEFAULT 0 NOT NULL,
-    [Crimpy]                   BIT           DEFAULT 0 NOT NULL,
-    [SeatStart]                BIT           DEFAULT 0 NOT NULL,
-    PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-
-IF EXISTS (SELECT TOP 1 1 
-           FROM   [dbo].[RockClimbingRoutes])
-    BEGIN
-        INSERT INTO [dbo].[tmp_ms_xx_RockClimbingRoutes] ([ID], [ClimbingWallID], [EngishFullName], [RouteCode], [RouteWallNumber], [Rating], [HieghtInMeters], [Anchors], [NumberOfPitch], [FirstAscent], [FirstFreeAscent], [SunAM], [SunPM], [Filtered], [Sunny], [Shady], [DriesFast], [DryInRain], [Windy], [ClimbAnglesHaveSlabs], [ClimbAnglesHaveVerticals], [ClimbAnglesHaveOverHangs], [ClimbAnglesHaveRoofs], [RockFalls], [Seepage], [StickClip], [Runout], [Reachy], [Dyno], [Pumpy], [Techy], [Power], [PockSlashHole], [Crimpy], [SeatStart])
-        SELECT   [ID],
-                 [ClimbingWallID],
-                 [EngishFullName],
-                 [RouteCode],
-                 [RouteWallNumber],
-                 [Rating],
-                 [HieghtInMeters],
-                 [Anchors],
-                 [NumberOfPitch],
-                 [FirstAscent],
-                 [FirstFreeAscent],
-                 [SunAM],
-                 [SunPM],
-                 [Filtered],
-                 [Sunny],
-                 [Shady],
-                 [DriesFast],
-                 [DryInRain],
-                 [Windy],
-                 [ClimbAnglesHaveSlabs],
-                 [ClimbAnglesHaveVerticals],
-                 [ClimbAnglesHaveOverHangs],
-                 [ClimbAnglesHaveRoofs],
-                 [RockFalls],
-                 [Seepage],
-                 [StickClip],
-                 [Runout],
-                 [Reachy],
-                 [Dyno],
-                 [Pumpy],
-                 [Techy],
-                 [Power],
-                 [PockSlashHole],
-                 [Crimpy],
-                 [SeatStart]
-        FROM     [dbo].[RockClimbingRoutes]
-        ORDER BY [ID] ASC;
-    END
-
-DROP TABLE [dbo].[RockClimbingRoutes];
-
-EXECUTE sp_rename N'[dbo].[tmp_ms_xx_RockClimbingRoutes]', N'RockClimbingRoutes';
-
-COMMIT TRANSACTION;
-
-SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
-
-
-GO
-PRINT N'Creating [dbo].[Gear]...';
-
-
-GO
-CREATE TABLE [dbo].[Gear] (
-    [ID]             TINYINT       NOT NULL,
-    [EngishFullName] VARCHAR (100) NOT NULL,
-    [ShortHand]      VARCHAR (5)   NOT NULL,
-    PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[RockClimbingRoutesGearLinkingTable]...';
-
-
-GO
-CREATE TABLE [dbo].[RockClimbingRoutesGearLinkingTable] (
-    [RockClimbingRoutesID] INT     NOT NULL,
-    [GearID]               TINYINT NOT NULL,
-    PRIMARY KEY CLUSTERED ([RockClimbingRoutesID] ASC, [GearID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[RockWallClimbingDifficulties]...';
-
-
-GO
-CREATE TABLE [dbo].[RockWallClimbingDifficulties] (
-    [ID]          TINYINT  NOT NULL,
-    [EnglishCode] CHAR (5) NOT NULL,
-    PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[RockWallClimbingTypes]...';
-
-
-GO
-CREATE TABLE [dbo].[RockWallClimbingTypes] (
-    [ID]             TINYINT       NOT NULL,
-    [EngishFullName] VARCHAR (100) NOT NULL,
-    [ShortHand]      VARCHAR (5)   NOT NULL,
-    PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-
-
-GO
-PRINT N'Creating [dbo].[FK_RockClimbingRoutes_ClimbingWalls]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] WITH NOCHECK
-    ADD CONSTRAINT [FK_RockClimbingRoutes_ClimbingWalls] FOREIGN KEY ([ClimbingWallID]) REFERENCES [dbo].[ClimbingWalls] ([ID]);
-
-
-GO
-PRINT N'Creating [dbo].[FK_RockClimbingRoutes_RockWallClimbingTypes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] WITH NOCHECK
-    ADD CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingTypes] FOREIGN KEY ([TypeID]) REFERENCES [dbo].[RockWallClimbingTypes] ([ID]);
-
-
-GO
-PRINT N'Creating [dbo].[FK_RockClimbingRoutes_RockWallClimbingDifficulties]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] WITH NOCHECK
-    ADD CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingDifficulties] FOREIGN KEY ([DifficultyID]) REFERENCES [dbo].[RockWallClimbingDifficulties] ([ID]);
-
-
-GO
-PRINT N'Creating [dbo].[FK_RockClimbingRoutesGearLinkingTable_RockClimbingRoutes]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutesGearLinkingTable] WITH NOCHECK
-    ADD CONSTRAINT [FK_RockClimbingRoutesGearLinkingTable_RockClimbingRoutes] FOREIGN KEY ([RockClimbingRoutesID]) REFERENCES [dbo].[RockClimbingRoutes] ([ID]);
-
-
-GO
-PRINT N'Creating [dbo].[FK_RockClimbingRoutesGearLinkingTable_RockClimbingGearID]...';
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutesGearLinkingTable] WITH NOCHECK
-    ADD CONSTRAINT [FK_RockClimbingRoutesGearLinkingTable_RockClimbingGearID] FOREIGN KEY ([GearID]) REFERENCES [dbo].[Gear] ([ID]);
-
 
 GO
 /*
@@ -508,7 +90,7 @@ delete ProvincesOrStates where 1=1
 delete Countries where 1=1
 --Adding data to the Countires table
 --insert all of the data
-INSERT INTO Countries ([ID], [EngishFullName], [CountryCode])
+INSERT INTO Countries ([ID], [EnglishFullName], [CountryCode])
 VALUES 
 ( 0, 'Afghanistan', 'AF'),
 ( 1, 'Aland Islands', 'AX'),
@@ -761,7 +343,7 @@ VALUES
 ( 248, 'Zimbabwe', 'ZW');
 GO
 
-if(exists(select ID from Countries where [EngishFullName] = 'Zimbabwe' and [CountryCode] = 'ZW'))
+if(exists(select ID from Countries where [EnglishFullName] = 'Zimbabwe' and [CountryCode] = 'ZW'))
 	print 'Countries successfully populated'
 else
 begin
@@ -773,7 +355,7 @@ GO
 --Add Provinces for Canada
 Declare @CountryCode as TinyInt
 select @CountryCode = ID from Countries where CountryCode = 'CA'
-INSERT INTO [ProvincesOrStates] ([ID], [EngishFullName], [RegionCode], [CountryID])
+INSERT INTO [ProvincesOrStates] ([ID], [EnglishFullName], [RegionCode], [CountryID])
 VALUES 
 ( 0, 'Newfoundland and Labrador', 'NL', @CountryCode),
 ( 1, 'Prince Edward Island', 'PE', @CountryCode),
@@ -789,7 +371,7 @@ VALUES
 ( 11, 'Northwest Territories', 'NT', @CountryCode),
 ( 12, 'Nunavut', 'NU', @CountryCode);
 
-if(exists(select ID from [ProvincesOrStates] where [EngishFullName] = 'Nunavut' and [RegionCode] = 'NU' and @CountryCode = [CountryID]))
+if(exists(select ID from [ProvincesOrStates] where [EnglishFullName] = 'Nunavut' and [RegionCode] = 'NU' and @CountryCode = [CountryID]))
 	print 'Canadain Prov successfully populated'
 else
 begin
@@ -801,7 +383,7 @@ GO
 --Add States for US
 Declare @CountryCode as TinyInt
 select @CountryCode = ID from Countries where CountryCode = 'US'
-INSERT INTO [ProvincesOrStates] ([ID], [EngishFullName], [RegionCode], [CountryID])
+INSERT INTO [ProvincesOrStates] ([ID], [EnglishFullName], [RegionCode], [CountryID])
 VALUES 
 ( 13, 'Alabama', 'AL', @CountryCode),
 ( 14, 'Alaska', 'AK', @CountryCode),
@@ -854,7 +436,7 @@ VALUES
 ( 61, 'Wisconsin', 'WI', @CountryCode),
 ( 62, 'Wyoming', 'WY', @CountryCode);
 
-if(exists(select ID from [ProvincesOrStates] where [EngishFullName] = 'Wyoming' and [RegionCode] = 'WY' and @CountryCode = [CountryID]))
+if(exists(select ID from [ProvincesOrStates] where [EnglishFullName] = 'Wyoming' and [RegionCode] = 'WY' and @CountryCode = [CountryID]))
 	print 'US States successfully populated'
 else
 begin
@@ -862,26 +444,37 @@ begin
 	raiserror('US States unsuccessfully populated', 20, -1) with log
 end
 GO
+--------------------------------------------------------------------------------Add Prov or states for Countries here
 
+--Gear Populating
+--Gear types
+INSERT INTO [GearClimbingTypes] ([ID], [EnglishFullName])
+VALUES 
+( 0, 'Trad Climbing');
+
+if(exists(select ID from [GearClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
+	print '[GearClimbingTypes] successfully populated'
+else
+begin
+	print '[GearClimbingTypes] unsuccessfully populated'
+	raiserror('[GearClimbingTypes] unsuccessfully populated', 20, -1) with log
+end
 GO
-PRINT N'Checking existing data against newly created constraints';
 
+--Gear
+INSERT INTO [Gear] ([ID], [EnglishFullName])
+VALUES 
+( 0, 'Rope'),
+( 2, 'Rope');
 
+if(exists(select ID from [GearClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
+	print '[GearClimbingTypes] successfully populated'
+else
+begin
+	print '[GearClimbingTypes] unsuccessfully populated'
+	raiserror('[GearClimbingTypes] unsuccessfully populated', 20, -1) with log
+end
 GO
-USE [$(DatabaseName)];
-
-
-GO
-ALTER TABLE [dbo].[RockClimbingRoutes] WITH CHECK CHECK CONSTRAINT [FK_RockClimbingRoutes_ClimbingWalls];
-
-ALTER TABLE [dbo].[RockClimbingRoutes] WITH CHECK CHECK CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingTypes];
-
-ALTER TABLE [dbo].[RockClimbingRoutes] WITH CHECK CHECK CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingDifficulties];
-
-ALTER TABLE [dbo].[RockClimbingRoutesGearLinkingTable] WITH CHECK CHECK CONSTRAINT [FK_RockClimbingRoutesGearLinkingTable_RockClimbingRoutes];
-
-ALTER TABLE [dbo].[RockClimbingRoutesGearLinkingTable] WITH CHECK CHECK CONSTRAINT [FK_RockClimbingRoutesGearLinkingTable_RockClimbingGearID];
-
 
 GO
 PRINT N'Update complete.';

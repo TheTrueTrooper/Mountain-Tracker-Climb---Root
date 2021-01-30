@@ -15,7 +15,7 @@ delete ProvincesOrStates where 1=1
 delete Countries where 1=1
 --Adding data to the Countires table
 --insert all of the data
-INSERT INTO Countries ([ID], [EngishFullName], [CountryCode])
+INSERT INTO Countries ([ID], [EnglishFullName], [CountryCode])
 VALUES 
 ( 0, 'Afghanistan', 'AF'),
 ( 1, 'Aland Islands', 'AX'),
@@ -268,7 +268,7 @@ VALUES
 ( 248, 'Zimbabwe', 'ZW');
 go
 
-if(exists(select ID from Countries where [EngishFullName] = 'Zimbabwe' and [CountryCode] = 'ZW'))
+if(exists(select ID from Countries where [EnglishFullName] = 'Zimbabwe' and [CountryCode] = 'ZW'))
 	print 'Countries successfully populated'
 else
 begin
@@ -280,7 +280,7 @@ go
 --Add Provinces for Canada
 Declare @CountryCode as TinyInt
 select @CountryCode = ID from Countries where CountryCode = 'CA'
-INSERT INTO [ProvincesOrStates] ([ID], [EngishFullName], [RegionCode], [CountryID])
+INSERT INTO [ProvincesOrStates] ([ID], [EnglishFullName], [RegionCode], [CountryID])
 VALUES 
 ( 0, 'Newfoundland and Labrador', 'NL', @CountryCode),
 ( 1, 'Prince Edward Island', 'PE', @CountryCode),
@@ -296,7 +296,7 @@ VALUES
 ( 11, 'Northwest Territories', 'NT', @CountryCode),
 ( 12, 'Nunavut', 'NU', @CountryCode);
 
-if(exists(select ID from [ProvincesOrStates] where [EngishFullName] = 'Nunavut' and [RegionCode] = 'NU' and @CountryCode = [CountryID]))
+if(exists(select ID from [ProvincesOrStates] where [EnglishFullName] = 'Nunavut' and [RegionCode] = 'NU' and @CountryCode = [CountryID]))
 	print 'Canadain Prov successfully populated'
 else
 begin
@@ -308,7 +308,7 @@ go
 --Add States for US
 Declare @CountryCode as TinyInt
 select @CountryCode = ID from Countries where CountryCode = 'US'
-INSERT INTO [ProvincesOrStates] ([ID], [EngishFullName], [RegionCode], [CountryID])
+INSERT INTO [ProvincesOrStates] ([ID], [EnglishFullName], [RegionCode], [CountryID])
 VALUES 
 ( 13, 'Alabama', 'AL', @CountryCode),
 ( 14, 'Alaska', 'AK', @CountryCode),
@@ -361,11 +361,42 @@ VALUES
 ( 61, 'Wisconsin', 'WI', @CountryCode),
 ( 62, 'Wyoming', 'WY', @CountryCode);
 
-if(exists(select ID from [ProvincesOrStates] where [EngishFullName] = 'Wyoming' and [RegionCode] = 'WY' and @CountryCode = [CountryID]))
+if(exists(select ID from [ProvincesOrStates] where [EnglishFullName] = 'Wyoming' and [RegionCode] = 'WY' and @CountryCode = [CountryID]))
 	print 'US States successfully populated'
 else
 begin
 	print 'US States unsuccessfully populated'
 	raiserror('US States unsuccessfully populated', 20, -1) with log
+end
+go
+--------------------------------------------------------------------------------Add Prov or states for Countries here
+
+--Gear Populating
+--Gear types
+INSERT INTO [GearClimbingTypes] ([ID], [EnglishFullName])
+VALUES 
+( 0, 'Trad Climbing');
+
+if(exists(select ID from [GearClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
+	print '[GearClimbingTypes] successfully populated'
+else
+begin
+	print '[GearClimbingTypes] unsuccessfully populated'
+	raiserror('[GearClimbingTypes] unsuccessfully populated', 20, -1) with log
+end
+go
+
+--Gear
+INSERT INTO [Gear] ([ID], [EnglishFullName])
+VALUES 
+( 0, 'Rope'),
+( 2, 'Rope');
+
+if(exists(select ID from [GearClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
+	print '[GearClimbingTypes] successfully populated'
+else
+begin
+	print '[GearClimbingTypes] unsuccessfully populated'
+	raiserror('[GearClimbingTypes] unsuccessfully populated', 20, -1) with log
 end
 go
