@@ -390,13 +390,24 @@ go
 INSERT INTO [Gear] ([ID], [EnglishFullName])
 VALUES 
 ( 0, 'Rope'),
-( 2, 'Rope');
+( 1, 'Quick Draw'),
+( 2, 'Anchor'),
+( 3, 'Hex Stopper'),
+( 4, 'Wire Stopper Standard'),
+( 5, 'Wire Stopper Micro'),
+( 6, 'Offset Stopper'),
+( 7, 'Tricam'),
+( 8, 'Cam'),
+( 9, 'Standard Rack'),
+( 10, 'Alpine Rack'),
+( 11, 'Standard Rack'),
+( 12, 'Bong And Chocks');
 
 if(exists(select ID from [GearClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
-	print '[GearClimbingTypes] successfully populated'
+	print '[Gear] successfully populated'
 else
 begin
-	print '[GearClimbingTypes] unsuccessfully populated'
-	raiserror('[GearClimbingTypes] unsuccessfully populated', 20, -1) with log
+	print '[Gear] unsuccessfully populated'
+	raiserror('[Gear] unsuccessfully populated', 20, -1) with log
 end
 go
