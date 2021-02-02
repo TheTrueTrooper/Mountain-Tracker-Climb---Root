@@ -4,11 +4,9 @@
 	CONSTRAINT [FK_UsersRockClimbTracker_RockClimbingRoutes] FOREIGN KEY ([RockClimbingRoutesID]) REFERENCES [RockClimbingRoutes]([ID]),
 	
 	[UserID] INT NOT NULL,
-	CONSTRAINT [FK_UsersRockClimbTracker_GearSizeID] FOREIGN KEY ([UserID]) REFERENCES [Users]([ID]),
+	CONSTRAINT [FK_UsersRockClimbTracker_Users] FOREIGN KEY ([UserID]) REFERENCES [Users]([ID]),
 
-	[NumberOfTimes] TINYINT NOT NULL DEFAULT 1,
+	[ClimbID] TINYINT PRIMARY KEY IDENTITY(0,1) NOT NULL,
 	[Time] DATETIME NOT NULL,
-	[RelatedTime] VARCHAR(2000) NOT NULL,
-
-	PRIMARY KEY([RockClimbingRoutesID], [UserID])
+	[Comments] VARCHAR(250) NOT NULL,
 )

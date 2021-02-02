@@ -1,0 +1,2 @@
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API.Tests\obj\Debug\Mountain Tracker Climb - API.Tests.csprojAssemblyReference.cache
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API.Tests\obj\Debug\Mountain Tracker Climb - API.Tests.csproj.CoreCompileInputs.cache
