@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Mountains]
 (
 	[ID] INT NOT NULL PRIMARY KEY IDENTITY(0,1), 
-    [EnglishFullName] VARCHAR(100) NOT NULL
+    [EnglishFullName] VARCHAR(100) NOT NULL,
+	[RouteInfo] VARCHAR(1000) NULL
 )

@@ -12,17 +12,13 @@
 --reset the table for data by deleting old data to make a clean alter\
 --Gear drill down reset
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearLinkingTableForGearType') AND Type = N'U')
-	delete GearLinkingTableForGearType where 1=1
-IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutesGearLinkingTable') AND Type = N'U')
-	delete RockClimbingRoutesGearLinkingTable where 1=1
+	delete [GearLinkingTableForGearType] where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.ClimbingTypes') AND Type = N'U')
+	delete [ClimbingTypes] where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearSizes') AND Type = N'U')
 	delete GearSizes where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Gear') AND Type = N'U')
 	delete Gear where 1=1
---Gear Climbing types drill woen rest
---GearLinkingTableForGearType handled in gear reset
-IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Gear') AND Type = N'U')
-	delete GearClimbingTypes where 1=1
 --Wall drill down reset
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.ProvincesOrStates') AND Type = N'U')
 	delete ProvincesOrStates where 1=1

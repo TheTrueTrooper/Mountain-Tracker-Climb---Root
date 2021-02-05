@@ -54,17 +54,13 @@ GO
 --reset the table for data by deleting old data to make a clean alter\
 --Gear drill down reset
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearLinkingTableForGearType') AND Type = N'U')
-	delete GearLinkingTableForGearType where 1=1
-IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutesGearLinkingTable') AND Type = N'U')
-	delete RockClimbingRoutesGearLinkingTable where 1=1
+	delete [GearLinkingTableForGearType] where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.ClimbingTypes') AND Type = N'U')
+	delete [ClimbingTypes] where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearSizes') AND Type = N'U')
 	delete GearSizes where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Gear') AND Type = N'U')
 	delete Gear where 1=1
---Gear Climbing types drill woen rest
---GearLinkingTableForGearType handled in gear reset
-IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Gear') AND Type = N'U')
-	delete GearClimbingTypes where 1=1
 --Wall drill down reset
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.ProvincesOrStates') AND Type = N'U')
 	delete ProvincesOrStates where 1=1
@@ -72,6 +68,152 @@ IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Countries
 	delete Countries where 1=1
 GO
 
+GO
+PRINT N'Dropping <unnamed>...';
+
+
+GO
+ALTER TABLE [dbo].[GroupMessagingMembers] DROP CONSTRAINT [DF__GroupMess__TimeJ__39E294A9];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_GroupMessagingMembers_Users]...';
+
+
+GO
+ALTER TABLE [dbo].[GroupMessagingMembers] DROP CONSTRAINT [FK_GroupMessagingMembers_Users];
+
+
+GO
+PRINT N'Dropping [dbo].[FK_GroupMessagingMembers_GroupMessaging]...';
+
+
+GO
+ALTER TABLE [dbo].[GroupMessagingMembers] DROP CONSTRAINT [FK_GroupMessagingMembers_GroupMessaging];
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[GroupMessagingMembers]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_GroupMessagingMembers] (
+    [UserID]           INT      NOT NULL,
+    [GroupMessagingID] INT      NOT NULL,
+    [TimeInvited]      DATETIME DEFAULT GETDATE() NOT NULL,
+    [TimeJoined]       DATETIME NULL,
+    [AcceptedInvite]   BIT      DEFAULT 0 NOT NULL,
+    PRIMARY KEY CLUSTERED ([UserID] ASC, [GroupMessagingID] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[GroupMessagingMembers])
+    BEGIN
+        INSERT INTO [dbo].[tmp_ms_xx_GroupMessagingMembers] ([UserID], [GroupMessagingID], [TimeJoined])
+        SELECT   [UserID],
+                 [GroupMessagingID],
+                 [TimeJoined]
+        FROM     [dbo].[GroupMessagingMembers]
+        ORDER BY [UserID] ASC, [GroupMessagingID] ASC;
+    END
+
+DROP TABLE [dbo].[GroupMessagingMembers];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_GroupMessagingMembers]', N'GroupMessagingMembers';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Users]...';
+
+
+GO
+ALTER TABLE [dbo].[Users]
+    ADD UNIQUE NONCLUSTERED ([PrimaryPersonalEmail] ASC);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Users]...';
+
+
+GO
+ALTER TABLE [dbo].[Users]
+    ADD UNIQUE NONCLUSTERED ([UserName] ASC);
+
+
+GO
+PRINT N'Creating [dbo].[FK_GroupMessagingMembers_Users]...';
+
+
+GO
+ALTER TABLE [dbo].[GroupMessagingMembers] WITH NOCHECK
+    ADD CONSTRAINT [FK_GroupMessagingMembers_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_GroupMessagingMembers_GroupMessaging]...';
+
+
+GO
+ALTER TABLE [dbo].[GroupMessagingMembers] WITH NOCHECK
+    ADD CONSTRAINT [FK_GroupMessagingMembers_GroupMessaging] FOREIGN KEY ([GroupMessagingID]) REFERENCES [dbo].[GroupMessaging] ([ID]);
+
+
+GO
+PRINT N'Creating [dbo].[LeavingMessagingGroupTrigger]...';
+
+
+GO
+CREATE TRIGGER [LeavingMessagingGroupTrigger]
+	ON [dbo].[GroupMessagingMembers]
+	After DELETE
+	AS
+	BEGIN
+		declare @GroupID as int, @UsersID as int
+		select @UsersID = UserID, @GroupID = GroupMessagingID from deleted
+
+		if Not Exists(select GroupMessagingID from GroupMessagingMembers where GroupMessagingID = @GroupID)
+		begin
+			delete from GroupMessagingMessages where GroupMessagingID = @GroupID
+			delete from GroupMessaging where ID = @GroupID
+		end
+	END
+GO
+PRINT N'Creating [dbo].[OpenNewGroupMessageSP]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[OpenNewGroupMessageSP]
+	@NewGroupsName NVARCHAR(50),
+	@UserID int
+AS
+	begin Transaction
+
+	declare @NewGroupID int
+
+	begin try
+		insert into [GroupMessaging] ([GroupsName])
+		values (@NewGroupsName)
+		SELECT @NewGroupID = @@IDENTITY
+		insert into [GroupMessagingMembers] ([AcceptedInvite], [TimeJoined], [UserID], [GroupMessagingID])
+		values (1, GETDATE(), @UserID, @NewGroupID)
+		commit
+		RETURN 0
+	end try
+	begin catch
+		RETURN -1
+	end catch
+
+RETURN -1
 GO
 /*
 Post-Deployment Script Template							
@@ -446,20 +588,21 @@ end
 GO
 --------------------------------------------------------------------------------Add Prov or states for Countries here
 
---Gear Populating
---Gear types
-INSERT INTO [GearClimbingTypes] ([ID], [EnglishFullName])
+--Climbing types Populating
+INSERT INTO [ClimbingTypes] ([ID], [EnglishFullName])
 VALUES 
 ( 0, 'Trad Climbing');
 
-if(exists(select ID from [GearClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
-	print '[GearClimbingTypes] successfully populated'
+if(exists(select ID from [ClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
+	print '[ClimbingTypes] successfully populated'
 else
 begin
-	print '[GearClimbingTypes] unsuccessfully populated'
-	raiserror('[GearClimbingTypes] unsuccessfully populated', 20, -1) with log
+	print '[ClimbingTypes] unsuccessfully populated'
+	raiserror('[ClimbingTypes] unsuccessfully populated', 20, -1) with log
 end
 GO
+
+--Gear Populating
 
 --Gear
 INSERT INTO [Gear] ([ID], [EnglishFullName])
@@ -475,10 +618,9 @@ VALUES
 ( 8, 'Cam'),
 ( 9, 'Standard Rack'),
 ( 10, 'Alpine Rack'),
-( 11, 'Standard Rack'),
-( 12, 'Bong And Chocks');
+( 11, 'Bongs/Chocks');
 
-if(exists(select ID from [GearClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
+if(exists(select ID from [Gear] where [EnglishFullName] = 'Bongs/Chocks'))
 	print '[Gear] successfully populated'
 else
 begin
@@ -486,6 +628,229 @@ begin
 	raiserror('[Gear] unsuccessfully populated', 20, -1) with log
 end
 GO
+Declare @RopeCode as TinyInt, @QuickDrawCode as TinyInt, @AnchorCode as TinyInt, @HexStopperCode as TinyInt,
+@WireStopperStandardCode as TinyInt, @WireStopperMicroCode as TinyInt, @OffsetStopperCode as TinyInt, 
+@TricamCode as TinyInt, @CamCode as TinyInt, @StandardRackCode as TinyInt,
+@AlpineRackCode as TinyInt, @BongAndChocksCode as TinyInt
+select @RopeCode = ID from [Gear] where [EnglishFullName] = 'Rope'
+select @QuickDrawCode = ID from [Gear] where [EnglishFullName] = 'Quick Draw'
+select @AnchorCode = ID from [Gear] where [EnglishFullName] = 'Anchor'
+select @HexStopperCode = ID from [Gear] where [EnglishFullName] = 'Hex Stopper'
+select @WireStopperStandardCode = ID from [Gear] where [EnglishFullName] = 'Wire Stopper Standard'
+select @WireStopperMicroCode = ID from [Gear] where [EnglishFullName] = 'Wire Stopper Micro'
+select @OffsetStopperCode = ID from [Gear] where [EnglishFullName] = 'Offset Stopper'
+select @TricamCode = ID from [Gear] where [EnglishFullName] = 'Tricam'
+select @CamCode = ID from [Gear] where [EnglishFullName] = 'Cam'
+select @StandardRackCode = ID from [Gear] where [EnglishFullName] = 'Standard Rack'
+select @AlpineRackCode = ID from [Gear] where [EnglishFullName] = 'Alpine Rack'
+select @BongAndChocksCode = ID from [Gear] where [EnglishFullName] = 'Bongs/Chocks'
+
+--Gear sizes
+INSERT INTO [GearSizes] ([ID], [EnglishFullName], [GearID])
+VALUES 
+( 0, '50 Meter Rope', @RopeCode),
+( 1, '60 Meter Rope', @RopeCode),
+( 2, '70 Meter Rope', @RopeCode),
+( 3, 'Double 50 Meter Rope', @RopeCode),
+( 4, 'Double 60 Meter Rope', @RopeCode),
+( 5, 'Double 70 Meter Rope', @RopeCode),
+( 6, 'Standard Quick Draw', @QuickDrawCode),
+( 7, 'Extendable Quick Draw', @QuickDrawCode),
+( 8, 'Two Bolt Anchor', @AnchorCode),
+( 9, 'Two Bolt Anchor With Rap Rings', @AnchorCode),
+( 10, 'Three Bolt Anchor', @AnchorCode),
+( 12, 'Three Bolt Anchor With Rap Rings', @AnchorCode),
+( 13, 'Hexcentrics - 0.25', @HexStopperCode),
+( 14, 'Hexcentrics - 0.5', @HexStopperCode),
+( 15, 'Hexcentrics - 0.75', @HexStopperCode),
+( 16, 'Hexcentrics - 1', @HexStopperCode),
+( 17, 'Hexcentrics - 1.25', @HexStopperCode),
+( 18, 'Hexcentrics - 1.5', @HexStopperCode),
+( 19, 'Hexcentrics - 1.75', @HexStopperCode),
+( 20, 'Hexcentrics - 2', @HexStopperCode),
+( 21, 'Hexcentrics - 2.5', @HexStopperCode),
+( 22, 'Hexcentrics - 3', @HexStopperCode),
+( 23, 'Hexcentrics - 3.5', @HexStopperCode),
+( 24, 'Wire Stopper - 0.25', @WireStopperStandardCode),
+( 25, 'Wire Stopper - 0.5', @WireStopperStandardCode),
+( 26, 'Wire Stopper - 0.75', @WireStopperStandardCode),
+( 27, 'Wire Stopper - 1', @WireStopperStandardCode),
+( 28, 'Wire Stopper - 1.25', @WireStopperStandardCode),
+( 29, 'Wire Stopper - 1.5', @WireStopperStandardCode),
+( 30, 'Wire Stopper - 1.75', @WireStopperStandardCode),
+( 31, 'Wire Stopper - 2', @WireStopperStandardCode),
+( 32, 'Wire Stopper - 2.5', @WireStopperStandardCode),
+( 33, 'Wire Stopper - 3', @WireStopperStandardCode),
+( 34, 'Wire Stopper - 3.5', @WireStopperStandardCode),
+( 35, 'Wire Stopper - 4', @WireStopperStandardCode),
+( 36, 'Wire Stopper - 4.5', @WireStopperStandardCode),
+( 37, 'Micro Stopper - 0.14', @WireStopperMicroCode),
+( 38, 'Micro Stopper - 0.16', @WireStopperMicroCode),
+( 39, 'Micro Stopper - 0.18', @WireStopperMicroCode),
+( 40, 'Micro Stopper - 0.2', @WireStopperMicroCode),
+( 41, 'Micro Stopper - 0.22', @WireStopperMicroCode),
+( 42, 'Micro Stopper - 0.25', @WireStopperMicroCode),
+( 43, 'Offset Stoper - 0.25', @OffsetStopperCode),
+( 44, 'Offset Stoper - 0.5', @OffsetStopperCode),
+( 45, 'Offset Stoper - 0.75', @OffsetStopperCode),
+( 46, 'Offset Stoper - 1', @OffsetStopperCode),
+( 47, 'Offset Stoper - 1.25', @OffsetStopperCode),
+( 48, 'Offset Stoper - 1.5', @OffsetStopperCode),
+( 49, 'Offset Stoper - 1.75', @OffsetStopperCode),
+( 51, 'Offset Stoper - 2', @OffsetStopperCode),
+( 52, 'Offset Stoper - 2.5', @OffsetStopperCode),
+( 53, 'Offset Stoper - 3', @OffsetStopperCode),
+( 54, 'Offset Stoper - 3.5', @OffsetStopperCode),
+( 55, 'Tricam - 0.5', @TricamCode),
+( 56, 'Tricam - 0.75', @TricamCode),
+( 57, 'Tricam - 1', @TricamCode),
+( 58, 'Tricam - 1.5', @TricamCode),
+( 59, 'Tricam - 2', @TricamCode),
+( 60, 'Tricam - 2.5', @TricamCode),
+( 61, 'Tricam - 3', @TricamCode),
+( 62, 'Tricam - 3.5', @TricamCode),
+( 63, 'Cam Size - 0.25', @CamCode),
+( 64, 'Cam Size - 0.5', @CamCode),
+( 65, 'Cam Size - 0.75', @CamCode),
+( 66, 'Cam Size - 1', @CamCode),
+( 67, 'Cam Size - 1.25', @CamCode),
+( 68, 'Cam Size - 1.5', @CamCode),
+( 69, 'Cam Size - 1.75', @CamCode),
+( 70, 'Cam Size - 2', @CamCode),
+( 71, 'Cam Size - 2.5', @CamCode),
+( 72, 'Cam Size - 3', @CamCode),
+( 73, 'Cam Size - 3.5', @CamCode),
+( 74, 'Cam Size - 4', @CamCode),
+( 75, 'Cam Size - 4.5', @CamCode),
+( 76, 'Cam Size - 5', @CamCode),
+( 77, 'Cam Size - 5.5', @CamCode),
+( 78, 'Cam Size - 6', @CamCode),
+( 79, 'Cam Size - 6.5', @CamCode),
+( 80, 'Cam Size - 7', @CamCode),
+( 81, 'Cam Size - 7.5', @CamCode),
+( 82, 'Cam Size - 8', @CamCode),
+( 83, 'Cam Size - 8.5', @CamCode),
+( 84, 'Cam Size - 9', @CamCode),
+( 85, 'Cam Size - 9.5', @CamCode),
+( 86, 'Cam Size - 10', @CamCode),
+( 87, 'Standard Rack - 1', @StandardRackCode),
+( 88, 'Standard Rack - 1.5', @StandardRackCode),
+( 89, 'Standard Rack - 2', @StandardRackCode),
+( 90, 'Standard Rack - 2.5', @StandardRackCode),
+( 91, 'Standard Rack - 3', @StandardRackCode),
+( 92, 'Standard Rack - 3.5', @StandardRackCode),
+( 93, 'Standard Rack - 4', @StandardRackCode),
+( 94, 'Standard Rack - 4.5', @StandardRackCode),
+( 95, 'Standard Rack - 5', @StandardRackCode),
+( 96, 'Standard Rack - 5.5', @StandardRackCode),
+( 97, 'Standard Rack - 6', @StandardRackCode),
+( 98, 'Standard Rack - 6.5', @StandardRackCode),
+( 99, 'Standard Rack - 7', @StandardRackCode),
+( 100, 'Standard Rack - 7.5', @StandardRackCode),
+( 101, 'Standard Rack - 8', @StandardRackCode),
+( 102, 'Standard Rack - 8.5', @StandardRackCode),
+( 103, 'Standard Rack - 9', @StandardRackCode),
+( 104, 'Standard Rack - 9.5', @StandardRackCode),
+( 105, 'Standard Rack - 10', @StandardRackCode),
+( 106, 'Standard Rack - 10.5', @StandardRackCode),
+( 107, 'Standard Rack - 11', @StandardRackCode),
+( 108, 'Alpine Rack - 1', @AlpineRackCode),
+( 109, 'Alpine Rack - 1.5', @AlpineRackCode),
+( 110, 'Alpine Rack - 2', @AlpineRackCode),
+( 111, 'Alpine Rack - 2.5', @AlpineRackCode),
+( 112, 'Alpine Rack - 3', @AlpineRackCode),
+( 113, 'Alpine Rack - 3.5', @AlpineRackCode),
+( 114, 'Alpine Rack - 4', @AlpineRackCode),
+( 115, 'Alpine Rack - 4.5', @AlpineRackCode),
+( 116, 'Alpine Rack - 5', @AlpineRackCode),
+( 117, 'Alpine Rack - 5.5', @AlpineRackCode),
+( 118, 'Alpine Rack - 6', @AlpineRackCode),
+( 119, 'Alpine Rack - 6.5', @AlpineRackCode),
+( 120, 'Alpine Rack - 7', @AlpineRackCode),
+( 121, 'Alpine Rack - 7.5', @AlpineRackCode),
+( 122, 'Alpine Rack - 8', @AlpineRackCode),
+( 123, 'Alpine Rack - 8.5', @AlpineRackCode),
+( 124, 'Alpine Rack - 9', @AlpineRackCode),
+( 125, 'Alpine Rack - 9.5', @AlpineRackCode),
+( 126, 'Bong/Chock - 1', @BongAndChocksCode),
+( 127, 'Bong/Chock - 2', @BongAndChocksCode),
+( 128, 'Bong/Chock - 3', @BongAndChocksCode),
+( 129, 'Bong/Chock - 4', @BongAndChocksCode),
+( 130, 'Bong/Chock - 5', @BongAndChocksCode),
+( 131, 'Bong/Chock - 6', @BongAndChocksCode),
+( 132, 'Bong/Chock - 7', @BongAndChocksCode);
+
+if(exists(select ID from [GearSizes] where [EnglishFullName] = 'Bong/Chock - 7'))
+	print '[GearSizes] successfully populated'
+else
+begin
+	print '[GearSizes] unsuccessfully populated'
+	raiserror('[GearSizes] unsuccessfully populated', 20, -1) with log
+end
+GO
+--get Climing types
+Declare @TradClimbingCode as TinyInt
+select @TradClimbingCode = ID from [ClimbingTypes] where [EnglishFullName] = 'Trad Climbing'
+
+--get gear codes
+Declare @RopeCode as TinyInt, @QuickDrawCode as TinyInt, @AnchorCode as TinyInt, @HexStopperCode as TinyInt,
+@WireStopperStandardCode as TinyInt, @WireStopperMicroCode as TinyInt, @OffsetStopperCode as TinyInt, 
+@TricamCode as TinyInt, @CamCode as TinyInt, @StandardRackCode as TinyInt,
+@AlpineRackCode as TinyInt, @BongAndChocksCode as TinyInt
+select @RopeCode = ID from [Gear] where [EnglishFullName] = 'Rope'
+select @QuickDrawCode = ID from [Gear] where [EnglishFullName] = 'Quick Draw'
+select @AnchorCode = ID from [Gear] where [EnglishFullName] = 'Anchor'
+select @HexStopperCode = ID from [Gear] where [EnglishFullName] = 'Hex Stopper'
+select @WireStopperStandardCode = ID from [Gear] where [EnglishFullName] = 'Wire Stopper Standard'
+select @WireStopperMicroCode = ID from [Gear] where [EnglishFullName] = 'Wire Stopper Micro'
+select @OffsetStopperCode = ID from [Gear] where [EnglishFullName] = 'Offset Stopper'
+select @TricamCode = ID from [Gear] where [EnglishFullName] = 'Tricam'
+select @CamCode = ID from [Gear] where [EnglishFullName] = 'Cam'
+select @StandardRackCode = ID from [Gear] where [EnglishFullName] = 'Standard Rack'
+select @AlpineRackCode = ID from [Gear] where [EnglishFullName] = 'Alpine Rack'
+select @BongAndChocksCode = ID from [Gear] where [EnglishFullName] = 'Bongs/Chocks'
+
+--Link Gear types to gear
+INSERT INTO [GearLinkingTableForGearType] ([ClimbingTypeID], [GearID])
+VALUES 
+--Used for all 
+(@TradClimbingCode, @RopeCode),--0,0
+-- end of use for all
+-- For Trad Climb Type
+(@TradClimbingCode, @QuickDrawCode),--0,1
+(@TradClimbingCode, @AnchorCode),
+(@TradClimbingCode, @HexStopperCode),
+(@TradClimbingCode, @WireStopperStandardCode),
+(@TradClimbingCode, @WireStopperMicroCode),
+(@TradClimbingCode, @OffsetStopperCode),
+(@TradClimbingCode, @TricamCode),
+(@TradClimbingCode, @CamCode),
+(@TradClimbingCode, @StandardRackCode),
+(@TradClimbingCode, @AlpineRackCode),
+(@TradClimbingCode, @BongAndChocksCode);
+
+if(exists(select [ClimbingTypeID], [GearID] from [GearLinkingTableForGearType] where [ClimbingTypeID] = @TradClimbingCode and [GearID] = @BongAndChocksCode))
+	print '[GearLinkingTableForGearType] successfully populated'
+else
+begin
+	print '[GearLinkingTableForGearType] unsuccessfully populated'
+	raiserror('[GearLinkingTableForGearType] unsuccessfully populated', 20, -1) with log
+end
+GO
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[GroupMessagingMembers] WITH CHECK CHECK CONSTRAINT [FK_GroupMessagingMembers_Users];
+
+ALTER TABLE [dbo].[GroupMessagingMembers] WITH CHECK CHECK CONSTRAINT [FK_GroupMessagingMembers_GroupMessaging];
+
 
 GO
 PRINT N'Update complete.';

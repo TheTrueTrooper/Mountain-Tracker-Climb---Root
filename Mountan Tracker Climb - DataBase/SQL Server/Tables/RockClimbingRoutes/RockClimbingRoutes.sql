@@ -5,10 +5,10 @@
 	CONSTRAINT [FK_RockClimbingRoutes_ClimbingWalls] FOREIGN KEY ([ClimbingWallID]) REFERENCES [ClimbingWalls]([ID]),
 
 	[TypeID] TINYINT NOT NULL,
-	CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingTypes] FOREIGN KEY ([TypeID]) REFERENCES [RockWallClimbingTypes]([ID]),
+	CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingTypes] FOREIGN KEY ([TypeID]) REFERENCES [ClimbingTypes]([ID]),
 
 	[DifficultyID] TINYINT NOT NULL,
-	CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingDifficulties] FOREIGN KEY ([DifficultyID]) REFERENCES [RockWallClimbingDifficulties]([ID]),
+	CONSTRAINT [FK_RockClimbingRoutes_RockWallClimbingDifficulties] FOREIGN KEY ([DifficultyID]) REFERENCES [RockClimbingDifficulties]([ID]),
 
 	--[Gear] TINYINT NOT NULL,* - * so needs a linking table as RockClimbingRoutesGearLinkingTable
 
@@ -20,7 +20,7 @@
 	[Rating] TINYINT NOT NULL,
 	[HieghtInMeters] FLOAT NOT NULL,
 	[HieghtInFeet] As 3.28084 * [HieghtInMeters],
-	--[Anchors] TINYINT NOT NULL,
+	--[Anchors] TINYINT NOT NULL, handled by gear
 	[NumberOfPitchs] TINYINT NOT NULL, 
 	[FirstAscent] VARCHAR(100) NOT NULL DEFAULT 'Unknown', --Could be unknown
 	[FirstFreeAscent] VARCHAR(100) NOT NULL DEFAULT 'Unknown', 
@@ -50,5 +50,5 @@
 	[SeatStart] BIT NOT NULL DEFAULT 0, 
     [Picture360] VARCHAR(100) NULL,
 	[Picture3603D] VARCHAR(100) NULL,
-	[MoutainInfo] VARCHAR(1000) NULL
+	[RouteInfo] VARCHAR(1000) NULL
 )

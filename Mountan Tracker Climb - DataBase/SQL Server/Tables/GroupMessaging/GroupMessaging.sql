@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[GroupMessaging]
+(
+	[ID] INT NOT NULL PRIMARY KEY IDENTITY(0,1), 
+    [GroupsName] NVARCHAR(50) NOT NULL, 
+    [TimeCreated] DATETIME NOT NULL DEFAULT GETDATE(),
+)
