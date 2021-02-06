@@ -25,5 +25,6 @@
 	[ProfileURL] NVARCHAR(100) NULL
 
     UNIQUE ([PrimaryPersonalEmail])
+    UNIQUE ([PrimaryPhone])
 	UNIQUE ([UserName])
 )

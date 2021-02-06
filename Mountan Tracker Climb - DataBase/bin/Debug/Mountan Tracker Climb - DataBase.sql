@@ -69,130 +69,20 @@ IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Countries
 GO
 
 GO
-PRINT N'Dropping <unnamed>...';
-
-
-GO
-ALTER TABLE [dbo].[GroupMessagingMembers] DROP CONSTRAINT [DF__GroupMess__TimeJ__39E294A9];
-
-
-GO
-PRINT N'Dropping [dbo].[FK_GroupMessagingMembers_Users]...';
-
-
-GO
-ALTER TABLE [dbo].[GroupMessagingMembers] DROP CONSTRAINT [FK_GroupMessagingMembers_Users];
-
-
-GO
-PRINT N'Dropping [dbo].[FK_GroupMessagingMembers_GroupMessaging]...';
-
-
-GO
-ALTER TABLE [dbo].[GroupMessagingMembers] DROP CONSTRAINT [FK_GroupMessagingMembers_GroupMessaging];
-
-
-GO
-PRINT N'Starting rebuilding table [dbo].[GroupMessagingMembers]...';
-
-
-GO
-BEGIN TRANSACTION;
-
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-
-SET XACT_ABORT ON;
-
-CREATE TABLE [dbo].[tmp_ms_xx_GroupMessagingMembers] (
-    [UserID]           INT      NOT NULL,
-    [GroupMessagingID] INT      NOT NULL,
-    [TimeInvited]      DATETIME DEFAULT GETDATE() NOT NULL,
-    [TimeJoined]       DATETIME NULL,
-    [AcceptedInvite]   BIT      DEFAULT 0 NOT NULL,
-    PRIMARY KEY CLUSTERED ([UserID] ASC, [GroupMessagingID] ASC)
-);
-
-IF EXISTS (SELECT TOP 1 1 
-           FROM   [dbo].[GroupMessagingMembers])
-    BEGIN
-        INSERT INTO [dbo].[tmp_ms_xx_GroupMessagingMembers] ([UserID], [GroupMessagingID], [TimeJoined])
-        SELECT   [UserID],
-                 [GroupMessagingID],
-                 [TimeJoined]
-        FROM     [dbo].[GroupMessagingMembers]
-        ORDER BY [UserID] ASC, [GroupMessagingID] ASC;
-    END
-
-DROP TABLE [dbo].[GroupMessagingMembers];
-
-EXECUTE sp_rename N'[dbo].[tmp_ms_xx_GroupMessagingMembers]', N'GroupMessagingMembers';
-
-COMMIT TRANSACTION;
-
-SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
-
-
-GO
 PRINT N'Creating unnamed constraint on [dbo].[Users]...';
 
 
 GO
 ALTER TABLE [dbo].[Users]
-    ADD UNIQUE NONCLUSTERED ([PrimaryPersonalEmail] ASC);
+    ADD UNIQUE NONCLUSTERED ([PrimaryPhone] ASC);
 
 
 GO
-PRINT N'Creating unnamed constraint on [dbo].[Users]...';
+PRINT N'Altering [dbo].[OpenNewGroupMessageSP]...';
 
 
 GO
-ALTER TABLE [dbo].[Users]
-    ADD UNIQUE NONCLUSTERED ([UserName] ASC);
-
-
-GO
-PRINT N'Creating [dbo].[FK_GroupMessagingMembers_Users]...';
-
-
-GO
-ALTER TABLE [dbo].[GroupMessagingMembers] WITH NOCHECK
-    ADD CONSTRAINT [FK_GroupMessagingMembers_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID]);
-
-
-GO
-PRINT N'Creating [dbo].[FK_GroupMessagingMembers_GroupMessaging]...';
-
-
-GO
-ALTER TABLE [dbo].[GroupMessagingMembers] WITH NOCHECK
-    ADD CONSTRAINT [FK_GroupMessagingMembers_GroupMessaging] FOREIGN KEY ([GroupMessagingID]) REFERENCES [dbo].[GroupMessaging] ([ID]);
-
-
-GO
-PRINT N'Creating [dbo].[LeavingMessagingGroupTrigger]...';
-
-
-GO
-CREATE TRIGGER [LeavingMessagingGroupTrigger]
-	ON [dbo].[GroupMessagingMembers]
-	After DELETE
-	AS
-	BEGIN
-		declare @GroupID as int, @UsersID as int
-		select @UsersID = UserID, @GroupID = GroupMessagingID from deleted
-
-		if Not Exists(select GroupMessagingID from GroupMessagingMembers where GroupMessagingID = @GroupID)
-		begin
-			delete from GroupMessagingMessages where GroupMessagingID = @GroupID
-			delete from GroupMessaging where ID = @GroupID
-		end
-	END
-GO
-PRINT N'Creating [dbo].[OpenNewGroupMessageSP]...';
-
-
-GO
-CREATE PROCEDURE [dbo].[OpenNewGroupMessageSP]
+ALTER PROCEDURE [dbo].[OpenNewGroupMessageSP]
 	@NewGroupsName NVARCHAR(50),
 	@UserID int
 AS
@@ -210,9 +100,9 @@ AS
 		RETURN 0
 	end try
 	begin catch
+		rollback
 		RETURN -1
 	end catch
-
 RETURN -1
 GO
 /*
@@ -837,20 +727,6 @@ begin
 	raiserror('[GearLinkingTableForGearType] unsuccessfully populated', 20, -1) with log
 end
 GO
-
-GO
-PRINT N'Checking existing data against newly created constraints';
-
-
-GO
-USE [$(DatabaseName)];
-
-
-GO
-ALTER TABLE [dbo].[GroupMessagingMembers] WITH CHECK CHECK CONSTRAINT [FK_GroupMessagingMembers_Users];
-
-ALTER TABLE [dbo].[GroupMessagingMembers] WITH CHECK CHECK CONSTRAINT [FK_GroupMessagingMembers_GroupMessaging];
-
 
 GO
 PRINT N'Update complete.';

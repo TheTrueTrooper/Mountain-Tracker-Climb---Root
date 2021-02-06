@@ -16,6 +16,7 @@ AS
 		RETURN 0
 	end try
 	begin catch
+		rollback
 		RETURN -1
 	end catch
 RETURN -1
