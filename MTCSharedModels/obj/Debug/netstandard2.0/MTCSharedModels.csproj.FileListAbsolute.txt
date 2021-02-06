@@ -1,0 +1,8 @@
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\bin\Debug\netstandard2.0\MTCSharedModels.deps.json
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\bin\Debug\netstandard2.0\MTCSharedModels.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\bin\Debug\netstandard2.0\MTCSharedModels.pdb
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\obj\Debug\netstandard2.0\MTCSharedModels.AssemblyInfoInputs.cache
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\obj\Debug\netstandard2.0\MTCSharedModels.AssemblyInfo.cs
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\obj\Debug\netstandard2.0\MTCSharedModels.csproj.CoreCompileInputs.cache
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\obj\Debug\netstandard2.0\MTCSharedModels.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCSharedModels\obj\Debug\netstandard2.0\MTCSharedModels.pdb

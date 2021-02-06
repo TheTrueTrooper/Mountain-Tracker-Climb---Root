@@ -10,9 +10,7 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
---Clear Data to have a clean table for repopulation
-delete ProvincesOrStates where 1=1
-delete Countries where 1=1
+
 --Adding data to the Countires table
 --insert all of the data
 INSERT INTO Countries ([ID], [EnglishFullName], [CountryCode])
@@ -276,6 +274,7 @@ begin
 	raiserror('Countries unsuccessfully populated', 20, -1) with log
 end
 go
+
 --Add [ProvincesOrStates]
 --Add Provinces for Canada
 Declare @CountryCode as TinyInt
@@ -618,5 +617,51 @@ else
 begin
 	print '[GearLinkingTableForGearType] unsuccessfully populated'
 	raiserror('[GearLinkingTableForGearType] unsuccessfully populated', 20, -1) with log
+end
+go
+
+--Add Rock Climbing Difficulties
+INSERT INTO [RockClimbingDifficulties] ([ID], [EnglishCode])
+VALUES 
+(0, '5.1'),
+(1, '5.2'),
+(2, '5.3'),
+(3, '5.4'),
+(4, '5.5'),
+(5, '5.6'),
+(6, '5.7'),
+(7, '5.8'),
+(8, '5.9'),
+(9, '5.10a'),
+(10, '5.10b'),
+(11, '5.10c'),
+(12, '5.10d'),
+(13, '5.11a'),
+(14, '5.11b'),
+(15, '5.11c'),
+(16, '5.11d'),
+(17, '5.12a'),
+(18, '5.12b'),
+(19, '5.12c'),
+(20, '5.12d'),
+(21, '5.13a'),
+(22, '5.13b'),
+(23, '5.13c'),
+(24, '5.13d'),
+(25, '5.14a'),
+(26, '5.14b'),
+(27, '5.14c'),
+(28, '5.14d'),
+(29, '5.15a'),
+(30, '5.15b'),
+(31, '5.15c'),
+(32, '5.15d');
+
+if(exists(select [ID] from [RockClimbingDifficulties] where [EnglishCode] = '5.15d'))
+	print '[RockClimbingDifficulties] successfully populated'
+else
+begin
+	print '[RockClimbingDifficulties] unsuccessfully populated'
+	raiserror('[RockClimbingDifficulties] unsuccessfully populated', 20, -1) with log
 end
 go

@@ -90,6 +90,7 @@
     <Folder Include="SQL Server\Tables\GroupMessagingMessages" />
     <Folder Include="SQL Server\Tables\GroupMessagingMembers\TableTriggers" />
     <Folder Include="SQL Server\Tables\GroupMessagingMembers\StoredProcedure" />
+    <Folder Include="SQL Server\Tables\UserFriends" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SQL Server\Tables\Countries\Countries.sql" />
@@ -119,6 +120,7 @@
     <Build Include="SQL Server\Tables\GroupMessagingMessages\GroupMessagingMessages.sql" />
     <Build Include="SQL Server\Tables\GroupMessagingMembers\TableTriggers\LeavingMessagingGroupTrigger.sql" />
     <Build Include="SQL Server\Tables\GroupMessagingMembers\StoredProcedure\OpenNewGroupMessageSP.sql" />
+    <Build Include="SQL Server\Tables\UserFriends\UserFriends.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Mountan Tracker Climb - DataBase.refactorlog" />

@@ -25,3 +25,6 @@ select GS.EnglishFullName as SizingName, G.EnglishFullName as TypeOfGear, CT.Eng
 		join GearLinkingTableForGearType as CLGT on CLGT.GearID = G.ID
 		join ClimbingTypes as CT on CLGT.ClimbingTypeID = CT.ID
 			where G.EnglishFullName = 'Anchor'
+
+select max(len(EnglishFullName)) from Countries
+select max(len(EnglishCode)) from RockClimbingDifficulties
