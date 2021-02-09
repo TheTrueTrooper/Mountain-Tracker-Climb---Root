@@ -6,7 +6,7 @@ namespace MTCSharedModels.Models
 {
     public class RockClimbingRoute
     {
-		public ClimbingWall OwningClimbingWall { get; set; }
+		//public ClimbingWall OwningClimbingWall { get; set; } = null;
 		public uint ClimbingWallID { get; set; }
 		//needs a type for
 		public byte TypeID { get; set; }

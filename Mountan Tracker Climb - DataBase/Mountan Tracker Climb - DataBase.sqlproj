@@ -66,9 +66,7 @@
     <Folder Include="SQL Server\Tables\Countries" />
     <Folder Include="SQL Server\Tables\ProvincesOrStates" />
     <Folder Include="SQL Server\Tables\Regions" />
-    <Folder Include="SQL Server\Tables\Districts" />
     <Folder Include="SQL Server\Tables\Mountains" />
-    <Folder Include="SQL Server\Tables\MountainZones" />
     <Folder Include="SQL Server\Tables\ZoneAreas" />
     <Folder Include="SQL Server\Tables\ClimbingWalls" />
     <Folder Include="SQL Server\Tables\RockClimbingRoutes" />
@@ -91,14 +89,14 @@
     <Folder Include="SQL Server\Tables\GroupMessagingMembers\TableTriggers" />
     <Folder Include="SQL Server\Tables\GroupMessagingMembers\StoredProcedure" />
     <Folder Include="SQL Server\Tables\UserFriends" />
+    <Folder Include="SQL Server\Tables\DistrictZones" />
+    <Folder Include="SQL Server\Tables\Districts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SQL Server\Tables\Countries\Countries.sql" />
     <Build Include="SQL Server\Tables\ProvincesOrStates\ProvincesOrStates.sql" />
     <Build Include="SQL Server\Tables\Regions\Regions.sql" />
-    <Build Include="SQL Server\Tables\Districts\Districts.sql" />
     <Build Include="SQL Server\Tables\Mountains\Mountains.sql" />
-    <Build Include="SQL Server\Tables\MountainZones\DistrictZones.sql" />
     <Build Include="SQL Server\Tables\ZoneAreas\ZoneAreas.sql" />
     <Build Include="SQL Server\Tables\ClimbingWalls\ClimbingWalls.sql" />
     <Build Include="SQL Server\Tables\RockClimbingRoutes\RockClimbingRoutes.sql" />
@@ -121,6 +119,8 @@
     <Build Include="SQL Server\Tables\GroupMessagingMembers\TableTriggers\LeavingMessagingGroupTrigger.sql" />
     <Build Include="SQL Server\Tables\GroupMessagingMembers\StoredProcedure\OpenNewGroupMessageSP.sql" />
     <Build Include="SQL Server\Tables\UserFriends\UserFriends.sql" />
+    <Build Include="SQL Server\Tables\DistrictZones\DistrictZones.sql" />
+    <Build Include="SQL Server\Tables\Districts\Districts.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Mountan Tracker Climb - DataBase.refactorlog" />

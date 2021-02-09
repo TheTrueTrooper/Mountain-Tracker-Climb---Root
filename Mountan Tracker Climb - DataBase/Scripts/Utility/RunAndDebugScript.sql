@@ -28,3 +28,6 @@ select GS.EnglishFullName as SizingName, G.EnglishFullName as TypeOfGear, CT.Eng
 
 select max(len(EnglishFullName)) from Countries
 select max(len(EnglishCode)) from RockClimbingDifficulties
+
+INSERT INTO dbo.Countries ([ID], [EnglishFullName], [CountryCode])
+VALUES ( 0, 'Afghanistan', 'AF')
