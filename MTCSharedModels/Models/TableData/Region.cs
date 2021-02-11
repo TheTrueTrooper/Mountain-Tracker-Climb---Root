@@ -10,7 +10,7 @@ namespace MTCSharedModels.Models
         public uint ProvinceOrStateID { get; set; }
         public uint ID { get; set; }
         public string EnglishFullName { get; set; }
-        public string CountryCode { get; set; }
+        public string RegionCode { get; set; }
         public List<District> Districts { get; set; } = null;
     }
 }

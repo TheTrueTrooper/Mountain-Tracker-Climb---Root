@@ -10,7 +10,7 @@ namespace MTCSharedModels.Models
         public uint OwningZoneAreaID { get; set; }
         public uint ID { get; set; }
         public string EnglishFullName { get; set; }
-        public string CountryCode { get; set; }
+        public string WallCode { get; set; }
         public List<RockClimbingRoute> RockClimbingRoutes { get; set; } = null;
     }
 }

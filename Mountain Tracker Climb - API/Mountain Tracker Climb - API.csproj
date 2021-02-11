@@ -162,10 +162,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\RouteQuickEditorController.cs" />
     <Compile Include="Controllers\CountiesAPIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProvincesOrStatesAPIController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBModelContexts\CountriesDBContext.cs" />
     <Compile Include="DBModelContexts\RootDBContext.cs" />
     <Compile Include="DBModelContexts\ProvincesOrStatesDBContext.cs" />
@@ -224,11 +224,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\RouteQuickEditor\Index.cshtml" />
+    <Content Include="Views\Home\MeetTheTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\ProvinceOrState\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

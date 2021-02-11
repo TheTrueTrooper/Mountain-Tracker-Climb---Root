@@ -10,7 +10,7 @@ namespace MTCSharedModels.Models
         public uint DistrictID { get; set; }
         public uint ID { get; set; }
         public string EnglishFullName { get; set; }
-        public string CountryCode { get; set; }
+        public string ZoneCode { get; set; }
         public List<ZoneArea> Districts { get; set; } = null;
     }
 }
