@@ -6,9 +6,13 @@ using System.Web;
 
 namespace Mountain_Tracker_Climb___API.DBModelContexts
 {
-    internal class ProvincesOrStatesDBContext : RootDBContext<ProvinceOrState>
+    internal class ProvincesOrStatesDBContext : RootDBContext<ProvinceOrState>, IDBRootContext
     {
         public override string DBTable => "dbo.ProvincesOrStates";
+
+        public ProvincesOrStatesDBContext() : base() { }
+
+        public ProvincesOrStatesDBContext(IDBRootContext Context) : base(Context.DB) { }
 
         public IEnumerable<ProvinceOrState> GetListOfProvincesOrStates()
         {

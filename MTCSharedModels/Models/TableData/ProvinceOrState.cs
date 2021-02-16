@@ -11,6 +11,7 @@ namespace MTCSharedModels.Models
         public short ID { get; set; }
         public string EnglishFullName { get; set; }
         public string RegionCode { get; set; }
+        [SQLIgnore]
         public List<Region> Regions { get; set; } = null;
     }
 }

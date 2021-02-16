@@ -2,17 +2,22 @@
 @{
     ViewBag.Title = "Quick Route Editor";
 }
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script src="~/Scripts/angular-sanitize.js"></script>
+<script src="~/Scripts/angular-cookies.js"></script>
+<script src="~/Scripts/AngularJSRouteQuickEdit.js"></script>
 <h2>Quick Route Editor</h2>
-<div>
+<div ng-app="NGRouteQuickEdit" ng-controller="RouteQuickEditController">
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
                 <label class="text-right">
                     Select a Country
                 </label>
-                <select name="SelectCountry" id="SelectCountry" ng-model="Countries.SelectedID">
-                    <option value="null">Select an option</option>
-                    <option ng-repeat="Country in Countries.FullList" value="{{Country.ID}}">{{Country.EnglishFullName}} - {{Country.CountryCode}}</option>
+                <select name="SelectCountry" id="SelectCountry" ng-model="Countries.SelectedID" ng-change="SelectedCountry(Countries.SelectedID)">
+                    <option selected value="null">Select an option</option>
+                    <option ng-repeat="Country in Countries.FullList" value="{{Country.ID}}">{{Country.CountryCode}} - {{Country.EnglishFullName}}</option>
                 </select>
                 <div>
                     <p>Handled by DB admin as static ISO standard table</p>
@@ -24,10 +29,9 @@
                 <label class="text-right">
                     Select a Province Or State
                 </label>
-                <select name="SelectProvinceOrState" id="SelectProvinceOrState" ng-model="ProvincesOrStates.SelectedID">
-                    @*disabled*@
+                <select disabled name="SelectProvinceOrState" id="SelectProvinceOrState" ng-model="ProvincesOrStates.SelectedID" ng-change="SelectedProvinceOrState(ProvincesOrStates.SelectedID)">
                     <option value="null">Select an option</option>
-                    <option ng-repeat="ProvinceOrState in ProvincesOrStates.FullList" value="{{ProvinceOrState.ID}}">{{ProvinceOrState.EnglishFullName}} - {{ProvinceOrState.RegionCode}}</option>
+                    <option ng-repeat="ProvinceOrState in ProvincesOrStates.FullList" value="{{ProvinceOrState.ID}}">{{ProvinceOrState.RegionCode}} - {{ProvinceOrState.EnglishFullName}}</option>
                 </select>
                 <div>
                     <p>Handled by DB admin as static table</p>
@@ -41,20 +45,20 @@
                 <label class="text-right">
                     Select a Region
                 </label>
-                <select name="SelectRegion" id="SelectRegion" ng-model="Regions.SelectedID">
+                <select disabled name="SelectRegion" id="SelectRegion" ng-model="Regions.SelectedID">
                     <option value="null">Select an option</option>
                     <option ng-repeat="Region in Regions.FullList" value="{{Region.ID}}">{{Region.EnglishFullName}} - {{Region.RegionCode}}</option>
                 </select>
             </div>
             <div class="row" style="padding-bottom:20px">
                 <div class="col-sm-4">
-                    <a class="btn btn-default" ng-click="Regions.Add()">Add Region</a>
+                    <button disabled id="AddRegion" class="btn btn-default" data-toggle="modal" data-target="#AddRegionModal">Add Region</button>
                 </div>
                 <div class="col-sm-4">
-                    <a class="btn btn-default" ng-click="Regions.EditRegion(Regions.SelectedID)">Region Edit Region</a>
+                    <button disabled id="EditRegion" class="btn btn-default" ng-click="Regions.EditRegion(Regions.SelectedID)">Edit Region</button>
                 </div>
                 <div class="col-sm-4">
-                    <a class="btn btn-default" ng-click="Regions.DeleteRegion(Regions.SelectedID)">Region Edit Region</a>
+                    <button disabled id="DeleteRegion" class="btn btn-default" ng-click="Regions.DeleteRegion(Regions.SelectedID)">Delete Region</button>
                 </div>
             </div>
         </div>
@@ -63,20 +67,20 @@
                 <label class="text-right">
                     Select a District
                 </label>
-                <select name="SelectDistrict" id="SelectDistrict" ng-model="Districts.SelectedID">
+                <select disabled name="SelectDistrict" id="SelectDistrict" ng-model="Districts.SelectedID">
                     <option value="null">Select an option</option>
                     <option ng-repeat="District in Districts.FullList" value="{{District.ID}}">{{District.EnglishFullName}} - {{District.DistrictCode}}</option>
                 </select>
             </div>
             <div class="row" style="padding-bottom:20px">
                 <div class="col-sm-4">
-                    <a class="btn btn-default" ng-click="Districts.Add()">Add District</a>
+                    <button disabled id="AddDistrict" class="btn btn-default" ng-click="Districts.Add()">Add District</button>
                 </div>
                 <div class="col-sm-4">
-                    <a class="btn btn-default" ng-click="Districts.EditRegion(Districts.SelectedID)">Region Edit District</a>
+                    <button disabled id="EditDistrict" class="btn btn-default" ng-click="Districts.EditRegion(Districts.SelectedID)">Region Edit District</button>
                 </div>
                 <div class="col-sm-4">
-                    <a class="btn btn-default" ng-click="Districts.DeleteRegion(Districts.SelectedID)">Region Edit District</a>
+                    <button disabled id="DeleteDistrict" class="btn btn-default" ng-click="Districts.DeleteRegion(Districts.SelectedID)">Region Edit District</button>
                 </div>
             </div>
         </div>
@@ -87,14 +91,14 @@
                 <label class="text-right">
                     Select a Zone
                 </label>
-                <select name="SelectDistrictZone" id="SelectDistrictZone" ng-model="DistrictZones.SelectedID">
+                <select disabled name="SelectDistrictZone" id="SelectDistrictZone" ng-model="DistrictZones.SelectedID">
                     <option value="null">Select an option</option>
                     <option ng-repeat="DistrictZone in DistrictZones.FullList" value="{{DistrictZone.ID}}">{{DistrictZone.EnglishFullName}} - {{DistrictZone.ZoneCode}}</option>
                 </select>
             </div>
             <div class="row" style="padding-bottom:20px">
                 <div class="col-sm-4">
-                    <a class="btn btn-default" ng-click="DistrictZones.Add()">Add Zone</a>
+                    <button disabled class="btn btn-default" ng-click="DistrictZones.Add()">Add Zone</button>
                 </div>
                 <div class="col-sm-4">
                     <a class="btn btn-default" ng-click="DistrictZones.EditRegion(DistrictZones.SelectedID)">Region Edit Zone</a>
@@ -109,7 +113,7 @@
                 <label class="text-right">
                     Select a Area
                 </label>
-                <select name="SelectZoneArea" id="SelectZoneArea" ng-model="ZoneAreas.SelectedID">
+                <select disabled name="SelectZoneArea" id="SelectZoneArea" ng-model="ZoneAreas.SelectedID">
                     <option value="null">Select an option</option>
                     <option ng-repeat="ZoneArea in ZoneAreas.FullList" value="{{ZoneArea.ID}}">{{ZoneArea.EnglishFullName}} - {{ZoneArea.AreaCode}}</option>
                 </select>
@@ -133,7 +137,7 @@
                 <label class="text-right">
                     Select a Climbing Wall
                 </label>
-                <select name="SelectDistrictZone" id="SelectDistrictZone" ng-model="ClimbingWalls.SelectedID">
+                <select disabled name="SelectClimbingWall" id="SelectClimbingWall" ng-model="ClimbingWalls.SelectedID">
                     <option value="null">Select an option</option>
                     <option ng-repeat="ClimbingWall in ClimbingWalls.FullList" value="{{ClimbingWall.ID}}">{{ClimbingWall.EnglishFullName}} - {{ClimbingWall.ZoneCode}}</option>
                 </select>
@@ -245,6 +249,54 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div id="AddRegionModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Region</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <div class="col-sm-10">
+                            <input disabled value="Auto set by database" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            ProvinceOrStateID @*Regions*@
+                        </label>
+                        <div class="col-sm-10">
+                            <input disabled value="{{ProvincesOrStates.SelectedID}}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <div class="col-sm-10">
+                            <input ng-bind="Regions.AddNew.EnglishFullName" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Region Code
+                        </label>
+                        <div class="col-sm-10">
+                            <input ng-bind="Regions.AddNew.RegionCode" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Regions.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
     @*public string RouteInfo { get; set; } add as a tool tip or click bit*@
 </div>

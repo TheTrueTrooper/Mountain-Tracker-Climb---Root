@@ -6,4 +6,7 @@
 	[ID] INT NOT NULL PRIMARY KEY, 
     [EnglishFullName] VARCHAR(100) NOT NULL, 
     [WallCode] CHAR(10) NOT NULL
+
+	UNIQUE ([AreaID], [EnglishFullName])
+	UNIQUE ([AreaID], [WallCode])
 )

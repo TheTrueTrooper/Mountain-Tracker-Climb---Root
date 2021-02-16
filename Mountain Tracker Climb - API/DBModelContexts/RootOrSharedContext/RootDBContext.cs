@@ -6,14 +6,35 @@ using System.Data;
 using System.Data.SqlClient;
 using Mountain_Tracker_Climb___API.App_Start;
 using System.Reflection;
+using MTCSharedModels.Models;
 
 namespace Mountain_Tracker_Climb___API.DBModelContexts
 {
-    internal class RootDBContext<T> : IDisposable where T : new()
+    internal abstract class RootDBContext<T> : IDisposable, IDBRootContext where T : new()
     {
-        protected SqlConnection DB { private set; get; } = new SqlConnection(StaticVars.DBConnectionsString);
+        public SqlConnection DB { protected set; get; }
 
-        public virtual string DBTable { get=>null; }
+        public RootDBContext()
+        {
+            DB = new SqlConnection(StaticVars.DBConnectionsString);
+            DB.Open();
+        }
+
+        public RootDBContext(SqlConnection DB)
+        {
+            this.DB = DB;
+        }
+
+        string _DBTable { get; set; }
+        public virtual string DBTable 
+        { 
+            get 
+            {
+                if (_DBTable == null)
+                    _DBTable = $"dbo.{typeof(T).Name}s";
+                return _DBTable;
+            }
+        }
 
         static List<string> _DBListOfColumns;
         public static List<string> DBListOfColumns
@@ -26,8 +47,8 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                     PropertyInfo[] Properties = typeof(T).GetProperties();
                     foreach(PropertyInfo x in Properties)
                     {
-                        Type T = x.PropertyType;
-                        if (T.IsPrimitive || T.Name == typeof(string).Name)
+                        //Type T = x.PropertyType;
+                        if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)))
                             _DBListOfColumns.Add(x.Name);
                     }
                 }
@@ -212,14 +233,16 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                 return Command.ExecuteNonQuery();
         }
 
-        protected RootDBContext()
-        {
-            DB.Open();
-        }
-
         public void Dispose()
         {
-            DB.Dispose();
+            try
+            {
+                DB.Dispose();
+            }
+            finally
+            {
+
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace MTCSharedModels.Models
         public uint ID { get; set; }
         public string EnglishFullName { get; set; }
         public string ZoneCode { get; set; }
+        [SQLIgnore]
         public List<ZoneArea> Districts { get; set; } = null;
     }
 }

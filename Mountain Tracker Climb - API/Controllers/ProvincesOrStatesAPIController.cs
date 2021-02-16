@@ -21,7 +21,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         public IEnumerable<ProvinceOrState> GetByCountry(int CountryID)
         {
             using (ProvincesOrStatesDBContext DB = new ProvincesOrStatesDBContext())
-                return DB.GetListOfProvincesOrStates();
+                return DB.GetListOfProvincesOrStates(CountryID);
         }
 
         // GET api/values/5

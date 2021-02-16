@@ -9,6 +9,7 @@ namespace MTCSharedModels.Models
         public byte ID { get; set; }
         public string EnglishFullName { get; set; }
         public string CountryCode{ get; set; }
+        [SQLIgnore]
         public List<ProvinceOrState> ProvincesOrStates { get; set; } = null;
     }
 }

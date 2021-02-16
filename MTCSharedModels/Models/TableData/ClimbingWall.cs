@@ -11,6 +11,7 @@ namespace MTCSharedModels.Models
         public uint ID { get; set; }
         public string EnglishFullName { get; set; }
         public string WallCode { get; set; }
+        [SQLIgnore]
         public List<RockClimbingRoute> RockClimbingRoutes { get; set; } = null;
     }
 }

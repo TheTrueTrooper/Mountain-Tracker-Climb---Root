@@ -51,4 +51,8 @@
     [Picture360] VARCHAR(100) NULL,
 	[Picture3603D] VARCHAR(100) NULL,
 	[RouteInfo] VARCHAR(1000) NULL
+
+	UNIQUE ([ClimbingWallID], [EnglishFullName])
+	UNIQUE ([ClimbingWallID], [RouteCode])
+	UNIQUE ([ClimbingWallID], [RouteWallNumber])
 )

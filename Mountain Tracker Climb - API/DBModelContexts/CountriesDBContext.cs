@@ -13,6 +13,10 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
     {
         public override string DBTable => "dbo.Countries";
 
+        public CountriesDBContext() : base() { }
+
+        public CountriesDBContext(IDBRootContext Context) : base(Context.DB) { }
+
         public IEnumerable<Country> GetListOfCountries()
         {
             return GetListOf();
@@ -23,14 +27,14 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf($"ID = {ID}").First();
         }
 
-        public int InsertCountry(Country NewCountry)
-        {
-            return InsertData(NewCountry);
-        }
+        //public int InsertCountry(Country NewCountry)
+        //{
+        //    return InsertData(NewCountry);
+        //}
 
-        public int InsertCountry(List<Country> NewCountrys)
-        {
-            return InsertData(NewCountrys);
-        }
+        //public int InsertCountry(List<Country> NewCountrys)
+        //{
+        //    return InsertData(NewCountrys);
+        //}
     }
 }
