@@ -3,7 +3,7 @@
 	[RegionID] INT NOT NULL,
 	CONSTRAINT [FK_Districts_Regions] FOREIGN KEY ([RegionID]) REFERENCES [Regions]([ID]),
 
-	[ID] INT NOT NULL PRIMARY KEY, 
+	[ID] INT NOT NULL PRIMARY KEY IDENTITY(0,1), 
     [EnglishFullName] VARCHAR(100) NOT NULL, 
     [DistrictCode] CHAR(10) NOT NULL
 

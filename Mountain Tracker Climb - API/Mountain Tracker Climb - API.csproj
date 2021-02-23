@@ -162,18 +162,29 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\RegionsAPIController.cs" />
+    <Compile Include="Controllers\_ClimbingWallsAPIController.cs" />
+    <Compile Include="Controllers\_DistrictsAPIController.cs" />
+    <Compile Include="Controllers\_DistrictZonesAPIController.cs" />
+    <Compile Include="Controllers\_RegionsAPIController.cs" />
     <Compile Include="Controllers\RouteQuickEditorController.cs" />
-    <Compile Include="Controllers\CountiesAPIController.cs" />
+    <Compile Include="Controllers\_CountiesAPIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProvincesOrStatesAPIController.cs" />
+    <Compile Include="Controllers\_ProvincesOrStatesAPIController.cs" />
+    <Compile Include="Controllers\_RockClimbingRoutesAPIController.cs" />
+    <Compile Include="Controllers\_ZoneAreasAPIController.cs" />
+    <Compile Include="DBModelContexts\ClimbingTypeDBContext.cs" />
+    <Compile Include="DBModelContexts\ClimbingWallsDBContext.cs" />
     <Compile Include="DBModelContexts\CountriesDBContext.cs" />
     <Compile Include="DBModelContexts\DistrictsDBContext.cs" />
+    <Compile Include="DBModelContexts\DistrictZonesDBContext.cs" />
     <Compile Include="DBModelContexts\RegionsDBContext.cs" />
+    <Compile Include="DBModelContexts\RockClimbingDifficultiesDBContext.cs" />
+    <Compile Include="DBModelContexts\RockClimbingRoutesDBContext.cs" />
     <Compile Include="DBModelContexts\RootOrSharedContext\DBContext.cs" />
     <Compile Include="DBModelContexts\RootOrSharedContext\IDBRootContext.cs" />
     <Compile Include="DBModelContexts\RootOrSharedContext\RootDBContext.cs" />
     <Compile Include="DBModelContexts\ProvincesOrStatesDBContext.cs" />
+    <Compile Include="DBModelContexts\ZoneAreasDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

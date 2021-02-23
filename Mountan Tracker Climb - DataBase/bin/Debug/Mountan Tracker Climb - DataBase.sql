@@ -52,6 +52,10 @@ GO
 --------------------------------------------------------------------------------------
 */
 --reset the table for data by deleting old data to make a clean alter\
+--Routes Rest
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutes') AND Type = N'U')
+	delete RockClimbingRoutes where 1=1
+
 --Gear drill down reset
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearLinkingTableForGearType') AND Type = N'U')
 	delete [GearLinkingTableForGearType] where 1=1
@@ -61,13 +65,26 @@ IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.GearSizes
 	delete GearSizes where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Gear') AND Type = N'U')
 	delete Gear where 1=1
+--Difficulties rest
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingDifficulties') AND Type = N'U')
+	delete RockClimbingDifficulties where 1=1
+
+--Routes Rest cont
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutes') AND Type = N'U')
+	delete ClimbingWalls where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutes') AND Type = N'U')
+	delete ZoneAreas where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutes') AND Type = N'U')
+	delete DistrictZones where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutes') AND Type = N'U')
+	delete Districts where 1=1
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingRoutes') AND Type = N'U')
+	delete Regions where 1=1
 --Wall drill down reset
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.ProvincesOrStates') AND Type = N'U')
 	delete ProvincesOrStates where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Countries') AND Type = N'U')
 	delete Countries where 1=1
-IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.RockClimbingDifficulties') AND Type = N'U')
-	delete RockClimbingDifficulties where 1=1
 GO
 
 GO
@@ -736,6 +753,52 @@ else
 begin
 	print '[RockClimbingDifficulties] unsuccessfully populated'
 	raiserror('[RockClimbingDifficulties] unsuccessfully populated', 20, -1) with log
+end
+GO
+
+--Quick Test Data build
+declare @Testing bit = 1
+if(@Testing = 1)
+begin
+DBCC CHECKIDENT ('Regions', RESEED, 0)
+INSERT INTO [Regions] ([ProvinceOrStateID], [EnglishFullName], [RegionCode])
+VALUES (8, 'Test1', 'T1')
+DBCC CHECKIDENT ('Districts', RESEED, 0)
+INSERT INTO [Districts] ([RegionID], [EnglishFullName], [DistrictCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('DistrictZones', RESEED, 0)
+INSERT INTO [DistrictZones] ([DistrictID], [EnglishFullName], [ZoneCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('ZoneAreas', RESEED, 0)
+INSERT INTO [ZoneAreas] ([DistrictZoneID], [EnglishFullName], [AreaCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('ClimbingWalls', RESEED, 0)
+INSERT INTO [ClimbingWalls] ([AreaID], [EnglishFullName], [WallCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('ClimbingWalls', RESEED, 0)
+INSERT INTO [ClimbingWalls] ([AreaID], [EnglishFullName], [WallCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('RockClimbingRoutes', RESEED, 0)
+INSERT INTO [RockClimbingRoutes] 
+([ClimbingWallID],[TypeID],[DifficultyID],[EnglishFullName], 
+[RouteCode],[RouteWallNumber],[Rating],[HieghtInMeters],
+[NumberOfPitchs], [SunAM],[SunPM],[Filtered],
+[Sunny],[Shady],[DriesFast],[DryInRain],
+[Windy],[ClimbAnglesHaveSlabs],[ClimbAnglesHaveVerticals],[ClimbAnglesHaveOverHangs],
+[ClimbAnglesHaveRoofs],[RockFalls],[Seepage],[StickClip],
+[Runout],[Reachy],[Dyno],[Pumpy], 
+[Techy],[Power],[PockSlashHole],[Crimpy],
+[SeatStart])
+VALUES 
+(1,0,0,'Test1', 
+'T1',1,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0)
 end
 GO
 

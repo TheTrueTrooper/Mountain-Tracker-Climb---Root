@@ -26,15 +26,5 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
         {
             return GetListOf($"ID = {ID}").First();
         }
-
-        //public int InsertCountry(Country NewCountry)
-        //{
-        //    return InsertData(NewCountry);
-        //}
-
-        //public int InsertCountry(List<Country> NewCountrys)
-        //{
-        //    return InsertData(NewCountrys);
-        //}
     }
 }

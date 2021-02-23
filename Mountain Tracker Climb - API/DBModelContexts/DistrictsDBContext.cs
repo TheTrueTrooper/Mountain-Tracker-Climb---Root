@@ -22,9 +22,24 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf($"RegionID = {RegionID}");
         }
 
-        public District GetRegion(int ID)
+        public District GetDistrict(int ID)
         {
             return GetListOf($"ID = {ID}").First();
+        }
+
+        public int AddDistrict(District Values)
+        {
+            return InsertData(Values);
+        }
+
+        public int UpdateDistrict(int ID, District Values)
+        {
+            return UpdateData(Values, $"ID = {ID}");
+        }
+
+        public int DeleteDistrict(int ID)
+        {
+            return DeleteData($"ID = {ID}");
         }
     }
 }

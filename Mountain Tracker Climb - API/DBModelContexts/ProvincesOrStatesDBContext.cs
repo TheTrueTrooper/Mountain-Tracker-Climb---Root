@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Mountain_Tracker_Climb___API.DBModelContexts
 {
-    internal class ProvincesOrStatesDBContext : RootDBContext<ProvinceOrState>, IDBRootContext
+    internal class ProvincesOrStatesDBContext : RootDBContext<ProvinceOrState>
     {
         public override string DBTable => "dbo.ProvincesOrStates";
 

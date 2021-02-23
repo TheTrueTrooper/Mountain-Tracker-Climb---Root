@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web;
 
 namespace Mountain_Tracker_Climb___API.DBModelContexts
@@ -22,9 +23,24 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf($"ProvinceOrStateID = {ProvinceOrStateID}");
         }
 
-        public Region GetRegion(int ID)
+        public Region GetRegion(int id)
         {
-            return GetListOf($"ID = {ID}").First();
+            return GetListOf($"ID = {id}").First();
+        }
+
+        public int AddRegion(Region Values)
+        {
+            return InsertData(Values);
+        }
+
+        public int UpdateRegion(int ID, Region Values)
+        {
+            return UpdateData(Values, $"ID = {ID}");
+        }
+
+        public int DeleteRegion(int ID)
+        {
+            return DeleteData($"ID = {ID}");
         }
     }
 }

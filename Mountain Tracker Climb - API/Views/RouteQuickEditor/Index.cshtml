@@ -45,9 +45,9 @@
                 <label class="text-right">
                     Select a Region
                 </label>
-                <select disabled name="SelectRegion" id="SelectRegion" ng-model="Regions.SelectedID">
+                <select disabled name="SelectRegion" id="SelectRegion" ng-model="Regions.SelectedID" ng-change="SelectedRegion(Regions.SelectedID)">
                     <option value="null">Select an option</option>
-                    <option ng-repeat="Region in Regions.FullList" value="{{Region.ID}}">{{Region.EnglishFullName}} - {{Region.RegionCode}}</option>
+                    <option ng-repeat="Region in Regions.FullList" value="{{Region.ID}}">{{Region.RegionCode}} - {{Region.EnglishFullName}}</option>
                 </select>
             </div>
             <div class="row" style="padding-bottom:20px">
@@ -74,7 +74,7 @@
             </div>
             <div class="row" style="padding-bottom:20px">
                 <div class="col-sm-4">
-                    <button disabled id="AddDistrict" class="btn btn-default" ng-click="Districts.Add()">Add District</button>
+                    <button disabled id="AddDistrict" class="btn btn-default"  data-toggle="modal" data-target="#AddDistrictModal">Add District</button>
                 </div>
                 <div class="col-sm-4">
                     <button disabled id="EditDistrict" class="btn btn-default" ng-click="Districts.EditRegion(Districts.SelectedID)">Region Edit District</button>
@@ -262,37 +262,69 @@
                         <label class="text-right">
                             ID
                         </label>
-                        <div class="col-sm-10">
-                            <input disabled value="Auto set by database" />
-                        </div>
+                        <input disabled value="Auto set by database" />
                     </div>
                     <div class="form-group">
                         <label class="text-right">
                             ProvinceOrStateID @*Regions*@
                         </label>
-                        <div class="col-sm-10">
-                            <input disabled value="{{ProvincesOrStates.SelectedID}}" />
-                        </div>
+                        <input disabled value="{{ProvincesOrStates.SelectedID}}" />
                     </div>
                     <div class="form-group">
                         <label class="text-right">
                             Enter a  Full English Name
                         </label>
-                        <div class="col-sm-10">
-                            <input ng-bind="Regions.AddNew.EnglishFullName" />
-                        </div>
+                        <input ng-model="Regions.AddNew.EnglishFullName" />
                     </div>
                     <div class="form-group">
                         <label class="text-right">
                             Enter a Region Code
                         </label>
-                        <div class="col-sm-10">
-                            <input ng-bind="Regions.AddNew.RegionCode" />
-                        </div>
+                        <input ng-model="Regions.AddNew.RegionCode" />
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Regions.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="AddDistrictModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Region</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="Auto set by database" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            RegionID @*Regions*@
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="Districts.AddNew.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Region Code
+                        </label>
+                        <input ng-model="Districts.AddNew.RegionCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Districts.Add()">Add</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

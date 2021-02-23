@@ -6,9 +6,10 @@ namespace MTCSharedModels.Models
 {
     public class Region
     {
-        //public ProvinceOrState OwningProvinceOrState { get; set; }
-        public int ProvinceOrStateID { get; set; }
-        public int ID { get; set; }
+        //public ProvinceOrState OwningProvinceOrState { get; set; }\
+        public short? ProvinceOrStateID { get; set; }
+        [SQLIdentityID]
+        public int? ID { get; set; }
         public string EnglishFullName { get; set; }
         public string RegionCode { get; set; }
         [SQLIgnore]

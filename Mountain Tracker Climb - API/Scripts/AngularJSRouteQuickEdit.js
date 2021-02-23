@@ -32,25 +32,87 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         const MailHostURL = "http://localhost:12699/Api/";
         const CountriesController = "Counties";
         const ProvincesOrStatesController = "ProvincesOrStates";
+        const RegionsController = "Regions";
+        const DistrictsController = "Districts";
         return {
             /**
              * The Calls for mail box operations
              */
             Countries: {
                 /**
-                 * @returns {object} A object containing all of the data for the mail boxes
+                 * @returns {object} A object containing all of the data
                  */
-                GetCountries: function () {
+                GetList: function () {
                     return $http.get(MailHostURL + CountriesController, { responseType: "json" });
                 }
             },
             ProvincesOrStates: {
                 /**
                  * @param {any} CountryID The ID of the country
-                 * @returns {object} A object containing all of the data for the mail boxes
+                 * @returns {object} A object containing all of the data
                  */
-                GetCountries: function (CountryID) {
+                GetList: function (CountryID) {
                     return $http.get(MailHostURL + ProvincesOrStatesController + "?CountryID=" + CountryID, { responseType: "json" });
+                }
+            },
+            Regions: {
+                /**
+                 * @param {any} ProvinceOrStateID The ID of the Province Or State
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function (ProvinceOrStateID) {
+                    return $http.get(MailHostURL + RegionsController + "?ProvinceOrStateID=" + ProvinceOrStateID, { responseType: "json" });
+                },
+                /**
+                 * @param {object} NewRegion The data for the new region to add
+                 * @returns {object} A object containing all of the data
+                 */
+                Add: function (NewRegion) {
+                    return $http.post(MailHostURL + RegionsController, NewRegion, { responseType: "json" });
+                },
+                /**
+                 * @param {any} ID The ID of the Region to edit
+                 * @returns {object} A object containing all of the data
+                 */
+                Edit: function (ID, EditedRegion) {
+                    return $http.put(MailHostURL + RegionsController + "/" + ID, EditedRegion, { responseType: "json" });
+                },
+                /**
+                 * @param {any} ID The ID of the Region to delete
+                 * @returns {object} A object containing all of the data
+                 */
+                DeleteList: function (ID) {
+                    return $http.delete(MailHostURL + RegionsController + "/" + ID, { responseType: "json" });
+                }
+            },
+            Districts: {
+                /**
+                 * @param {any} RegionID The ID of the Region
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function (RegionID) {
+                    return $http.get(MailHostURL + DistrictsController + "?RegionID=" + RegionID, { responseType: "json" });
+                },
+                /**
+                 * @param {object} NewDistrict The data for the new District to add
+                 * @returns {object} A object containing all of the data
+                 */
+                Add: function (NewDistrict) {
+                    return $http.post(MailHostURL + DistrictsController, NewDistrict, { responseType: "json" });
+                },
+                /**
+                 * @param {any} ProvinceOrStateID The ID of the District to edit
+                 * @returns {object} A object containing all of the data
+                 */
+                Edit: function (RegionID, EditedRegion) {
+                    return $http.put(MailHostURL + DistrictsController + "/" + RegionID, EditedRegion, { responseType: "json" });
+                },
+                /**
+                 * @param {any} ProvinceOrStateID The ID of the District to delete
+                 * @returns {object} A object containing all of the data
+                 */
+                DeleteList: function (ID) {
+                    return $http.delete(MailHostURL + DistrictsController + "/" + ID, { responseType: "json" });
                 }
             }
         };
@@ -76,11 +138,15 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         var RegionAddEle = angular.element($("#AddRegion"));
         var RegionEditEle = angular.element($("#EditRegion"));
         var RegionDeleteEle = angular.element($("#DeleteRegion"));
+        var DistrictSelectEle = angular.element($("#SelectDistrict"));
+        var DistrictAddEle = angular.element($("#AddDistrict"));
+        var DistrictEditEle = angular.element($("#EditDistrict"));
+        var DistrictDeleteEle = angular.element($("#DeleteDistrict"));
 
         $scope.SelectedCountry = function (ID) {
             if (!isNaN(ID)) {
                 //ID = parseInt(ID)
-                WebAPIServices.ProvincesOrStates.GetCountries(ID).then(function (result) {
+                WebAPIServices.ProvincesOrStates.GetList(ID).then(function (result) {
                     $scope.ProvincesOrStates.FullList = result.data;
                     $scope.ProvincesOrStates.SelectedID = "null"
                     ProvSelectEle.attr('disabled', false);
@@ -99,7 +165,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             }
         };
 
-        WebAPIServices.Countries.GetCountries().then(function (result) {
+        WebAPIServices.Countries.GetList().then(function (result) {
             $scope.Countries.FullList = result.data;
             $scope.Countries.SelectedID = "null"
         });
@@ -107,7 +173,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         $scope.SelectedProvinceOrState = function (ID) {
             if (!isNaN(ID)) {
                 //ID = parseInt(ID)
-                WebAPIServices.ProvincesOrStates.GetCountries(ID).then(function (result) {
+                WebAPIServices.Regions.GetList(ID).then(function (result) {
                     $scope.Regions.FullList = result.data;
                     $scope.Regions.SelectedID = "null"
                     RegionSelectEle.attr('disabled', false);
@@ -123,6 +189,33 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 RegionDeleteEle.attr('disabled', true);
             }
         };
+
+        $scope.SelectedRegion = function (ID) {
+            if (!isNaN(ID)) {
+                //ID = parseInt(ID)
+                WebAPIServices.Districts.GetList(ID).then(function (result) {
+                    $scope.Districts.FullList = result.data;
+                    $scope.Districts.SelectedID = "null"
+                    DistrictSelectEle.attr('disabled', false);
+                    DistrictAddEle.attr('disabled', false);
+                });
+            }
+            else {
+                $scope.Districts.FullList = []
+                $scope.Districts.SelectedID = "null"
+            }
+        }
+
+
+        $scope.Regions.Add = function () {
+            $scope.Regions.AddNew.ProvinceOrStateID = $scope.ProvincesOrStates.SelectedID;
+            WebAPIServices.Regions.Add($scope.Regions.AddNew).then(function (result) {
+                WebAPIServices.Regions.GetList($scope.ProvincesOrStates.SelectedID).then(function (result) {
+                    $scope.Regions.FullList = result.data;
+                });
+            });
+        }
+
 
     });
     //.filter('ArrayToBase64String', function () {

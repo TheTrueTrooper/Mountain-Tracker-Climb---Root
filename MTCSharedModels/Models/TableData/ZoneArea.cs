@@ -7,10 +7,12 @@ namespace MTCSharedModels.Models
     public class ZoneArea
     {
         //public DistrictZone OwningDistrictZone { get; set; }
-        public uint DistrictZoneID { get; set; }
-        public uint ID { get; set; }
+        public int? DistrictZoneID { get; set; }
+        [SQLIdentityID]
+        public int? ID { get; set; }
         public string EnglishFullName { get; set; }
         public string AreaCode { get; set; }
-        public List<ClimbingWall> Districts { get; set; } = null;
+        [SQLIgnore]
+        public List<ClimbingWall> ClimbingWalls { get; set; } = null;
     }
 }

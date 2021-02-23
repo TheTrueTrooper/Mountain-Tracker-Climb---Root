@@ -7,8 +7,9 @@ namespace MTCSharedModels.Models
     public class ClimbingWall
     {
         //public ZoneArea OwningZoneArea { get; set; } = null;
-        public uint OwningZoneAreaID { get; set; }
-        public uint ID { get; set; }
+        public int? AreaID { get; set; }
+        [SQLIdentityID]
+        public int? ID { get; set; }
         public string EnglishFullName { get; set; }
         public string WallCode { get; set; }
         [SQLIgnore]

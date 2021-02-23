@@ -665,3 +665,49 @@ begin
 	raiserror('[RockClimbingDifficulties] unsuccessfully populated', 20, -1) with log
 end
 go
+
+--Quick Test Data build
+declare @Testing bit = 1
+if(@Testing = 1)
+begin
+DBCC CHECKIDENT ('Regions', RESEED, 0)
+INSERT INTO [Regions] ([ProvinceOrStateID], [EnglishFullName], [RegionCode])
+VALUES (8, 'Test1', 'T1')
+DBCC CHECKIDENT ('Districts', RESEED, 0)
+INSERT INTO [Districts] ([RegionID], [EnglishFullName], [DistrictCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('DistrictZones', RESEED, 0)
+INSERT INTO [DistrictZones] ([DistrictID], [EnglishFullName], [ZoneCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('ZoneAreas', RESEED, 0)
+INSERT INTO [ZoneAreas] ([DistrictZoneID], [EnglishFullName], [AreaCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('ClimbingWalls', RESEED, 0)
+INSERT INTO [ClimbingWalls] ([AreaID], [EnglishFullName], [WallCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('ClimbingWalls', RESEED, 0)
+INSERT INTO [ClimbingWalls] ([AreaID], [EnglishFullName], [WallCode])
+VALUES (1, 'Test1', 'T1')
+DBCC CHECKIDENT ('RockClimbingRoutes', RESEED, 0)
+INSERT INTO [RockClimbingRoutes] 
+([ClimbingWallID],[TypeID],[DifficultyID],[EnglishFullName], 
+[RouteCode],[RouteWallNumber],[Rating],[HieghtInMeters],
+[NumberOfPitchs], [SunAM],[SunPM],[Filtered],
+[Sunny],[Shady],[DriesFast],[DryInRain],
+[Windy],[ClimbAnglesHaveSlabs],[ClimbAnglesHaveVerticals],[ClimbAnglesHaveOverHangs],
+[ClimbAnglesHaveRoofs],[RockFalls],[Seepage],[StickClip],
+[Runout],[Reachy],[Dyno],[Pumpy], 
+[Techy],[Power],[PockSlashHole],[Crimpy],
+[SeatStart])
+VALUES 
+(1,0,0,'Test1', 
+'T1',1,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0)
+end
+go

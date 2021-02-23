@@ -8,7 +8,7 @@ namespace MTCSharedModels.Models
     {
         //public Country OwningCountry { get; set; } = null;
         public byte CountryID { get; set; }
-        public short ID { get; set; }
+        public short? ID { get; set; }
         public string EnglishFullName { get; set; }
         public string RegionCode { get; set; }
         [SQLIgnore]
