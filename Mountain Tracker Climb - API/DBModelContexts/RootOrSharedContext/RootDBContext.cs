@@ -95,7 +95,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             PropertyInfo[] Properties = TType.GetProperties();
             foreach (PropertyInfo x in Properties)
             {
-                if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)) && !Attribute.IsDefined(x, typeof(SQLIdentityIDAttribute)))
+                if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)) && !Attribute.IsDefined(x, typeof(SQLIdentityIDAttribute)) && !Attribute.IsDefined(x, typeof(SQLComputedColumn)))
                 {
                     Return[0] += $"{x.Name},";
                     if (x.PropertyType.Name == typeof(string).Name)
@@ -118,7 +118,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             foreach (PropertyInfo x in Properties)
             {
                 //Type T = x.PropertyType;
-                if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)) && !Attribute.IsDefined(x, typeof(SQLIdentityIDAttribute)))
+                if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)) && !Attribute.IsDefined(x, typeof(SQLIdentityIDAttribute)) && !Attribute.IsDefined(x, typeof(SQLComputedColumn)))
                 {
                     object Obj = x.GetValue(Object);
                     if (Obj != null)
@@ -140,13 +140,16 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             PropertyInfo[] Properties = TType.GetProperties();
             foreach (PropertyInfo x in Properties)
             {
-                Return.Add(x.Name, new List<string>());
-                foreach (T Object in ObjectList)
+                if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)) && !Attribute.IsDefined(x, typeof(SQLIdentityIDAttribute)) && !Attribute.IsDefined(x, typeof(SQLComputedColumn)))
                 {
-                    if (x.PropertyType.Name == typeof(string).Name)
-                        Return[x.Name].Add($"'{x.GetValue(Object)}'");
-                    else
-                        Return[x.Name].Add($"{x.GetValue(Object)}");
+                    Return.Add(x.Name, new List<string>());
+                    foreach (T Object in ObjectList)
+                    {
+                        if (x.PropertyType.Name == typeof(string).Name)
+                            Return[x.Name].Add($"'{x.GetValue(Object)}'");
+                        else
+                            Return[x.Name].Add($"{x.GetValue(Object)}");
+                    }
                 }
             }
             return Return;
@@ -267,7 +270,10 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                     Type TType = typeof(T);
                     DBListOfColumns.ForEach(x =>
                     {
-                        TType.GetProperty(x).SetValue(NewObj, DataReader[i]);
+                        if (DataReader[i] == null || DataReader[i] == DBNull.Value)
+                            TType.GetProperty(x).SetValue(NewObj, null);
+                        else
+                            TType.GetProperty(x).SetValue(NewObj, DataReader[i]);
                         i++;
                     });
                     Items.Add(NewObj);

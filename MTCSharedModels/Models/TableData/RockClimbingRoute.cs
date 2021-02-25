@@ -27,6 +27,7 @@ namespace MTCSharedModels.Models
 		public int? RouteWallNumber { get; set; }
 		public byte? Rating { get; set; }
 		public double? HieghtInMeters { get; set; }
+		[SQLComputedColumn]
 		public double? HieghtInFeet { get; set; } // calcualated from db as Meters * 3.xxxx
 		//[Anchors] handled by gear
 		public byte? NumberOfPitchs { get; set; }
