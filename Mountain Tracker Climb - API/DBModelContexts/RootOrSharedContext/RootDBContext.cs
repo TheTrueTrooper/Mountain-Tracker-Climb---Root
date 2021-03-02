@@ -14,6 +14,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 {
     internal abstract class RootDBContext<T> : IDisposable, IDBRootContext where T : new()
     {
+
         public SqlConnection DB { protected set; get; }
 
         public RootDBContext()
@@ -100,6 +101,14 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                     Return[0] += $"{x.Name},";
                     if (x.PropertyType.Name == typeof(string).Name)
                         Return[1] += $"'{x.GetValue(Object)}',";
+                    else if (x.PropertyType.FullName == typeof(bool?).FullName)
+                    {
+                        bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
+                        if (Value)
+                            Return[1] += $"1,";
+                        else
+                            Return[1] += $"0,";
+                    }
                     else
                         Return[1] += $"{x.GetValue(Object)},";
                 }
@@ -124,6 +133,14 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                     if (Obj != null)
                         if (x.PropertyType.Name == typeof(string).Name)
                             Return += $"{x.Name} = '{Obj}',";
+                        else if (x.PropertyType.FullName == typeof(bool?).FullName)
+                        {
+                            bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
+                            if (Value)
+                                Return += $"{x.Name} = 1,";
+                            else
+                                Return += $"{x.Name} = 0,";
+                        }
                         else
                             Return += $"{x.Name} = {Obj},";
                 }
@@ -147,6 +164,14 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                     {
                         if (x.PropertyType.Name == typeof(string).Name)
                             Return[x.Name].Add($"'{x.GetValue(Object)}'");
+                        else if (x.PropertyType.FullName == typeof(bool?).FullName)
+                        {
+                            bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
+                            if (Value)
+                                Return[x.Name].Add($"1");
+                            else
+                                Return[x.Name].Add($"0");
+                        }
                         else
                             Return[x.Name].Add($"{x.GetValue(Object)}");
                     }
@@ -304,7 +329,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                 }
             return Items;
         }
-
+        
         protected int InsertData(T Object)
         {
             string QueryString = BasicInsert(Object);

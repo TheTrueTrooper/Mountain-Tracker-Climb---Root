@@ -49,6 +49,11 @@ namespace Mountain_Tracker_Climb___API.Controllers
                                                 {
                                                     RCR.RouteType = DB.ClimbingTypesTable.GetClimbingType(RCR.TypeID.Value);
                                                     RCR.Difficulty = DB.RockClimbingDifficultiesTable.GetRockClimbingDifficulty(RCR.TypeID.Value);
+                                                    RCR.RoutesGear = DB.RouteGearTable.GetListOfRouteGear(RCR.ID.Value).ToList();
+                                                    foreach (RouteGear RG in RCR.RoutesGear)
+                                                    {
+                                                        RG.Gear = DB.GearSizesTable.GetGearSize(RG.GearSizeID.Value);
+                                                    }
                                                 }
                                             }
                                         }
@@ -74,6 +79,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
                 return Return;
             }
         }
+
         //Will do full drill down
         public Country Get(int id, bool? GetAll)
         {
@@ -105,6 +111,11 @@ namespace Mountain_Tracker_Climb___API.Controllers
                                             {
                                                 RCR.RouteType = DB.ClimbingTypesTable.GetClimbingType(RCR.TypeID.Value);
                                                 RCR.Difficulty = DB.RockClimbingDifficultiesTable.GetRockClimbingDifficulty(RCR.TypeID.Value);
+                                                RCR.RoutesGear = DB.RouteGearTable.GetListOfRouteGear(RCR.ID.Value).ToList();
+                                                foreach (RouteGear RG in RCR.RoutesGear)
+                                                {
+                                                    RG.Gear = DB.GearSizesTable.GetGearSize(RG.GearSizeID.Value);
+                                                }
                                             }
                                         }
                                     }

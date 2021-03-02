@@ -22,6 +22,11 @@ namespace Mountain_Tracker_Climb___API.Controllers
                 {
                     Route.Difficulty = DB.RockClimbingDifficultiesTable.GetRockClimbingDifficulty(Route.DifficultyID.Value);
                     Route.RouteType = DB.ClimbingTypesTable.GetClimbingType(Route.TypeID.Value);
+                    Route.RoutesGear = DB.RouteGearTable.GetListOfRouteGear(Route.ID.Value).ToList();
+                    foreach(RouteGear RG in Route.RoutesGear)
+                    {
+                        RG.Gear = DB.GearSizesTable.GetGearSize(RG.GearSizeID.Value);
+                    }
                 }
                 return Routes;
             }

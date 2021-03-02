@@ -31,3 +31,9 @@ select max(len(EnglishCode)) from RockClimbingDifficulties
 
 INSERT INTO dbo.Countries ([ID], [EnglishFullName], [CountryCode])
 VALUES ( 0, 'Afghanistan', 'AF')
+
+select * from dbo.Gear
+select Count(ID) from dbo.Gear
+
+insert into [RockClimbingRoutesGearLinkingTable] ([RockClimbingRoutesID], [GearSizeID], [NumberRequired]) values (1 ,1, 2)
+insert into [RockClimbingRoutesGearLinkingTable] ([RockClimbingRoutesID], [GearSizeID], [NumberRequired]) values (1 ,12, 30)

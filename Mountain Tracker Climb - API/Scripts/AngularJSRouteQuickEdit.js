@@ -38,6 +38,8 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         const ZoneAreasController = "ZoneAreas";
         const ClimbingWallsController = "ClimbingWalls";
         const RockClimbingRoutesController = "RockClimbingRoutes";
+        const ClimbingTypesController = "ClimbingTypes";
+        const RockClimbingDifficultiesController = "RockClimbingDifficulties";
         return {
             /**
              * The Calls for mail box operations
@@ -239,6 +241,22 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                     return $http.delete(MailHostURL + RockClimbingRoutesController + "/" + ID, { responseType: "json" });
                 }
             },
+            ClimbingTypes: {
+                /**
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function () {
+                    return $http.get(MailHostURL + ClimbingTypesController, { responseType: "json" });
+                }
+            },
+            RockClimbingDifficulties: {
+                /**
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function () {
+                    return $http.get(MailHostURL + RockClimbingDifficultiesController, { responseType: "json" });
+                }
+            },
         };
     })
     .controller("RouteQuickEditController", function ($window, $scope, $sce, WebAPIServices) {
@@ -324,7 +342,36 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 RegionCode: ""
             }
         };
-        $scope.Routes = {};
+        $scope.Routes = {
+            AddNew: {
+                FirstAscent: "Unknown",
+                FirstFreeAscent: "Unknown",
+                SunAM: false,
+                SunPM: false,
+                Filtered: false,
+                Sunny: false,
+                Shady: false,
+                DriesFast: false,
+                DryInRain: false,
+                Windy: false,
+                ClimbAnglesHaveSlabs: false,
+                ClimbAnglesHaveVerticals: false,
+                ClimbAnglesHaveOverHangs: false,
+                ClimbAnglesHaveRoofs: false,
+                RockFalls: false,
+                Seepage: false,
+                StickClip: false,
+                Runout: false,
+                Reachy: false,
+                Dyno: false,
+                Pumpy: false,
+                Techy: false,
+                Power: false,
+                PockSlashHole: false,
+                Crimpy: false,
+                SeatStart: false
+            }
+        };
 
         var ProvSelectEle = angular.element($("#SelectProvinceOrState"));
         var RegionSelectEle = angular.element($("#SelectRegion"));
@@ -376,24 +423,34 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
 
         WebAPIServices.Countries.GetList().then(function (result) {
             $scope.Countries.FullList = result.data;
-            $scope.Countries.SelectedID = "null"
+            $scope.Countries.SelectedID = "null";
+        });
+
+        WebAPIServices.RockClimbingDifficulties.GetList().then(function (result) {
+            $scope.RockClimbingDifficulties = result.data;
+            $scope.Routes.AddNew.TypeID = "null";
+        });
+
+        WebAPIServices.ClimbingTypes.GetList().then(function (result) {
+            $scope.ClimbingTypes = result.data;
+            $scope.Routes.AddNew.DifficultyID = "null";
         });
 
         $scope.SelectedCountry = function (ID) {
             if (!isNaN(ID)) {
                 WebAPIServices.ProvincesOrStates.GetList(ID).then(function (result) {
                     $scope.ProvincesOrStates.FullList = result.data;
-                    $scope.ProvincesOrStates.SelectedID = "null"
-                    $scope.Regions.FullList = []
-                    $scope.Regions.SelectedID = "null"
-                    $scope.Districts.FullList = []
-                    $scope.Districts.SelectedID = "null"
-                    $scope.DistrictZones.FullList = []
-                    $scope.DistrictZones.SelectedID = "null"
-                    $scope.ZoneAreas.FullList = []
-                    $scope.ZoneAreas.SelectedID = "null"
-                    $scope.ClimbingWalls.FullList = []
-                    $scope.ClimbingWalls.SelectedID = "null"
+                    $scope.ProvincesOrStates.SelectedID = "null";
+                    $scope.Regions.FullList = [];
+                    $scope.Regions.SelectedID = "null";
+                    $scope.Districts.FullList = [];
+                    $scope.Districts.SelectedID = "null";
+                    $scope.DistrictZones.FullList = [];
+                    $scope.DistrictZones.SelectedID = "null";
+                    $scope.ZoneAreas.FullList = [];
+                    $scope.ZoneAreas.SelectedID = "null";
+                    $scope.ClimbingWalls.FullList = [];
+                    $scope.ClimbingWalls.SelectedID = "null";
                     EnableButtons([ProvSelectEle]);
                     DisableButtons([RegionSelectEle, RegionAddEle, RegionEditEle, RegionDeleteEle,
                         DistrictSelectEle, DistrictAddEle, DistrictEditEle, DistrictDeleteEle,
@@ -404,19 +461,19 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 });
             }
             else {
-                $scope.ProvincesOrStates.FullList = []
-                $scope.ProvincesOrStates.SelectedID = "null"
-                $scope.Regions.FullList = []
-                $scope.Regions.SelectedID = "null"
-                $scope.Districts.FullList = []
-                $scope.Districts.SelectedID = "null"
-                $scope.DistrictZones.FullList = []
-                $scope.DistrictZones.SelectedID = "null"
-                $scope.ZoneAreas.FullList = []
-                $scope.ZoneAreas.SelectedID = "null"
-                $scope.ClimbingWalls.FullList = []
-                $scope.ClimbingWalls.SelectedID = "null"
-                $scope.Routes.FullList = []
+                $scope.ProvincesOrStates.FullList = [];
+                $scope.ProvincesOrStates.SelectedID = "null";
+                $scope.Regions.FullList = [];
+                $scope.Regions.SelectedID = "null";
+                $scope.Districts.FullList = [];
+                $scope.Districts.SelectedID = "null";
+                $scope.DistrictZones.FullList = [];
+                $scope.DistrictZones.SelectedID = "null";
+                $scope.ZoneAreas.FullList = [];
+                $scope.ZoneAreas.SelectedID = "null";
+                $scope.ClimbingWalls.FullList = [];
+                $scope.ClimbingWalls.SelectedID = "null";
+                $scope.Routes.FullList = [];
                 DisableButtons([ProvSelectEle,
                     RegionSelectEle, RegionAddEle, RegionEditEle, RegionDeleteEle,
                     DistrictSelectEle, DistrictAddEle, DistrictEditEle, DistrictDeleteEle,
@@ -431,16 +488,16 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             if (!isNaN(ID)) {
                 WebAPIServices.Regions.GetList(ID).then(function (result) {
                     $scope.Regions.FullList = result.data;
-                    $scope.Regions.SelectedID = "null"
-                    $scope.Districts.FullList = []
-                    $scope.Districts.SelectedID = "null"
-                    $scope.DistrictZones.FullList = []
-                    $scope.DistrictZones.SelectedID = "null"
-                    $scope.ZoneAreas.FullList = []
-                    $scope.ZoneAreas.SelectedID = "null"
-                    $scope.ClimbingWalls.FullList = []
-                    $scope.ClimbingWalls.SelectedID = "null"
-                    $scope.Routes.FullList = []
+                    $scope.Regions.SelectedID = "null";
+                    $scope.Districts.FullList = [];
+                    $scope.Districts.SelectedID = "null";
+                    $scope.DistrictZones.FullList = [];
+                    $scope.DistrictZones.SelectedID = "null";
+                    $scope.ZoneAreas.FullList = [];
+                    $scope.ZoneAreas.SelectedID = "null";
+                    $scope.ClimbingWalls.FullList = [];
+                    $scope.ClimbingWalls.SelectedID = "null";
+                    $scope.Routes.FullList = [];
                     EnableButtons([RegionSelectEle, RegionAddEle]);
                     DisableButtons([RegionEditEle, RegionDeleteEle,
                         DistrictSelectEle, DistrictAddEle, DistrictEditEle, DistrictDeleteEle,
@@ -451,17 +508,17 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 });
             }
             else {
-                $scope.Regions.FullList = []
-                $scope.Regions.SelectedID = "null"
-                $scope.Districts.FullList = []
-                $scope.Districts.SelectedID = "null"
-                $scope.DistrictZones.FullList = []
-                $scope.DistrictZones.SelectedID = "null"
-                $scope.ZoneAreas.FullList = []
-                $scope.ZoneAreas.SelectedID = "null"
-                $scope.ClimbingWalls.FullList = []
-                $scope.ClimbingWalls.SelectedID = "null"
-                $scope.Routes.FullList = []
+                $scope.Regions.FullList = [];
+                $scope.Regions.SelectedID = "null";
+                $scope.Districts.FullList = [];
+                $scope.Districts.SelectedID = "null";
+                $scope.DistrictZones.FullList = [];
+                $scope.DistrictZones.SelectedID = "null";
+                $scope.ZoneAreas.FullList = [];
+                $scope.ZoneAreas.SelectedID = "null";
+                $scope.ClimbingWalls.FullList = [];
+                $scope.ClimbingWalls.SelectedID = "null";
+                $scope.Routes.FullList = [];
                 DisableButtons([RegionSelectEle, RegionAddEle, RegionEditEle, RegionDeleteEle,
                     DistrictSelectEle, DistrictAddEle, DistrictEditEle, DistrictDeleteEle,
                     DistrictZoneSelectEle, DistrictZoneAddEle, DistrictZoneEditEle, DistrictZoneDeleteEle,
@@ -475,14 +532,14 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             if (!isNaN(ID)) {
                 WebAPIServices.Districts.GetList(ID).then(function (result) {
                     $scope.Districts.FullList = result.data;
-                    $scope.Districts.SelectedID = "null"
-                    $scope.DistrictZones.FullList = []
-                    $scope.DistrictZones.SelectedID = "null"
-                    $scope.ZoneAreas.FullList = []
-                    $scope.ZoneAreas.SelectedID = "null"
-                    $scope.ClimbingWalls.FullList = []
-                    $scope.ClimbingWalls.SelectedID = "null"
-                    $scope.Routes.FullList = []
+                    $scope.Districts.SelectedID = "null";
+                    $scope.DistrictZones.FullList = [];
+                    $scope.DistrictZones.SelectedID = "null";
+                    $scope.ZoneAreas.FullList = [];
+                    $scope.ZoneAreas.SelectedID = "null";
+                    $scope.ClimbingWalls.FullList = [];
+                    $scope.ClimbingWalls.SelectedID = "null";
+                    $scope.Routes.FullList = [];
                     EnableButtons([DistrictSelectEle, DistrictAddEle, RegionEditEle, RegionDeleteEle]);
                     DisableButtons([DistrictEditEle, DistrictDeleteEle,
                         DistrictZoneSelectEle, DistrictZoneAddEle, DistrictZoneEditEle, DistrictZoneDeleteEle,
@@ -494,15 +551,15 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 });
             }
             else {
-                $scope.Districts.FullList = []
-                $scope.Districts.SelectedID = "null"
-                $scope.DistrictZones.FullList = []
-                $scope.DistrictZones.SelectedID = "null"
-                $scope.ZoneAreas.FullList = []
-                $scope.ZoneAreas.SelectedID = "null"
-                $scope.ClimbingWalls.FullList = []
-                $scope.ClimbingWalls.SelectedID = "null"
-                $scope.Routes.FullList = []
+                $scope.Districts.FullList = [];
+                $scope.Districts.SelectedID = "null";
+                $scope.DistrictZones.FullList = [];
+                $scope.DistrictZones.SelectedID = "null";
+                $scope.ZoneAreas.FullList = [];
+                $scope.ZoneAreas.SelectedID = "null";
+                $scope.ClimbingWalls.FullList = [];
+                $scope.ClimbingWalls.SelectedID = "null";
+                $scope.Routes.FullList = [];
                 DisableButtons([RegionEditEle, RegionDeleteEle,
                     DistrictSelectEle, DistrictAddEle, DistrictEditEle, DistrictDeleteEle,
                     DistrictZoneSelectEle, DistrictZoneAddEle, DistrictZoneEditEle, DistrictZoneDeleteEle,
@@ -516,12 +573,12 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             if (!isNaN(ID)) {
                 WebAPIServices.DistrictZones.GetList(ID).then(function (result) {
                     $scope.DistrictZones.FullList = result.data;
-                    $scope.DistrictZones.SelectedID = "null"
-                    $scope.ZoneAreas.FullList = []
-                    $scope.ZoneAreas.SelectedID = "null"
-                    $scope.ClimbingWalls.FullList = []
-                    $scope.ClimbingWalls.SelectedID = "null"
-                    $scope.Routes.FullList = []
+                    $scope.DistrictZones.SelectedID = "null";
+                    $scope.ZoneAreas.FullList = [];
+                    $scope.ZoneAreas.SelectedID = "null";
+                    $scope.ClimbingWalls.FullList = [];
+                    $scope.ClimbingWalls.SelectedID = "null";
+                    $scope.Routes.FullList = [];
                     EnableButtons([DistrictZoneSelectEle, DistrictZoneAddEle, DistrictEditEle, DistrictDeleteEle]);
                     DisableButtons([DistrictZoneEditEle, DistrictZoneDeleteEle,
                         ZoneAreaSelectEle, ZoneAreaAddEle, ZoneAreaEditEle, ZoneAreaDeleteEle,
@@ -532,13 +589,13 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 });
             }
             else {
-                $scope.DistrictZones.FullList = []
-                $scope.DistrictZones.SelectedID = "null"
-                $scope.ZoneAreas.FullList = []
-                $scope.ZoneAreas.SelectedID = "null"
-                $scope.ClimbingWalls.FullList = []
-                $scope.ClimbingWalls.SelectedID = "null"
-                $scope.Routes.FullList = []
+                $scope.DistrictZones.FullList = [];
+                $scope.DistrictZones.SelectedID = "null";
+                $scope.ZoneAreas.FullList = [];
+                $scope.ZoneAreas.SelectedID = "null";
+                $scope.ClimbingWalls.FullList = [];
+                $scope.ClimbingWalls.SelectedID = "null";
+                $scope.Routes.FullList = [];
                 DisableButtons([DistrictEditEle, DistrictDeleteEle,
                     DistrictZoneSelectEle, DistrictZoneAddEle, DistrictZoneEditEle, DistrictZoneDeleteEle,
                     ZoneAreaSelectEle, ZoneAreaAddEle, ZoneAreaEditEle, ZoneAreaDeleteEle,
@@ -551,10 +608,10 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             if (!isNaN(ID)) {
                 WebAPIServices.ZoneAreas.GetList(ID).then(function (result) {
                     $scope.ZoneAreas.FullList = result.data;
-                    $scope.ZoneAreas.SelectedID = "null"
-                    $scope.ClimbingWalls.FullList = []
-                    $scope.ClimbingWalls.SelectedID = "null"
-                    $scope.Routes.FullList = []
+                    $scope.ZoneAreas.SelectedID = "null";
+                    $scope.ClimbingWalls.FullList = [];
+                    $scope.ClimbingWalls.SelectedID = "null";
+                    $scope.Routes.FullList = [];
                     EnableButtons([ZoneAreaSelectEle, ZoneAreaAddEle, DistrictZoneEditEle, DistrictZoneDeleteEle]);
                     DisableButtons([ZoneAreaEditEle, ZoneAreaDeleteEle,
                         ClimbingWallSelectEle, ClimbingWallAddEle, ClimbingWallEditEle, ClimbingWallDeleteEle,
@@ -564,11 +621,11 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 });
             }
             else {
-                $scope.ZoneAreas.FullList = []
-                $scope.ZoneAreas.SelectedID = "null"
-                $scope.ClimbingWalls.FullList = []
-                $scope.ClimbingWalls.SelectedID = "null"
-                $scope.Routes.FullList = []
+                $scope.ZoneAreas.FullList = [];
+                $scope.ZoneAreas.SelectedID = "null";
+                $scope.ClimbingWalls.FullList = [];
+                $scope.ClimbingWalls.SelectedID = "null";
+                $scope.Routes.FullList = [];
                 DisableButtons([DistrictZoneEditEle, DistrictZoneDeleteEle,
                     ZoneAreaSelectEle, ZoneAreaAddEle, ZoneAreaEditEle, ZoneAreaDeleteEle,
                     ClimbingWallSelectEle, ClimbingWallAddEle, ClimbingWallEditEle, ClimbingWallDeleteEle,
@@ -580,8 +637,8 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             if (!isNaN(ID)) {
                 WebAPIServices.ClimbingWalls.GetList(ID).then(function (result) {
                     $scope.ClimbingWalls.FullList = result.data;
-                    $scope.ClimbingWalls.SelectedID = "null"
-                    $scope.Routes.FullList = []
+                    $scope.ClimbingWalls.SelectedID = "null";
+                    $scope.Routes.FullList = [];
                     EnableButtons([ClimbingWallSelectEle, ClimbingWallAddEle, ZoneAreaEditEle, ZoneAreaDeleteEle]);
                     DisableButtons([ClimbingWallEditEle, ClimbingWallDeleteEle,
                         AddRockClimbingRouteEle]);
@@ -590,9 +647,9 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 });
             }
             else {
-                $scope.ClimbingWalls.FullList = []
-                $scope.ClimbingWalls.SelectedID = "null"
-                $scope.Routes.FullList = []
+                $scope.ClimbingWalls.FullList = [];
+                $scope.ClimbingWalls.SelectedID = "null";
+                $scope.Routes.FullList = [];
                 DisableButtons([ZoneAreaEditEle, ZoneAreaDeleteEle,
                     ClimbingWallSelectEle, ClimbingWallAddEle, ClimbingWallEditEle, ClimbingWallDeleteEle,
                     AddRockClimbingRouteEle]);
@@ -610,7 +667,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 });
             }
             else {
-                $scope.Routes.FullList = []
+                $scope.Routes.FullList = [];
                 DisableButtons([ClimbingWallEditEle, ClimbingWallDeleteEle,
                     AddRockClimbingRouteEle]);
             }
@@ -720,6 +777,15 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 $scope.SelectedZoneArea($scope.ZoneAreas.SelectedID);
             }, function (result) { ErrorCallBack(result) });
         };
+
+        $scope.Routes.Add = function () {
+            $scope.Routes.AddNew.ClimbingWallID = $scope.ClimbingWalls.SelectedID
+            WebAPIServices.RockClimbingRoutes.Add($scope.Routes.AddNew).then(function (result) {
+                WebAPIServices.RockClimbingRoutes.GetList($scope.ClimbingWalls.SelectedID).then(function (result) {
+                    $scope.Routes.FullList = result.data;
+                });
+            }, function (result) { ErrorCallBack(result) });
+        }
 
     });
     //.filter('ArrayToBase64String', function () {

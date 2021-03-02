@@ -19,6 +19,10 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
         public RockClimbingRoutesDBContext RockClimbingRoutesTable { get; }
         public RockClimbingDifficultiesDBContext RockClimbingDifficultiesTable { get; }
         public ClimbingTypeDBContext ClimbingTypesTable { get; }
+        public RouteGearDBContext RockClimbingRoutesGearLinkingTable { get; }
+        public RouteGearDBContext RouteGearTable { get => RockClimbingRoutesGearLinkingTable; }
+        public GearSizesDBContext GearSizesTable { get; }
+        public GearDBContext GearTable { get; }
 
         public DBContext()
         {
@@ -32,6 +36,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             RockClimbingRoutesTable = new RockClimbingRoutesDBContext(ClimbingWallsTable);
             ClimbingTypesTable = new ClimbingTypeDBContext(RockClimbingRoutesTable);
             RockClimbingDifficultiesTable = new RockClimbingDifficultiesDBContext(ClimbingTypesTable);
+            RockClimbingRoutesGearLinkingTable = new RouteGearDBContext(RockClimbingDifficultiesTable);
+            GearSizesTable = new GearSizesDBContext(RockClimbingRoutesGearLinkingTable);
+            GearTable = new GearDBContext(GearSizesTable);
         }
 
         public void Dispose()

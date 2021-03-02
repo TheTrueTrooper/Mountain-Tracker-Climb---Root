@@ -1,7 +1,4 @@
-﻿using MTCSharedModels.Models.TableData;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MTCSharedModels.Models
 {
@@ -18,8 +15,8 @@ namespace MTCSharedModels.Models
 		public byte? DifficultyID { get; set; }
 		[SQLIgnore]
 		public RockClimbingDifficulty Difficulty { get; set; }
-		//[SQLIgnore]
-		//Needs a type for List<GearEntry> from RockClimbingRoutesGearLinkingTable
+		[SQLIgnore]
+		public List<RouteGear> RoutesGear { get; set; } = null;
 		[SQLIdentityID]
 		public int? ID { get; set; }
 		public string EnglishFullName { get; set; }

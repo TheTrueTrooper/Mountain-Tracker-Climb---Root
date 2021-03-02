@@ -98,15 +98,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\_CountiesAPIControllerTest.cs" />
+    <Compile Include="Controllers\_GearAPIControllerTest.cs" />
+    <Compile Include="Controllers\_ProvincesOrStatesAPIControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
+    <Compile Include="Controllers\_RockClimbingDifficultiesAPIControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mountain Tracker Climb - API\Mountain Tracker Climb - API.csproj">
+      <Project>{dfc32409-df35-4cfe-96a2-0ff9e2a0ea70}</Project>
+      <Name>Mountain Tracker Climb - API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MTCSharedModels\MTCSharedModels.csproj">
+      <Project>{a7d619c1-b504-4827-bfd0-0e0e76c51f01}</Project>
+      <Name>MTCSharedModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

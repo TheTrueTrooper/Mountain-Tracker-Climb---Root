@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MTCSharedModels.Models.TableData
+﻿namespace MTCSharedModels.Models
 {
     public class RockClimbingDifficulty
     {

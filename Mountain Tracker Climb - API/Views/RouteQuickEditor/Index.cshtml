@@ -166,6 +166,7 @@
                         <th>ID</th>
                         <th>English Full Name</th>
                         <th>Climbing Wall ID</th>
+                        <th>Route Code</th>
                         <th>Wall Route Number</th>
                         <th>Type</th>
                         <th>Difficulty</th>
@@ -199,6 +200,7 @@
                         <th>Power</th>
                         <th>Pock Slash Hole</th>
                         <th>Crimpy</th>
+                        <td>From Seated Start</td>
                         <th>360 Picture</th>
                         <th>360 3D Picture</th>
                         <th>Info On</th>
@@ -211,6 +213,7 @@
                         <td>{{Route.ID}}</td>
                         <td>{{Route.EnglishFullName}}</td>
                         <th>{{Route.ClimbingWallID}}</th>
+                        <th>{{Route.RouteCode}}</th>
                         <td>{{Route.RouteWallNumber}}</td>
                         <td>{{Route.RouteType.EnglishFullName}}</td>
                         <td>{{Route.Difficulty.EnglishCode}}</td>
@@ -245,6 +248,7 @@
                         <td>{{Route.Power}}</td>
                         <td>{{Route.PockSlashHole}}</td>
                         <td>{{Route.Crimpy}}</td>
+                        <td>{{Route.SeatStart}}</td>
                         <td>{{Route.Picture360}}</td>
                         <td>{{Route.Picture3603D}}</td>
                         <td><a class="btn btn-default">View Info</a></td>
@@ -881,6 +885,12 @@
                     </div>
                     <div class="form-group">
                         <label class="text-right">
+                            Route Code
+                        </label>
+                        <input ng-model="Routes.AddNew.RouteCode" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
                             Enter a Full English Name
                         </label>
                         <input ng-model="Routes.AddNew.EnglishFullName" />
@@ -889,35 +899,37 @@
                         <label class="text-right">
                             Route Wall Number
                         </label>
-                        <input type="number" ng-model="Routes.AddNew.RouteWallNumber" />
+                        <input type="number" min=0 max=255 ng-model="Routes.AddNew.RouteWallNumber" />
                     </div>
-                    @*
-        <div class="form-group">
-            <label class="text-right">
-                Route Wall Number
-            </label>
-            <input ng-model="Routes.AddNew.WallCode" />
-        </div>
-        <div class="form-group">
-            <label class="text-right">
-                Route Wall Number
-            </label>
-            <input ng-model="Routes.AddNew.WallCode" />
-        </div>
-        <td>{{Route.RouteType.EnglishFullName}}</td>
-        <td>{{Route.Difficulty.EnglishCode}}</td>
-                    *@
+                    <div class="form-group">
+                        <label>
+                            Select a Type for the route
+                        </label>
+                        <select name="SelectNewRouteClimbingType" id="SelectNewRouteClimbingType" ng-model="Routes.AddNew.TypeID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="Type in ClimbingTypes" value="{{Type.ID}}">{{Type.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Select a Difficulty for the route
+                        </label>
+                        <select name="SelectNewRouteDifficulty" id="SelectNewRouteDifficulty" ng-model="Routes.AddNew.DifficultyID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="RockClimbingDifficulty in RockClimbingDifficulties" value="{{RockClimbingDifficulty.ID}}">{{RockClimbingDifficulty.EnglishCode}}</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label class="text-right">
                             Rating
                         </label>
-                        <input type="number" ng-model="Routes.AddNew.Rating" />
+                        <input type="number" min="0" ng-model="Routes.AddNew.Rating" />
                     </div>
                     <div class="form-group">
                         <label class="text-right">
                             Hieght In Meters
                         </label>
-                        <input type="number" ng-model="Routes.AddNew.HieghtInMeters" />
+                        <input type="number" min="0" ng-model="Routes.AddNew.HieghtInMeters" />
                     </div>
                     <div class="form-group">
                         <label class="text-right">
@@ -929,7 +941,7 @@
                         <label class="text-right">
                             Number of Pitchs
                         </label>
-                        <input type="number" ng-model="Routes.AddNew.NumberOfPitchs" />
+                        <input type="number" min="0" ng-model="Routes.AddNew.NumberOfPitchs" />
                     </div>
                     <div class="form-group">
                         <label class="text-right">
@@ -1081,9 +1093,15 @@
                         </label>
                         <input type="checkbox" ng-model="Routes.AddNew.Crimpy" />
                     </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Seated Start
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.SeatStart" />
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ClimbingWalls.Delete()">Yes Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Routes.Add()">Add</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
