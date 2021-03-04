@@ -7,7 +7,7 @@
 <script src="~/Scripts/angular-sanitize.js"></script>
 <script src="~/Scripts/angular-cookies.js"></script>
 <script src="~/Scripts/AngularJSRouteQuickEdit.js"></script>
-<h2>Quick Route Editor</h2>
+<h2>MTL Quick Route Editor</h2>
 <div ng-app="NGRouteQuickEdit" ng-controller="RouteQuickEditController">
     <div class="row">
         <div class="col-sm-6">
@@ -200,7 +200,7 @@
                         <th>Power</th>
                         <th>Pock Slash Hole</th>
                         <th>Crimpy</th>
-                        <td>From Seated Start</td>
+                        <th>From Seated Start</th>
                         <th>360 Picture</th>
                         <th>360 3D Picture</th>
                         <th>Info On</th>
@@ -212,13 +212,13 @@
                     <tr ng-repeat="Route in Routes.FullList">
                         <td>{{Route.ID}}</td>
                         <td>{{Route.EnglishFullName}}</td>
-                        <th>{{Route.ClimbingWallID}}</th>
-                        <th>{{Route.RouteCode}}</th>
+                        <td>{{Route.ClimbingWallID}}</td>
+                        <td>{{Route.RouteCode}}</td>
                         <td>{{Route.RouteWallNumber}}</td>
                         <td>{{Route.RouteType.EnglishFullName}}</td>
                         <td>{{Route.Difficulty.EnglishCode}}</td>
                         <td>{{Route.Rating}}</td>
-                        <td><a class="btn btn-default">View Gear List</a></td>
+                        <td><button class="btn btn-default" data-toggle="modal" data-target="#ViewRouteGearModal" ng-click="Routes.ViewGear(Route)">View Gear List</button></td>
                         @*<td>{{Route.GearList}}</td>*@
                         <td>{{Route.HieghtInMeters}}</td>
                         <td>{{Route.HieghtInFeet}}</td>
@@ -251,9 +251,9 @@
                         <td>{{Route.SeatStart}}</td>
                         <td>{{Route.Picture360}}</td>
                         <td>{{Route.Picture3603D}}</td>
-                        <td><a class="btn btn-default">View Info</a></td>
-                        <td><a class="btn btn-default">Edit</a></td>
-                        <td><a class="btn btn-default" ng-click="Routes.Delete(Route.ID)">Delete</a></td>
+                        <td><button class="btn btn-default" data-toggle="modal" data-target="#ViewRouteInfoModal" ng-click="Routes.ViewInfo(Route)">View Info</button></td>
+                        <td><button class="btn btn-default" data-toggle="modal" data-target="#EditRockClimbingRouteModal" ng-click="Routes.Edit(Route)">Edit</button></td>
+                        <td><button class="btn btn-default" ng-click="Routes.Delete(Route.ID)">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -863,6 +863,35 @@
             </div>
         </div>
     </div>
+    <div id="ViewRouteInfoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Route Info</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID of Route
+                        </label>
+                        <input disabled value="{{RouteInfo.ID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Info
+                        </label>
+                        <textarea type="text" id="RouteInfoEditBox" disabled rows="25" inputmode="verbatim" vocab="http://data-vocabulary.org" style="width:100%"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="RouteInfoEdit" type="button" class="btn btn-default" ng-click="RouteInfo.Edit()">Edit</button>
+                    <button disabled id="RouteInfoSave" type="button" class="btn btn-default" ng-click="RouteInfo.Update()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="AddRockClimbingRouteModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1103,6 +1132,328 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Routes.Add()">Add</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditRockClimbingRouteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Rock Climbing Route</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Routes.EditChanges.ID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climbing Wall ID
+                        </label>
+                        <input disabled value="{{ClimbingWalls.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Code
+                        </label>
+                        <input ng-model="Routes.EditChanges.RouteCode" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Full English Name
+                        </label>
+                        <input ng-model="Routes.EditChanges.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Wall Number
+                        </label>
+                        <input type="number" min=0 max=255 ng-model="Routes.EditChanges.RouteWallNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Select a Type for the route
+                        </label>
+                        <select name="SelectNewRouteClimbingType" id="SelectNewRouteClimbingType" ng-model="Routes.EditChanges.TypeID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="Type in ClimbingTypes" value="{{Type.ID}}">{{Type.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Select a Difficulty for the route
+                        </label>
+                        <select name="SelectNewRouteDifficulty" id="SelectNewRouteDifficulty" ng-model="Routes.EditChanges.DifficultyID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="RockClimbingDifficulty in RockClimbingDifficulties" value="{{RockClimbingDifficulty.ID}}">{{RockClimbingDifficulty.EnglishCode}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Rating
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.EditChanges.Rating" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Hieght In Meters
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.EditChanges.HieghtInMeters" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Hieght In Feet
+                        </label>
+                        <input disabled value="This field is calculated based off the HieghtInMeters" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Number of Pitchs
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.EditChanges.NumberOfPitchs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            First Ascent
+                        </label>
+                        <input type="text" ng-model="Routes.EditChanges.FirstAscent" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            First Free Ascent
+                        </label>
+                        <input type="text" ng-model="Routes.EditChanges.FirstFreeAscent" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gets Sun in the AM
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.SunAM" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gets Sun in the PM
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.SunPM" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Sun is filtered
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Filtered" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Is very sunny in places
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Sunny" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Is very shady in places
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Shady" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Dries Fast
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.DriesFast" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Dry In Rain
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.DryInRain" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Can be Windy
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Windy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Slabs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveSlabs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Verticals
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveVerticals" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Over Hangs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveOverHangs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Roofs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveRoofs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Know rock falls in the area
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.RockFalls" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Can have Seepage
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Seepage" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Done Stick Clip
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.StickClip" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Done as a Run out
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Runout" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Reachy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Reachy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Dyno style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Dyno" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Pumpy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Pumpy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Techy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Techy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Power style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Power" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Pock Slash Holes
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.PockSlashHole" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Crimpy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Crimpy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Seated Start
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.SeatStart" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Routes.Update()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ViewRouteGearModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Route Gear</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID of Route
+                        </label>
+                        <input disabled value="{{Gear.RoutesID}}" />
+                    </div>
+                    <div class="form-group" style="overflow:scroll;max-height:400px">
+                        <table class="table table-striped small" style="padding-left:0;width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Route ID</th>
+                                    <th>Gear Size ID</th>
+                                    <th>Number Required</th>
+                                    <th>English Full Name</th>
+                                    <th>ID of Gear Family (GearID)</th>
+                                    <!--<th>Edit</th>-->
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="GearPiece in Gear.RoutesList">
+                                    <td>{{GearPiece.RockClimbingRoutesID}}</td>
+                                    <td>{{GearPiece.GearSizeID}}</td>
+                                    <td>{{GearPiece.NumberRequired}}</td>
+                                    <td>{{GearPiece.Gear.EnglishFullName}}</td>
+                                    <td>{{GearPiece.Gear.GearID}}</td>
+                                    <!--<td><button type="button" class="btn btn-default">Edit</button></td>-->
+                                    <td><button type="button" class="btn btn-default" ng-click="Gear.Delete(GearPiece.RockClimbingRoutesID, GearPiece.GearSizeID)">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Rock Climbing Routes ID
+                        </label>
+                        <input type="text" disabled value="{{Gear.Add.RockClimbingRoutesID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Number Required for Route
+                        </label>
+                        <input type="number" min="0" max="6000" ng-model="Gear.Add.NumberRequired" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gear Type
+                        </label>
+                        <select ng-model="Gear.Add.GearID" ng-change="SelectedGearType(Gear.Add.GearID)">
+                            <option value="null">Select an option</option>
+                            <option ng-repeat="GearType in Gear.FullList" value="{{GearType.ID}}">{{GearType.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gear Sizing
+                        </label>
+                        <select disabled name="SelectGearSize" id="SelectGearSize" ng-model="Gear.Add.GearSizeID">
+                            <option value="null">Select an option</option>
+                            <option ng-repeat="GearSize in Gear.TypeList" value="{{GearSize.ID}}">{{GearSize.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="Gear.AddItem()">Add Gear</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

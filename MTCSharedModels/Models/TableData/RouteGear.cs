@@ -8,8 +8,8 @@ namespace MTCSharedModels.Models
         public byte? GearSizeID { get; set; }
         public short? NumberRequired { get; set; }
 
-        [SQLIgnoreAttribute]
-        public RockClimbingRoute RockClimbingRoute { get; set; }
+        //[SQLIgnoreAttribute]
+        //public RockClimbingRoute RockClimbingRoute { get; set; }
 
         [SQLIgnoreAttribute]
         public GearSize Gear { get; set; }

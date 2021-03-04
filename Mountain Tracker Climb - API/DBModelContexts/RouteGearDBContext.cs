@@ -24,22 +24,22 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf($"RockClimbingRoutesID = {RockClimbingRoutesID}");
         }
 
-        public RouteGear GetRockClimbingRoute(int RockClimbingRoutesID, byte GearSizeID)
+        public RouteGear GetRouteGear(int RockClimbingRoutesID, byte GearSizeID)
         {
             return GetListOf($"RockClimbingRoutesID = {RockClimbingRoutesID} and GearSizeID = {GearSizeID}").First();
         }
 
-        public int AddRockClimbingRoute(RouteGear Values)
+        public int AddRouteGear(RouteGear Values)
         {
             return InsertData(Values);
         }
 
-        public int UpdateRockClimbingRoute(int RockClimbingRoutesID, byte GearSizeID, RouteGear Values)
+        public int UpdateRouteGear(int RockClimbingRoutesID, byte GearSizeID, RouteGear Values)
         {
             return UpdateData(Values, $"RockClimbingRoutesID = {RockClimbingRoutesID} and GearSizeID = {GearSizeID}");
         }
 
-        public int DeleteRockClimbingRoute(int RockClimbingRoutesID, byte GearSizeID)
+        public int DeleteRouteGear(int RockClimbingRoutesID, byte GearSizeID)
         {
             return DeleteData($"RockClimbingRoutesID = {RockClimbingRoutesID} and GearSizeID = {GearSizeID}");
         }

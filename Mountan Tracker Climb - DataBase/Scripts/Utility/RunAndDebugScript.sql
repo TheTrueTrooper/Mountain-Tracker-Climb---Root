@@ -37,3 +37,5 @@ select Count(ID) from dbo.Gear
 
 insert into [RockClimbingRoutesGearLinkingTable] ([RockClimbingRoutesID], [GearSizeID], [NumberRequired]) values (1 ,1, 2)
 insert into [RockClimbingRoutesGearLinkingTable] ([RockClimbingRoutesID], [GearSizeID], [NumberRequired]) values (1 ,12, 30)
+
+select * from [ClimbingTypes]

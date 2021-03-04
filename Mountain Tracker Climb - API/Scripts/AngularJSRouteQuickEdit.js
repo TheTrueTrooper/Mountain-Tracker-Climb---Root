@@ -29,7 +29,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
     //    //Not used
     //})
     .service("WebAPIServices", function ($http) {
-        const MailHostURL = "http://localhost:12699/Api/";
+        const HostURL = "http://localhost:12699/Api/";
         const CountriesController = "Counties";
         const ProvincesOrStatesController = "ProvincesOrStates";
         const RegionsController = "Regions";
@@ -40,6 +40,9 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         const RockClimbingRoutesController = "RockClimbingRoutes";
         const ClimbingTypesController = "ClimbingTypes";
         const RockClimbingDifficultiesController = "RockClimbingDifficulties";
+        const GearController = "Gear";
+        const GearSizesController = "GearSizes";
+        const RouteGearController = "RouteGear";
         return {
             /**
              * The Calls for mail box operations
@@ -49,7 +52,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function () {
-                    return $http.get(MailHostURL + CountriesController, { responseType: "json" });
+                    return $http.get(HostURL + CountriesController, { responseType: "json" });
                 }
             },
             ProvincesOrStates: {
@@ -58,7 +61,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function (CountryID) {
-                    return $http.get(MailHostURL + ProvincesOrStatesController + "?CountryID=" + CountryID, { responseType: "json" });
+                    return $http.get(HostURL + ProvincesOrStatesController + "?CountryID=" + CountryID, { responseType: "json" });
                 }
             },
             Regions: {
@@ -67,28 +70,28 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function (ProvinceOrStateID) {
-                    return $http.get(MailHostURL + RegionsController + "?ProvinceOrStateID=" + ProvinceOrStateID, { responseType: "json" });
+                    return $http.get(HostURL + RegionsController + "?ProvinceOrStateID=" + ProvinceOrStateID, { responseType: "json" });
                 },
                 /**
                  * @param {object} NewRegion The data for the new region to add
                  * @returns {object} A object containing all of the data
                  */
                 Add: function (NewRegion) {
-                    return $http.post(MailHostURL + RegionsController, NewRegion, { responseType: "json" });
+                    return $http.post(HostURL + RegionsController, NewRegion, { responseType: "json" });
                 },
                 /**
                  * @param {any} ID The ID of the Region to edit
                  * @returns {object} A object containing all of the data
                  */
                 Update: function (ID, EditedRegion) {
-                    return $http.put(MailHostURL + RegionsController + "/" + ID, EditedRegion, { responseType: "json" });
+                    return $http.put(HostURL + RegionsController + "/" + ID, EditedRegion, { responseType: "json" });
                 },
                 /**
                  * @param {any} ID The ID of the Region to delete
                  * @returns {object} A object containing all of the data
                  */
                 Delete: function (ID) {
-                    return $http.delete(MailHostURL + RegionsController + "/" + ID, { responseType: "json" });
+                    return $http.delete(HostURL + RegionsController + "/" + ID, { responseType: "json" });
                 }
             },
             Districts: {
@@ -97,28 +100,28 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function (RegionID) {
-                    return $http.get(MailHostURL + DistrictsController + "?RegionID=" + RegionID, { responseType: "json" });
+                    return $http.get(HostURL + DistrictsController + "?RegionID=" + RegionID, { responseType: "json" });
                 },
                 /**
                  * @param {object} NewDistrict The data for the new District to add
                  * @returns {object} A object containing all of the data
                  */
                 Add: function (NewDistrict) {
-                    return $http.post(MailHostURL + DistrictsController, NewDistrict, { responseType: "json" });
+                    return $http.post(HostURL + DistrictsController, NewDistrict, { responseType: "json" });
                 },
                 /**
                  * @param {any} ID The ID of the District to edit
                  * @returns {object} A object containing all of the data
                  */
                 Update: function (ID, EditedRegion) {
-                    return $http.put(MailHostURL + DistrictsController + "/" + ID, EditedRegion, { responseType: "json" });
+                    return $http.put(HostURL + DistrictsController + "/" + ID, EditedRegion, { responseType: "json" });
                 },
                 /**
-                 * @param {any} ProvinceOrStateID The ID of the District to delete
+                 * @param {any} ID The ID of the District to delete
                  * @returns {object} A object containing all of the data
                  */
                 Delete: function (ID) {
-                    return $http.delete(MailHostURL + DistrictsController + "/" + ID, { responseType: "json" });
+                    return $http.delete(HostURL + DistrictsController + "/" + ID, { responseType: "json" });
                 }
             },
             DistrictZones: {
@@ -127,28 +130,28 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function (DistrictID) {
-                    return $http.get(MailHostURL + DistrictZonesController + "?DistrictID=" + DistrictID, { responseType: "json" });
+                    return $http.get(HostURL + DistrictZonesController + "?DistrictID=" + DistrictID, { responseType: "json" });
                 },
                 /**
                  * @param {object} NewZone The data for the new Zone to add
                  * @returns {object} A object containing all of the data
                  */
                 Add: function (NewZone) {
-                    return $http.post(MailHostURL + DistrictZonesController, NewZone, { responseType: "json" });
+                    return $http.post(HostURL + DistrictZonesController, NewZone, { responseType: "json" });
                 },
                 /**
                  * @param {any} ID The ID to edit
                  * @returns {object} A object containing all of the data
                  */
                 Update: function (ID, EditedRegion) {
-                    return $http.put(MailHostURL + DistrictZonesController + "/" + ID, EditedRegion, { responseType: "json" });
+                    return $http.put(HostURL + DistrictZonesController + "/" + ID, EditedRegion, { responseType: "json" });
                 },
                 /**
-                 * @param {any} ProvinceOrStateID The ID of the District to delete
+                 * @param {any} ID The ID of the District to delete
                  * @returns {object} A object containing all of the data
                  */
                 Delete: function (ID) {
-                    return $http.delete(MailHostURL + DistrictZonesController + "/" + ID, { responseType: "json" });
+                    return $http.delete(HostURL + DistrictZonesController + "/" + ID, { responseType: "json" });
                 }
             },
             ZoneAreas: {
@@ -157,28 +160,28 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function (ZoneID) {
-                    return $http.get(MailHostURL + ZoneAreasController + "?ZoneID=" + ZoneID, { responseType: "json" });
+                    return $http.get(HostURL + ZoneAreasController + "?ZoneID=" + ZoneID, { responseType: "json" });
                 },
                 /**
                  * @param {object} NewArea The data for the new Area to add
                  * @returns {object} A object containing all of the data
                  */
                 Add: function (NewArea) {
-                    return $http.post(MailHostURL + ZoneAreasController, NewArea, { responseType: "json" });
+                    return $http.post(HostURL + ZoneAreasController, NewArea, { responseType: "json" });
                 },
                 /**
                  * @param {any} ID The ID to edit
                  * @returns {object} A object containing all of the data
                  */
                 Update: function (ID, EditedRegion) {
-                    return $http.put(MailHostURL + ZoneAreasController + "/" + ID, EditedRegion, { responseType: "json" });
+                    return $http.put(HostURL + ZoneAreasController + "/" + ID, EditedRegion, { responseType: "json" });
                 },
                 /**
-                 * @param {any} ProvinceOrStateID The ID of the District to delete
+                 * @param {any} ID The ID of the District to delete
                  * @returns {object} A object containing all of the data
                  */
                 Delete: function (ID) {
-                    return $http.delete(MailHostURL + ZoneAreasController + "/" + ID, { responseType: "json" });
+                    return $http.delete(HostURL + ZoneAreasController + "/" + ID, { responseType: "json" });
                 }
             },
             ClimbingWalls: {
@@ -187,58 +190,58 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function (AreaID) {
-                    return $http.get(MailHostURL + ClimbingWallsController + "?AreaID=" + AreaID, { responseType: "json" });
+                    return $http.get(HostURL + ClimbingWallsController + "?AreaID=" + AreaID, { responseType: "json" });
                 },
                 /**
                  * @param {object} NewClimbingWall The data for the new ClimbingWall to add
                  * @returns {object} A object containing all of the data
                  */
                 Add: function (NewClimbingWall) {
-                    return $http.post(MailHostURL + ClimbingWallsController, NewClimbingWall, { responseType: "json" });
+                    return $http.post(HostURL + ClimbingWallsController, NewClimbingWall, { responseType: "json" });
                 },
                 /**
                  * @param {any} ID The ID to edit
                  * @returns {object} A object containing all of the data
                  */
                 Update: function (ID, EditedRegion) {
-                    return $http.put(MailHostURL + ClimbingWallsController + "/" + ID, EditedRegion, { responseType: "json" });
+                    return $http.put(HostURL + ClimbingWallsController + "/" + ID, EditedRegion, { responseType: "json" });
                 },
                 /**
-                 * @param {any} ProvinceOrStateID The ID of the District to delete
+                 * @param {any} ID The ID of the District to delete
                  * @returns {object} A object containing all of the data
                  */
                 Delete: function (ID) {
-                    return $http.delete(MailHostURL + ClimbingWallsController + "/" + ID, { responseType: "json" });
+                    return $http.delete(HostURL + ClimbingWallsController + "/" + ID, { responseType: "json" });
                 }
             },
             RockClimbingRoutes: {
                 /**
-                 * @param {any} AreaID The ID of the Area
+                 * @param {any} WallID The ID of the Wall
                  * @returns {object} A object containing all of the data
                  */
-                GetList: function (AreaID) {
-                    return $http.get(MailHostURL + RockClimbingRoutesController + "?AreaID=" + AreaID, { responseType: "json" });
+                GetList: function (WallID) {
+                    return $http.get(HostURL + RockClimbingRoutesController + "?WallID=" + WallID, { responseType: "json" });
                 },
                 /**
                  * @param {object} NewRockClimbingRoute The data for the new RockClimbingRoute to add
                  * @returns {object} A object containing all of the data
                  */
                 Add: function (NewRockClimbingRoute) {
-                    return $http.post(MailHostURL + RockClimbingRoutesController, NewRockClimbingRoute, { responseType: "json" });
+                    return $http.post(HostURL + RockClimbingRoutesController, NewRockClimbingRoute, { responseType: "json" });
                 },
                 /**
                  * @param {any} ID The ID to edit
                  * @returns {object} A object containing all of the data
                  */
                 Update: function (ID, EditedRegion) {
-                    return $http.put(MailHostURL + RockClimbingRoutesController + "/" + ID, EditedRegion, { responseType: "json" });
+                    return $http.put(HostURL + RockClimbingRoutesController + "/" + ID, EditedRegion, { responseType: "json" });
                 },
                 /**
-                 * @param {any} ProvinceOrStateID The ID of the District to delete
+                 * @param {any} ID The ID of the District to delete
                  * @returns {object} A object containing all of the data
                  */
                 Delete: function (ID) {
-                    return $http.delete(MailHostURL + RockClimbingRoutesController + "/" + ID, { responseType: "json" });
+                    return $http.delete(HostURL + RockClimbingRoutesController + "/" + ID, { responseType: "json" });
                 }
             },
             ClimbingTypes: {
@@ -246,7 +249,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function () {
-                    return $http.get(MailHostURL + ClimbingTypesController, { responseType: "json" });
+                    return $http.get(HostURL + ClimbingTypesController, { responseType: "json" });
                 }
             },
             RockClimbingDifficulties: {
@@ -254,9 +257,66 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                  * @returns {object} A object containing all of the data
                  */
                 GetList: function () {
-                    return $http.get(MailHostURL + RockClimbingDifficultiesController, { responseType: "json" });
+                    return $http.get(HostURL + RockClimbingDifficultiesController, { responseType: "json" });
                 }
             },
+            RockClimbingDifficulties: {
+                /**
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function () {
+                    return $http.get(HostURL + RockClimbingDifficultiesController, { responseType: "json" });
+                }
+            },
+            Gear: {
+                /**
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function () {
+                    return $http.get(HostURL + GearController, { responseType: "json" });
+                }
+            },
+            GearSizes: {
+                /**
+                 * @param {any} GearID The ID of the District to delete
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function (GearID) {
+                    return $http.get(HostURL + GearSizesController + "?GearID=" + GearID, { responseType: "json" });
+                }
+            },
+            RouteGear: {
+                /**
+                 * @param {any} RockClimbingRoutesID The ID of the Route
+                 * @returns {object} A object containing all of the data
+                 */
+                GetList: function (RockClimbingRoutesID) {
+                    return $http.get(HostURL + RouteGearController + "?RockClimbingRoutesID=" + RockClimbingRoutesID, { responseType: "json" });
+                },
+                /**
+                 * @param {object} NewRouteGear The data for the new RouteGear to add
+                 * @returns {object} A object containing all of the data
+                 */
+                Add: function (NewRouteGear) {
+                    return $http.post(HostURL + RouteGearController, NewRouteGear, { responseType: "json" });
+                },
+                /**
+                 * @param {any} RockClimbingRoutesID The ID of the Route to delete
+                 * @param {any} GearSizeID The ID of the Gear Size to delete
+                 * @returns {object} A object containing all of the data
+                 */
+                Update: function (RockClimbingRoutesID, GearSizeID, EditedRouteGear) {
+                    return $http.put(HostURL + RouteGearController + "?RockClimbingRoutesID=" + RockClimbingRoutesID + "&GearSizeID=" + GearSizeID, EditedRouteGear, { responseType: "json" });
+                },
+                /**
+                 * @param {any} RockClimbingRoutesID The ID of the Route to delete
+                 * @param {any} GearSizeID The ID of the Gear Size to delete
+                 * @returns {object} A object containing all of the data
+                 */
+                Delete: function (RockClimbingRoutesID, GearSizeID) {
+                    return $http.delete(HostURL + RouteGearController + "?RockClimbingRoutesID=" + RockClimbingRoutesID + "&GearSizeID=" + GearSizeID, { responseType: "json" });
+                }
+            }
         };
     })
     .controller("RouteQuickEditController", function ($window, $scope, $sce, WebAPIServices) {
@@ -372,6 +432,16 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                 SeatStart: false
             }
         };
+        $scope.Gear = {
+            Add: {
+                GearID: "null",
+                GearSizeID: "null",
+            }
+        };
+        $scope.RouteInfo = {
+            ID: null,
+            RouteInfo: ""
+        };
 
         var ProvSelectEle = angular.element($("#SelectProvinceOrState"));
         var RegionSelectEle = angular.element($("#SelectRegion"));
@@ -395,6 +465,10 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         var ClimbingWallEditEle = angular.element($("#EditClimbingWall"));
         var ClimbingWallDeleteEle = angular.element($("#DeleteClimbingWall"));
         var AddRockClimbingRouteEle = angular.element($("#AddRockClimbingRoute"));
+        var RouteInfoEditEle = angular.element($("#RouteInfoEdit"));
+        var RouteInfoSaveEle = angular.element($("#RouteInfoSave"));
+        var RouteInfoEditBoxEle = angular.element($("#RouteInfoEditBox"));
+        var SelectGearSizeEle = angular.element($("#SelectGearSize"));
 
 
         function DisableButtons(Eles) {
@@ -419,7 +493,9 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             DistrictZoneSelectEle, DistrictZoneAddEle, DistrictZoneEditEle, DistrictZoneDeleteEle,
             ZoneAreaSelectEle, ZoneAreaAddEle, ZoneAreaEditEle, ZoneAreaDeleteEle,
             ClimbingWallSelectEle, ClimbingWallAddEle, ClimbingWallEditEle, ClimbingWallDeleteEle,
-            AddRockClimbingRouteEle]);
+            AddRockClimbingRouteEle,
+            RouteInfoSaveEle, RouteInfoEditBoxEle]);
+        EnableButtons([RouteInfoEditEle]);;
 
         WebAPIServices.Countries.GetList().then(function (result) {
             $scope.Countries.FullList = result.data;
@@ -434,6 +510,12 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         WebAPIServices.ClimbingTypes.GetList().then(function (result) {
             $scope.ClimbingTypes = result.data;
             $scope.Routes.AddNew.DifficultyID = "null";
+        });
+
+        WebAPIServices.Gear.GetList().then(function (result) {
+            $scope.Gear.FullList = result.data;
+            $scope.Gear.Add.GearID = "null";
+            $scope.Gear.Add.GearSizeID = "null";
         });
 
         $scope.SelectedCountry = function (ID) {
@@ -785,8 +867,86 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
                     $scope.Routes.FullList = result.data;
                 });
             }, function (result) { ErrorCallBack(result) });
+        };
+
+        $scope.Routes.Edit = function (Route) {
+            $scope.Routes.EditChanges = JSON.parse(JSON.stringify(Route));
+        };
+
+        $scope.Routes.Update = function () {
+            WebAPIServices.RockClimbingRoutes.Update($scope.Routes.EditChanges.ID, $scope.Routes.EditChanges).then(function (result) {
+                WebAPIServices.RockClimbingRoutes.GetList($scope.ClimbingWalls.SelectedID).then(function (result) {
+                    $scope.Routes.FullList = result.data;
+                });
+            }, function (result) { ErrorCallBack(result) });
+        };
+
+        $scope.Routes.Delete = function (ID) {
+            WebAPIServices.RockClimbingRoutes.Delete(ID).then(function (result) {
+                WebAPIServices.RockClimbingRoutes.GetList($scope.ClimbingWalls.SelectedID).then(function (result) {
+                    $scope.Routes.FullList = result.data;
+                });
+            }, function (result) { ErrorCallBack(result) });
+        };
+
+        $scope.Routes.ViewInfo = function (Route) {
+            $scope.RouteInfo.ID = Route.ID;
+            RouteInfoEditBoxEle[0].value = Route.RouteInfo;
+        };
+
+        $scope.RouteInfo.Edit = function () {
+            DisableButtons([RouteInfoEditEle]);
+            EnableButtons([RouteInfoSaveEle, RouteInfoEditBoxEle]);
+        };
+
+        $scope.RouteInfo.Update = function () {
+            var Info = { RouteInfo: RouteInfoEditBoxEle[0].value };
+            WebAPIServices.RockClimbingRoutes.Update($scope.RouteInfo.ID, Info).then(function (result) {
+                WebAPIServices.RockClimbingRoutes.GetList($scope.ClimbingWalls.SelectedID).then(function (result) {
+                    $scope.Routes.FullList = result.data;
+                });
+                DisableButtons([RouteInfoSaveEle, RouteInfoEditBoxEle]);
+                EnableButtons([RouteInfoEditEle]);
+            }, function (result) { ErrorCallBack(result) });
+        };
+
+        $scope.Routes.ViewGear = function (Route) {
+            $scope.Gear.RoutesID = Route.ID;
+            $scope.Gear.Add.RockClimbingRoutesID = $scope.Gear.RoutesID;
+            $scope.Gear.RoutesList = Route.RoutesGear;
         }
 
+        $scope.SelectedGearType = function (ID) {
+            if (!isNaN(ID)) {
+                WebAPIServices.GearSizes.GetList(ID).then(function (result) {
+                    $scope.Gear.TypeList = result.data;
+                    EnableButtons([SelectGearSizeEle]);
+                });
+            }
+            else {
+                $scope.Gear.TypeList = [];
+                $scope.Gear.Add.GearSizeID = "null";
+                DisableButtons([SelectGearSizeEle]);
+            }
+        };
+
+        $scope.Gear.AddItem = function () {
+            WebAPIServices.RouteGear.Add($scope.Gear.Add).then(function (result) {
+                WebAPIServices.RouteGear.GetList($scope.Gear.RoutesID).then(function (result) {
+                    $scope.Gear.RoutesList = result.data
+                    $scope.Routes.FullList[$scope.Routes.FullList.findIndex(x => x.ID === $scope.Gear.RoutesID)].RoutesGear = RoutesList;
+                });
+            }, function (result) { ErrorCallBack(result) });
+        };
+
+        $scope.Gear.Delete = function (RockClimbingRoutesID, GearSizeID) {
+            WebAPIServices.RouteGear.Delete(RockClimbingRoutesID, GearSizeID).then(function (result) {
+                WebAPIServices.RouteGear.GetList($scope.Gear.RoutesID).then(function (result) {
+                    $scope.Gear.RoutesList = result.data
+                    $scope.Routes.FullList[$scope.Routes.FullList.findIndex(x => x.ID === $scope.Gear.RoutesID)].RoutesGear = RoutesList;
+                });
+            }, function (result) { ErrorCallBack(result) });
+        };
     });
     //.filter('ArrayToBase64String', function () {
     //    return function (buffer) {

@@ -373,7 +373,9 @@ go
 --Climbing types Populating
 INSERT INTO [ClimbingTypes] ([ID], [EnglishFullName])
 VALUES 
-( 0, 'Trad Climbing');
+( 0, 'Trad Climbing'),
+( 1, 'Sport Climbing'),
+( 2, 'Mixed Climbing');
 
 if(exists(select ID from [ClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
 	print '[ClimbingTypes] successfully populated'

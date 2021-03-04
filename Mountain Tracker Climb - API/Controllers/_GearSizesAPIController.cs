@@ -19,10 +19,10 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<GearSize> GetListOfByGearType(byte GearType)
+        public IEnumerable<GearSize> GetListOfGearSizesByGearType(byte GearID)
         {
             using (DBContext DB = new DBContext())
-                return DB.GearSizesTable.GetListOfGearSizes(GearType);
+                return DB.GearSizesTable.GetListOfGearSizes(GearID);
         }
 
         [HttpGet]
