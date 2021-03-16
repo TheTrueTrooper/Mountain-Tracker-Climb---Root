@@ -178,6 +178,7 @@
     <Compile Include="Controllers\_RouteGearAPIController.cs" />
     <Compile Include="Controllers\_UserAPIController.cs" />
     <Compile Include="Controllers\_ZoneAreasAPIController.cs" />
+    <Compile Include="Controllers\__TestingAPIController.cs" />
     <Compile Include="DBModelContexts\ClimbingTypeDBContext.cs" />
     <Compile Include="DBModelContexts\ClimbingWallsDBContext.cs" />
     <Compile Include="DBModelContexts\CountriesDBContext.cs" />
@@ -193,10 +194,15 @@
     <Compile Include="DBModelContexts\RootOrSharedContext\RootDBContext.cs" />
     <Compile Include="DBModelContexts\ProvincesOrStatesDBContext.cs" />
     <Compile Include="DBModelContexts\RouteGearDBContext.cs" />
+    <Compile Include="DBModelContexts\UserAccessLevelDBContext.cs" />
+    <Compile Include="DBModelContexts\UserDBContext.cs" />
     <Compile Include="DBModelContexts\ZoneAreasDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ControllerHelper.cs" />
+    <Compile Include="Helpers\SecurityHelper.cs" />
+    <Compile Include="Models\UserFullWithSecurity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -271,7 +277,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

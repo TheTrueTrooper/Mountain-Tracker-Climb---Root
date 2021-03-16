@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using MTCSharedModels.Models;
 using Mountain_Tracker_Climb___API.DBModelContexts;
+using System.Data.SqlClient;
+using Mountain_Tracker_Climb___API.Helpers;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
@@ -36,22 +38,43 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] ClimbingWall Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.ClimbingWallsTable.AddClimbingWall(Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.ClimbingWallsTable.AddClimbingWall(Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpPut]
         public void Put(int id, [FromBody] ClimbingWall Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.ClimbingWallsTable.UpdateClimbingWall(id, Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.ClimbingWallsTable.UpdateClimbingWall(id, Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpDelete]
         public void Delete(int id)
         {
-            using (DBContext DB = new DBContext())
-                DB.ClimbingWallsTable.DeleteClimbingWall(id);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.ClimbingWallsTable.DeleteClimbingWall(id);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         public RouteGear GetRouteGear(int RockClimbingRoutesID, byte GearSizeID)
         {
-            return GetListOf($"RockClimbingRoutesID = {RockClimbingRoutesID} and GearSizeID = {GearSizeID}").First();
+            return GetListOf($"RockClimbingRoutesID = {RockClimbingRoutesID} and GearSizeID = {GearSizeID}").FirstOrDefault();
         }
 
         public int AddRouteGear(RouteGear Values)

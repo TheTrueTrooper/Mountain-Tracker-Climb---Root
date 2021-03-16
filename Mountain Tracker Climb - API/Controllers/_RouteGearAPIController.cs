@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using MTCSharedModels.Models;
 using Mountain_Tracker_Climb___API.DBModelContexts;
+using System.Data.SqlClient;
+using Mountain_Tracker_Climb___API.Helpers;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
@@ -47,22 +49,43 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] RouteGear Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.RouteGearTable.AddRouteGear(Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.RouteGearTable.AddRouteGear(Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpPut]
         public void Put(int RockClimbingRoutesID, byte GearSizeID, [FromBody] RouteGear Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.RouteGearTable.UpdateRouteGear(RockClimbingRoutesID, GearSizeID, Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.RouteGearTable.UpdateRouteGear(RockClimbingRoutesID, GearSizeID, Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpDelete]
         public void Delete(int RockClimbingRoutesID, byte GearSizeID)
         {
-            using (DBContext DB = new DBContext())
-                DB.RouteGearTable.DeleteRouteGear(RockClimbingRoutesID, GearSizeID);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.RouteGearTable.DeleteRouteGear(RockClimbingRoutesID, GearSizeID);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
     }

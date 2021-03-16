@@ -12,13 +12,23 @@
     [KeepPrivate] BIT NOT NULL DEFAULT 0, 
 
     --Security
-    [HashedPassword] NCHAR(50) NOT NULL, 
-	[Salt] CHAR(28) NOT NULL, 
+
+    --(0, 'Admin'),
+    --(1, 'Employee'),
+    --(2, 'Guide'),
+    --(3, 'PayedUser'),
+    --(4, 'User');
+    [AccessLevelID] TINYINT NOT NULL DEFAULT 5,
+	CONSTRAINT [FK_UserAccessTokens_UserAccessLevels] FOREIGN KEY ([AccessLevelID]) REFERENCES [UserAccessLevels]([ID]),
+
+    [HashedPassword] NCHAR(44) NOT NULL, 
+	[Salt] CHAR(44) NOT NULL, 
 
 	--Profile stuff
 	--Size is 2 to the 16 - 1 = 65,536 - 1 bytes 
     --[Picture] VARBINARY(16) NULL, 
-    [PicturePath] VARCHAR(16) NULL, 
+    [ProfilePicturePath] VARCHAR(16) NULL, 
+    [BannerPicturePath] VARCHAR(16) NULL, 
     [Bio] NVARCHAR(250) NULL, 
 
     --linkable page to something extra

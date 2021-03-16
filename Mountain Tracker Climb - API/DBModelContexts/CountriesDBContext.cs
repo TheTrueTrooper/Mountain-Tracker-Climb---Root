@@ -23,7 +23,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         public Country GetCountry(int ID)
         {
-            return GetListOf($"ID = {ID}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
     }
 }

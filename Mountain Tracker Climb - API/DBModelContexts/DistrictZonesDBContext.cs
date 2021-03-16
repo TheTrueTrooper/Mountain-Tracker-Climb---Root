@@ -24,7 +24,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         public DistrictZone GetDistrictZone(int ID)
         {
-            return GetListOf($"ID = {ID}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
 
         public int AddDistrictZone(DistrictZone Values)

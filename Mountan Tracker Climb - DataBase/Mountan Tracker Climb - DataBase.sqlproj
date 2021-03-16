@@ -91,6 +91,9 @@
     <Folder Include="SQL Server\Tables\UserFriends" />
     <Folder Include="SQL Server\Tables\DistrictZones" />
     <Folder Include="SQL Server\Tables\Districts" />
+    <Folder Include="SQL Server\Tables\Area360Pictures" />
+    <Folder Include="SQL Server\Tables\UserAccessTokens" />
+    <Folder Include="SQL Server\Tables\UserAccessLevels" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SQL Server\Tables\Countries\Countries.sql" />
@@ -121,6 +124,8 @@
     <Build Include="SQL Server\Tables\UserFriends\UserFriends.sql" />
     <Build Include="SQL Server\Tables\DistrictZones\DistrictZones.sql" />
     <Build Include="SQL Server\Tables\Districts\Districts.sql" />
+    <Build Include="SQL Server\Tables\UserAccessTokens\UserAccessTokens.sql" />
+    <Build Include="SQL Server\Tables\UserAccessLevels\UserAccessLevels.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Mountan Tracker Climb - DataBase.refactorlog" />

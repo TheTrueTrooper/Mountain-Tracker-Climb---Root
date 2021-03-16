@@ -23,6 +23,8 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
         public RouteGearDBContext RouteGearTable { get => RockClimbingRoutesGearLinkingTable; }
         public GearSizesDBContext GearSizesTable { get; }
         public GearDBContext GearTable { get; }
+        public UserAccessLevelDBContext UserAccessLevelTable { get; }
+        public UserDBContext UserTable { get; }
 
         public DBContext()
         {
@@ -39,6 +41,8 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             RockClimbingRoutesGearLinkingTable = new RouteGearDBContext(RockClimbingDifficultiesTable);
             GearSizesTable = new GearSizesDBContext(RockClimbingRoutesGearLinkingTable);
             GearTable = new GearDBContext(GearSizesTable);
+            UserAccessLevelTable = new UserAccessLevelDBContext(GearTable);
+            UserTable = new UserDBContext(UserAccessLevelTable);
         }
 
         public void Dispose()

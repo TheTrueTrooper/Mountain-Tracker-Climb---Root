@@ -85,6 +85,9 @@ IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Provinces
 	delete ProvincesOrStates where 1=1
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Countries') AND Type = N'U')
 	delete Countries where 1=1
+
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.UserAccessLevels') AND Type = N'U')
+	delete UserAccessLevels where 1=1
 GO
 
 GO
@@ -371,19 +374,19 @@ Declare @CountryCode as TinyInt
 select @CountryCode = ID from Countries where CountryCode = 'CA'
 INSERT INTO [ProvincesOrStates] ([ID], [EnglishFullName], [RegionCode], [CountryID])
 VALUES 
-( 0, 'Newfoundland and Labrador', 'NL', @CountryCode),
-( 1, 'Prince Edward Island', 'PE', @CountryCode),
-( 2, 'Nova Scotia', 'NS', @CountryCode),
+( 0, 'Alberta', 'AB', @CountryCode),
+( 1, 'British Columbia', 'BC', @CountryCode),
+( 2, 'Manitoba', 'MB', @CountryCode),
 ( 3, 'New Brunswick', 'NB', @CountryCode),
-( 4, 'Quebec', 'QC', @CountryCode),
-( 5, 'Ontario', 'ON', @CountryCode),
-( 6, 'Manitoba', 'MB', @CountryCode),
-( 7, 'Saskatchewan', 'SK', @CountryCode),
-( 8, 'Alberta', 'AB', @CountryCode),
-( 9, 'British Columbia', 'BC', @CountryCode),
-( 10, 'Yukon', 'YT', @CountryCode),
-( 11, 'Northwest Territories', 'NT', @CountryCode),
-( 12, 'Nunavut', 'NU', @CountryCode);
+( 4, 'Newfoundland and Labrador', 'NL', @CountryCode),
+( 5, 'Nova Scotia', 'NS', @CountryCode),
+( 6, 'Ontario', 'ON', @CountryCode),
+( 7, 'Prince Edward Island', 'PE', @CountryCode),
+( 8, 'Quebec', 'QC', @CountryCode),
+( 9, 'Saskatchewan', 'SK', @CountryCode),
+( 10, 'Northwest Territories', 'NT', @CountryCode),
+( 11, 'Nunavut', 'NU', @CountryCode),
+( 12, 'Yukon', 'YT', @CountryCode);
 
 if(exists(select ID from [ProvincesOrStates] where [EnglishFullName] = 'Nunavut' and [RegionCode] = 'NU' and @CountryCode = [CountryID]))
 	print 'Canadain Prov successfully populated'
@@ -458,12 +461,19 @@ begin
 	raiserror('US States unsuccessfully populated', 20, -1) with log
 end
 GO
+
+INSERT INTO [ProvincesOrStates] ([ID], [EnglishFullName], [RegionCode], [CountryID])
+VALUES 
+( 63, 'Test1', 'T1', 0),
+( 64, 'Test2', 'T2', 0);
 --------------------------------------------------------------------------------Add Prov or states for Countries here
 
 --Climbing types Populating
 INSERT INTO [ClimbingTypes] ([ID], [EnglishFullName])
 VALUES 
-( 0, 'Trad Climbing');
+( 0, 'Trad Climbing'),
+( 1, 'Sport Climbing'),
+( 2, 'Mixed Climbing');
 
 if(exists(select ID from [ClimbingTypes] where [EnglishFullName] = 'Trad Climbing'))
 	print '[ClimbingTypes] successfully populated'
@@ -756,13 +766,31 @@ begin
 end
 GO
 
+INSERT INTO [UserAccessLevels] ([ID], [EnglishName])
+VALUES 
+(0, 'Unrestricted Admin'),
+(1, 'Admin'),
+(2, 'Moderater'),
+(3, 'Guide'),
+(4, 'PayedUser'),
+(5, 'User');
+
+if(exists(select [ID] from [UserAccessLevels] where [EnglishName] = 'User'))
+	print '[UserAccessLevels] successfully populated'
+else
+begin
+	print '[UserAccessLevels] unsuccessfully populated'
+	raiserror('[UserAccessLevels] unsuccessfully populated', 20, -1) with log
+end
+GO
+
 --Quick Test Data build
-declare @Testing bit = 1
+declare @Testing bit = 0
 if(@Testing = 1)
 begin
 DBCC CHECKIDENT ('Regions', RESEED, 0)
 INSERT INTO [Regions] ([ProvinceOrStateID], [EnglishFullName], [RegionCode])
-VALUES (8, 'Test1', 'T1')
+VALUES (63, 'Test1', 'T1')
 DBCC CHECKIDENT ('Districts', RESEED, 0)
 INSERT INTO [Districts] ([RegionID], [EnglishFullName], [DistrictCode])
 VALUES (1, 'Test1', 'T1')

@@ -22,9 +22,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf($"GearID = {GearID}");
         }
 
-        public GearSize GetGearSize(byte id)
+        public GearSize GetGearSize(byte ID)
         {
-            return GetListOf($"ID = {id}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
     }
 }

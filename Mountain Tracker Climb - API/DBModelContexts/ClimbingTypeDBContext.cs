@@ -20,7 +20,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         public ClimbingType GetClimbingType(byte id)
         {
-            return GetListOf($"ID = {id}").First();
+            return GetListOf($"ID = {id}").FirstOrDefault();
         }
 
         public int AddClimbingType(ClimbingType Values)

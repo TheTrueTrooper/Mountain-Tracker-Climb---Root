@@ -1,0 +1,1462 @@
+﻿
+@{
+    ViewBag.Title = "Quick Route Editor";
+}
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script src="~/Scripts/angular-sanitize.js"></script>
+<script src="~/Scripts/angular-cookies.js"></script>
+<script src="~/Scripts/AngularJSRouteQuickEdit.js"></script>
+<h2>MTL Quick Route Editor</h2>
+<div ng-app="NGRouteQuickEdit" ng-controller="RouteQuickEditController">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="text-right">
+                    Select a Country
+                </label>
+                <select name="SelectCountry" id="SelectCountry" ng-model="Countries.SelectedID" ng-change="SelectedCountry(Countries.SelectedID)">
+                    <option selected value="null">Select an option</option>
+                    <option ng-repeat="Country in Countries.FullList" value="{{Country.ID}}">{{Country.CountryCode}} - {{Country.EnglishFullName}}</option>
+                </select>
+                <div>
+                    <p>Handled by DB admin as static ISO standard table</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="text-right">
+                    Select a Province Or State
+                </label>
+                <select disabled name="SelectProvinceOrState" id="SelectProvinceOrState" ng-model="ProvincesOrStates.SelectedID" ng-change="SelectedProvinceOrState(ProvincesOrStates.SelectedID)">
+                    <option value="null">Select an option</option>
+                    <option ng-repeat="ProvinceOrState in ProvincesOrStates.FullList" value="{{ProvinceOrState.ID}}">{{ProvinceOrState.RegionCode}} - {{ProvinceOrState.EnglishFullName}}</option>
+                </select>
+                <div>
+                    <p>Handled by DB admin as static table</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="text-right">
+                    Select a Region
+                </label>
+                <select disabled name="SelectRegion" id="SelectRegion" ng-model="Regions.SelectedID" ng-change="SelectedRegion(Regions.SelectedID)">
+                    <option value="null">Select an option</option>
+                    <option ng-repeat="Region in Regions.FullList" value="{{Region.ID}}">{{Region.RegionCode}} - {{Region.EnglishFullName}}</option>
+                </select>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-sm-4">
+                    <button disabled id="AddRegion" class="btn btn-default" data-toggle="modal" data-target="#AddRegionModal">Add Region</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="EditRegion" class="btn btn-default" data-toggle="modal" data-target="#EditRegionModal">Edit Region</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="DeleteRegion" class="btn btn-default" data-toggle="modal" data-target="#DeleteRegionModal">Delete Region</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="text-right">
+                    Select a District
+                </label>
+                <select disabled name="SelectDistrict" id="SelectDistrict" ng-model="Districts.SelectedID" ng-change="SelectedDistrict(Districts.SelectedID)">
+                    <option value="null">Select an option</option>
+                    <option ng-repeat="District in Districts.FullList" value="{{District.ID}}">{{District.DistrictCode}} - {{District.EnglishFullName}}</option>
+                </select>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-sm-4">
+                    <button disabled id="AddDistrict" class="btn btn-default" data-toggle="modal" data-target="#AddDistrictModal">Add District</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="EditDistrict" class="btn btn-default" data-toggle="modal" data-target="#EditDistrictModal">Edit District</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="DeleteDistrict" class="btn btn-default" data-toggle="modal" data-target="#DeleteDistrictModal">Delete District</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="text-right">
+                    Select a Zone
+                </label>
+                <select disabled name="SelectDistrictZone" id="SelectDistrictZone" ng-model="DistrictZones.SelectedID" ng-change="SelectedDistrictZone(DistrictZones.SelectedID)">
+                    <option value="null">Select an option</option>
+                    <option ng-repeat="DistrictZone in DistrictZones.FullList" value="{{DistrictZone.ID}}">{{DistrictZone.ZoneCode}} - {{DistrictZone.EnglishFullName}}</option>
+                </select>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-sm-4">
+                    <button disabled id="AddDistrictZone" class="btn btn-default" data-toggle="modal" data-target="#AddDistrictZoneModal">Add Zone</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="EditDistrictZone" class="btn btn-default" data-toggle="modal" data-target="#EditDistrictZoneModal">Edit Zone</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="DeleteDistrictZone" class="btn btn-default" data-toggle="modal" data-target="#DeleteDistrictZoneModal">Delete Zone</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="text-right">
+                    Select an Area
+                </label>
+                <select disabled name="SelectZoneArea" id="SelectZoneArea" ng-model="ZoneAreas.SelectedID" ng-change="SelectedZoneArea(ZoneAreas.SelectedID)">
+                    <option value="null">Select an option</option>
+                    <option ng-repeat="ZoneArea in ZoneAreas.FullList" value="{{ZoneArea.ID}}">{{ZoneArea.AreaCode}} - {{ZoneArea.EnglishFullName}}</option>
+                </select>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-sm-4">
+                    <button disabled id="AddZoneArea" class="btn btn-default" data-toggle="modal" data-target="#AddZoneAreaModal">Add Area</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="EditZoneArea" class="btn btn-default" data-toggle="modal" data-target="#EditZoneAreaModal">Edit Area</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="DeleteZoneArea" class="btn btn-default" data-toggle="modal" data-target="#DeleteZoneAreaModal">Delete Area</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="text-right">
+                    Select a Climbing Wall
+                </label>
+                <select disabled name="SelectClimbingWall" id="SelectClimbingWall" ng-model="ClimbingWalls.SelectedID" ng-change="SelectedClimbingWall(ClimbingWalls.SelectedID)">
+                    <option value="null">Select an option</option>
+                    <option ng-repeat="ClimbingWall in ClimbingWalls.FullList" value="{{ClimbingWall.ID}}">{{ClimbingWall.WallCode}} - {{ClimbingWall.EnglishFullName}}</option>
+                </select>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-sm-4">
+                    <button disabled id="AddClimbingWall" class="btn btn-default" data-toggle="modal" data-target="#AddClimbingWallModal">Add Climbing Wall</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="EditClimbingWall" class="btn btn-default" data-toggle="modal" data-target="#EditClimbingWallModal">Edit Climbing Wall</button>
+                </div>
+                <div class="col-sm-4">
+                    <button disabled id="DeleteClimbingWall" class="btn btn-default" data-toggle="modal" data-target="#DeleteClimbingWallModal">Delete Climbing Wall</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button disabled id="AddRockClimbingRoute" class="btn btn-default" data-toggle="modal" data-target="#AddRockClimbingRouteModal" style="width:100%">Add New Rock Climbing Route</button>
+    </div>
+    <div class="jumbotron" style="height:max-content;max-height:900px;overflow:scroll;padding-left:0;">
+        <div>
+            <table class="table table-striped small" style="padding-left:0;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>English Full Name</th>
+                        <th>Climbing Wall ID</th>
+                        <th>Route Code</th>
+                        <th>Wall Route Number</th>
+                        <th>Type</th>
+                        <th>Difficulty</th>
+                        <th>Rating</th>
+                        <th>Gear List</th>
+                        <th>Hieght In Meters</th>
+                        <th>Hieght In Feet</th>
+                        <th>Number Of Pitchs</th>
+                        <th>First Ascent</th>
+                        <th>First Free Ascent</th>
+                        <th>Sun AM</th>
+                        <th>Sun PM</th>
+                        <th>Filtered</th>
+                        <th>Sunny</th>
+                        <th>Shady</th>
+                        <th>Dries Fast</th>
+                        <th>Dry In Rain</th>
+                        <th>Windy</th>
+                        <th>Angles Are With Slabs</th>
+                        <th>Angles Are With Verticals</th>
+                        <th>Angles Are With Over Hangs</th>
+                        <th>Angles Are With Roofs</th>
+                        <th>Rock Falls</th>
+                        <th>Seepage</th>
+                        <th>Stick Clip</th>
+                        <th>Runout</th>
+                        <th>Reachy</th>
+                        <th>Dyno</th>
+                        <th>Pumpy</th>
+                        <th>Techy</th>
+                        <th>Power</th>
+                        <th>Pock Slash Hole</th>
+                        <th>Crimpy</th>
+                        <th>From Seated Start</th>
+                        <th>360 Picture</th>
+                        <th>360 3D Picture</th>
+                        <th>Info On</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="Route in Routes.FullList">
+                        <td>{{Route.ID}}</td>
+                        <td>{{Route.EnglishFullName}}</td>
+                        <td>{{Route.ClimbingWallID}}</td>
+                        <td>{{Route.RouteCode}}</td>
+                        <td>{{Route.RouteWallNumber}}</td>
+                        <td>{{Route.RouteType.EnglishFullName}}</td>
+                        <td>{{Route.Difficulty.EnglishCode}}</td>
+                        <td>{{Route.Rating}}</td>
+                        <td><button class="btn btn-default" data-toggle="modal" data-target="#ViewRouteGearModal" ng-click="Routes.ViewGear(Route)">View Gear List</button></td>
+                        @*<td>{{Route.GearList}}</td>*@
+                        <td>{{Route.HieghtInMeters}}</td>
+                        <td>{{Route.HieghtInFeet}}</td>
+                        <td>{{Route.NumberOfPitchs}}</td>
+                        <td>{{Route.FirstAscent}}</td>
+                        <td>{{Route.FirstFreeAscent}}</td>
+                        <td>{{Route.SunAM}}</td>
+                        <td>{{Route.SunPM}}</td>
+                        <td>{{Route.Filtered}}</td>
+                        <td>{{Route.Sunny}}</td>
+                        <td>{{Route.Shady}}</td>
+                        <td>{{Route.DriesFast}}</td>
+                        <td>{{Route.DryInRain}}</td>
+                        <td>{{Route.Windy}}</td>
+                        <td>{{Route.ClimbAnglesHaveSlabs}}</td>
+                        <td>{{Route.ClimbAnglesHaveVerticals}}</td>
+                        <td>{{Route.ClimbAnglesHaveOverHangs}}</td>
+                        <td>{{Route.ClimbAnglesHaveRoofs}}</td>
+                        <td>{{Route.RockFalls}}</td>
+                        <td>{{Route.Seepage}}</td>
+                        <td>{{Route.StickClip}}</td>
+                        <td>{{Route.Runout}}</td>
+                        <td>{{Route.Reachy}}</td>
+                        <td>{{Route.Dyno}}</td>
+                        <td>{{Route.Pumpy}}</td>
+                        <td>{{Route.Techy}}</td>
+                        <td>{{Route.Power}}</td>
+                        <td>{{Route.PockSlashHole}}</td>
+                        <td>{{Route.Crimpy}}</td>
+                        <td>{{Route.SeatStart}}</td>
+                        <td>{{Route.Picture360}}</td>
+                        <td>{{Route.Picture3603D}}</td>
+                        <td><button class="btn btn-default" data-toggle="modal" data-target="#ViewRouteInfoModal" ng-click="Routes.ViewInfo(Route)">View Info</button></td>
+                        <td><button class="btn btn-default" data-toggle="modal" data-target="#EditRockClimbingRouteModal" ng-click="Routes.Edit(Route)">Edit</button></td>
+                        <td><button class="btn btn-default" ng-click="Routes.Delete(Route.ID)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="AddRegionModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Region</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="Auto set by database" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            ProvinceOrStateID
+                        </label>
+                        <input disabled value="{{ProvincesOrStates.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="Regions.AddNew.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Region Code
+                        </label>
+                        <input ng-model="Regions.AddNew.RegionCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Regions.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="AddDistrictModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add District</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="Auto set by database" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            RegionID
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="Districts.AddNew.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a District Code
+                        </label>
+                        <input ng-model="Districts.AddNew.DistrictCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Districts.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="AddDistrictZoneModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Zone</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="Auto set by database" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            RegionID
+                        </label>
+                        <input disabled value="{{Districts.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="DistrictZones.AddNew.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Zone Code
+                        </label>
+                        <input ng-model="DistrictZones.AddNew.ZoneCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="DistrictZones.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="AddZoneAreaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add an Area</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="Auto set by database" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            ZoneID
+                        </label>
+                        <input disabled value="{{DistrictZones.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="ZoneAreas.AddNew.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Area Code
+                        </label>
+                        <input ng-model="ZoneAreas.AddNew.AreaCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ZoneAreas.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        @*public string RouteInfo { get; set; } add as a tool tip or click bit*@
+    </div>
+    <div id="AddClimbingWallModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add a Climbing Wall</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="Auto set by database" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            AreaID
+                        </label>
+                        <input disabled value="{{ZoneAreas.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="ClimbingWalls.AddNew.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Wall Code
+                        </label>
+                        <input ng-model="ClimbingWalls.AddNew.WallCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ClimbingWalls.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        @*public string RouteInfo { get; set; } add as a tool tip or click bit*@
+    </div>
+    <div id="EditRegionModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Region</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            ProvinceOrStateID
+                        </label>
+                        <input disabled value="{{ProvincesOrStates.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="Regions.EditChanges.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Region Code
+                        </label>
+                        <input ng-model="Regions.EditChanges.RegionCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Regions.Edit()">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditDistrictModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit District</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Districts.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            RegionID
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="Districts.EditChanges.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a District Code
+                        </label>
+                        <input ng-model="Districts.EditChanges.DistrictCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Districts.Edit()">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditDistrictZoneModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Zone</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Districts.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            RegionID
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="DistrictZones.EditChanges.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Zone Code
+                        </label>
+                        <input ng-model="DistrictZones.EditChanges.ZoneCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="DistrictZones.Edit()">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditZoneAreaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit an Area</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{ZoneAreas.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            ZoneID
+                        </label>
+                        <input disabled value="{{DistrictZones.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="ZoneAreas.EditChanges.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Area Code
+                        </label>
+                        <input ng-model="ZoneAreas.EditChanges.AreaCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ZoneAreas.Edit()">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        @*public string RouteInfo { get; set; } add as a tool tip or click bit*@
+    </div>
+    <div id="EditClimbingWallModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit a Climbing Wall</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{ClimbingWalls.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            AreaID
+                        </label>
+                        <input disabled value="{{ZoneAreas.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="ClimbingWalls.EditChanges.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Wall Code
+                        </label>
+                        <input ng-model="ClimbingWalls.EditChanges.WallCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ClimbingWalls.Edit()">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        @*public string RouteInfo { get; set; } add as a tool tip or click bit*@
+    </div>
+    <div id="DeleteRegionModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to Delete this Region</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            ProvinceOrStateID
+                        </label>
+                        <input disabled value="{{ProvincesOrStates.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input disabled value="{{Regions.DeleteDisplay.EnglishFullName}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Region Code
+                        </label>
+                        <input disabled value="{{Regions.DeleteDisplay.RegionCode}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Regions.Delete()">Yes Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="DeleteDistrictModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to Delete this District</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Districts.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            RegionID
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="Districts.DeleteDisplay.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a District Code
+                        </label>
+                        <input ng-model="Districts.DeleteDisplay.DistrictCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Districts.Delete()">Yes Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="DeleteDistrictZoneModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to Delete this Zone</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Districts.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            RegionID
+                        </label>
+                        <input disabled value="{{Regions.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="DistrictZones.DeleteDisplay.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Zone Code
+                        </label>
+                        <input ng-model="DistrictZones.DeleteDisplay.ZoneCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="DistrictZones.Delete()">Yes Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="DeleteZoneAreaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to Delete this Area</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{ZoneAreas.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            ZoneID
+                        </label>
+                        <input disabled value="{{DistrictZones.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="ZoneAreas.DeleteDisplay.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Area Code
+                        </label>
+                        <input ng-model="ZoneAreas.DeleteDisplay.AreaCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ZoneAreas.Delete()">Yes Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="DeleteClimbingWallModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to Delete this Climbing Wall</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{ClimbingWalls.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            AreaID
+                        </label>
+                        <input disabled value="{{ZoneAreas.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a  Full English Name
+                        </label>
+                        <input ng-model="ClimbingWalls.DeleteDisplay.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Wall Code
+                        </label>
+                        <input ng-model="ClimbingWalls.DeleteDisplay.WallCode" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ClimbingWalls.Delete()">Yes Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ViewRouteInfoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Route Info</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID of Route
+                        </label>
+                        <input disabled value="{{RouteInfo.ID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Info
+                        </label>
+                        <textarea type="text" id="RouteInfoEditBox" disabled rows="25" inputmode="verbatim" vocab="http://data-vocabulary.org" style="width:100%"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="RouteInfoEdit" type="button" class="btn btn-default" ng-click="RouteInfo.Edit()">Edit</button>
+                    <button disabled id="RouteInfoSave" type="button" class="btn btn-default" ng-click="RouteInfo.Update()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="AddRockClimbingRouteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Rock Climbing Route</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="Auto set by database" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climbing Wall ID
+                        </label>
+                        <input disabled value="{{ClimbingWalls.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Code
+                        </label>
+                        <input ng-model="Routes.AddNew.RouteCode" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Full English Name
+                        </label>
+                        <input ng-model="Routes.AddNew.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Wall Number
+                        </label>
+                        <input type="number" min=0 max=255 ng-model="Routes.AddNew.RouteWallNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Select a Type for the route
+                        </label>
+                        <select name="SelectNewRouteClimbingType" id="SelectNewRouteClimbingType" ng-model="Routes.AddNew.TypeID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="Type in ClimbingTypes" value="{{Type.ID}}">{{Type.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Select a Difficulty for the route
+                        </label>
+                        <select name="SelectNewRouteDifficulty" id="SelectNewRouteDifficulty" ng-model="Routes.AddNew.DifficultyID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="RockClimbingDifficulty in RockClimbingDifficulties" value="{{RockClimbingDifficulty.ID}}">{{RockClimbingDifficulty.EnglishCode}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Rating
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.AddNew.Rating" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Hieght In Meters
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.AddNew.HieghtInMeters" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Hieght In Feet
+                        </label>
+                        <input disabled value="This field is calculated based off the HieghtInMeters" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Number of Pitchs
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.AddNew.NumberOfPitchs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            First Ascent
+                        </label>
+                        <input type="text" ng-model="Routes.AddNew.FirstAscent" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            First Free Ascent
+                        </label>
+                        <input type="text" ng-model="Routes.AddNew.FirstFreeAscent" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gets Sun in the AM
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.SunAM" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gets Sun in the PM
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.SunPM" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Sun is filtered
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Filtered" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Is very sunny in places
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Sunny" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Is very shady in places
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Shady" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Dries Fast
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.DriesFast" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Dry In Rain
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.DryInRain" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Can be Windy
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Windy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Slabs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.ClimbAnglesHaveSlabs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Verticals
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.ClimbAnglesHaveVerticals" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Over Hangs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.ClimbAnglesHaveOverHangs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Roofs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.ClimbAnglesHaveRoofs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Know rock falls in the area
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.RockFalls" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Can have Seepage
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Seepage" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Done Stick Clip
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.StickClip" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Done as a Run out
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Runout" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Reachy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Reachy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Dyno style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Dyno" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Pumpy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Pumpy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Techy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Techy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Power style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Power" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Pock Slash Holes
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.PockSlashHole" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Crimpy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.Crimpy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Seated Start
+                        </label>
+                        <input type="checkbox" ng-model="Routes.AddNew.SeatStart" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Routes.Add()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditRockClimbingRouteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Rock Climbing Route</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID
+                        </label>
+                        <input disabled value="{{Routes.EditChanges.ID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climbing Wall ID
+                        </label>
+                        <input disabled value="{{ClimbingWalls.SelectedID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Code
+                        </label>
+                        <input ng-model="Routes.EditChanges.RouteCode" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Enter a Full English Name
+                        </label>
+                        <input ng-model="Routes.EditChanges.EnglishFullName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Route Wall Number
+                        </label>
+                        <input type="number" min=0 max=255 ng-model="Routes.EditChanges.RouteWallNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Select a Type for the route
+                        </label>
+                        <select name="SelectNewRouteClimbingType" id="SelectNewRouteClimbingType" ng-model="Routes.EditChanges.TypeID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="Type in ClimbingTypes" value="{{Type.ID}}">{{Type.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Select a Difficulty for the route
+                        </label>
+                        <select name="SelectNewRouteDifficulty" id="SelectNewRouteDifficulty" ng-model="Routes.EditChanges.DifficultyID">
+                            <option selected value="null">Select an option</option>
+                            <option ng-repeat="RockClimbingDifficulty in RockClimbingDifficulties" value="{{RockClimbingDifficulty.ID}}">{{RockClimbingDifficulty.EnglishCode}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Rating
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.EditChanges.Rating" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Hieght In Meters
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.EditChanges.HieghtInMeters" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Hieght In Feet
+                        </label>
+                        <input disabled value="This field is calculated based off the HieghtInMeters" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Number of Pitchs
+                        </label>
+                        <input type="number" min="0" ng-model="Routes.EditChanges.NumberOfPitchs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            First Ascent
+                        </label>
+                        <input type="text" ng-model="Routes.EditChanges.FirstAscent" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            First Free Ascent
+                        </label>
+                        <input type="text" ng-model="Routes.EditChanges.FirstFreeAscent" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gets Sun in the AM
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.SunAM" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gets Sun in the PM
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.SunPM" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Sun is filtered
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Filtered" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Is very sunny in places
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Sunny" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Is very shady in places
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Shady" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Dries Fast
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.DriesFast" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Dry In Rain
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.DryInRain" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Can be Windy
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Windy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Slabs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveSlabs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Verticals
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveVerticals" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Over Hangs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveOverHangs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Climb Angles Have Roofs
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.ClimbAnglesHaveRoofs" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Know rock falls in the area
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.RockFalls" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Can have Seepage
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Seepage" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Done Stick Clip
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.StickClip" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Done as a Run out
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Runout" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Reachy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Reachy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Dyno style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Dyno" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Pumpy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Pumpy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Techy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Techy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Power style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Power" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Pock Slash Holes
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.PockSlashHole" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Requires a Crimpy style
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.Crimpy" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Seated Start
+                        </label>
+                        <input type="checkbox" ng-model="Routes.EditChanges.SeatStart" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Routes.Update()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ViewRouteGearModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Route Gear</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            ID of Route
+                        </label>
+                        <input disabled value="{{Gear.RoutesID}}" />
+                    </div>
+                    <div class="form-group" style="overflow:scroll;max-height:400px">
+                        <table class="table table-striped small" style="padding-left:0;width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Route ID</th>
+                                    <th>Gear Size ID</th>
+                                    <th>Number Required</th>
+                                    <th>English Full Name</th>
+                                    <th>ID of Gear Family (GearID)</th>
+                                    <!--<th>Edit</th>-->
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="GearPiece in Gear.RoutesList">
+                                    <td>{{GearPiece.RockClimbingRoutesID}}</td>
+                                    <td>{{GearPiece.GearSizeID}}</td>
+                                    <td>{{GearPiece.NumberRequired}}</td>
+                                    <td>{{GearPiece.Gear.EnglishFullName}}</td>
+                                    <td>{{GearPiece.Gear.GearID}}</td>
+                                    <!--<td><button type="button" class="btn btn-default">Edit</button></td>-->
+                                    <td><button type="button" class="btn btn-default" ng-click="Gear.Delete(GearPiece.RockClimbingRoutesID, GearPiece.GearSizeID)">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Rock Climbing Routes ID
+                        </label>
+                        <input type="text" disabled value="{{Gear.Add.RockClimbingRoutesID}}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Number Required for Route
+                        </label>
+                        <input type="number" min="0" max="6000" ng-model="Gear.Add.NumberRequired" />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gear Type
+                        </label>
+                        <select ng-model="Gear.Add.GearID" ng-change="SelectedGearType(Gear.Add.GearID)">
+                            <option value="null">Select an option</option>
+                            <option ng-repeat="GearType in Gear.FullList" value="{{GearType.ID}}">{{GearType.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-right">
+                            Gear Sizing
+                        </label>
+                        <select disabled name="SelectGearSize" id="SelectGearSize" ng-model="Gear.Add.GearSizeID">
+                            <option value="null">Select an option</option>
+                            <option ng-repeat="GearSize in Gear.TypeList" value="{{GearSize.ID}}">{{GearSize.EnglishFullName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="Gear.AddItem()">Add Gear</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -20,9 +20,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf();
         }
 
-        public RockClimbingDifficulty GetRockClimbingDifficulty(byte id)
+        public RockClimbingDifficulty GetRockClimbingDifficulty(byte ID)
         {
-            return GetListOf($"ID = {id}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
 
         public int AddRockClimbingDifficulty(RockClimbingDifficulty Values)

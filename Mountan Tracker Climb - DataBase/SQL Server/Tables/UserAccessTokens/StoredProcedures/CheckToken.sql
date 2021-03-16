@@ -1,0 +1,12 @@
+﻿--CREATE PROCEDURE [dbo].[CheckToken]
+--	@UserID int,
+--	@UserToken CHAR(50),
+--	@RequiredAthenticationLevel VARCHAR(50)
+--AS
+--	Declare @UserAthenticationLevel int, @RequiredAthenticationLevelID int
+--	Select @RequiredAthenticationLevelID = [ID] from [UserAccessLevels] where [EnglishName] = @RequiredAthenticationLevel
+--	Select @UserAthenticationLevel = UAL.ID from [UserAccessTokens] as UAT 
+--		join [Users] as U on UAT.UserID = U.ID 
+--		join [UserAccessLevels] as UAL on U.AccessLevelID = UAL.ID
+--	where UAT.UserID = @UserID and UAT.UserToken = @UserToken
+--RETURN 0

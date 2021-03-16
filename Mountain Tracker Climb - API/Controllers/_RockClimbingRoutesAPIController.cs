@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using MTCSharedModels.Models;
 using Mountain_Tracker_Climb___API.DBModelContexts;
+using System.Data.SqlClient;
+using Mountain_Tracker_Climb___API.Helpers;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
@@ -73,22 +75,43 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] RockClimbingRoute Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.RockClimbingRoutesTable.AddRockClimbingRoute(Values);
+            try 
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.RockClimbingRoutesTable.AddRockClimbingRoute(Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpPut]
         public void Put(int id, [FromBody]RockClimbingRoute Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.RockClimbingRoutesTable.UpdateRockClimbingRoute(id, Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.RockClimbingRoutesTable.UpdateRockClimbingRoute(id, Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpDelete]
         public void Delete(int id)
         {
-            using (DBContext DB = new DBContext())
-                DB.RockClimbingRoutesTable.DeleteRockClimbingRoute(id);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.RockClimbingRoutesTable.DeleteRockClimbingRoute(id);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
     }
 }

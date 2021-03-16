@@ -25,7 +25,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         public ClimbingWall GetClimbingWall(int id)
         {
-            return GetListOf($"ID = {id}").First();
+            return GetListOf($"ID = {id}").FirstOrDefault();
         }
 
         public int AddClimbingWall(ClimbingWall Values)

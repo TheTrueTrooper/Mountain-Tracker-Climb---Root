@@ -8,7 +8,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 {
     internal class GearDBContext : RootDBContext<Gear>
     {
-        public override string DBTable => "Gear";
+        public override string DBTable => "dbo.Gear";
 
         public GearDBContext() : base() { }
 
@@ -19,9 +19,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf();
         }
 
-        public Gear GetGear(byte id)
+        public Gear GetGear(byte ID)
         {
-            return GetListOf($"ID = {id}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
     }
 }

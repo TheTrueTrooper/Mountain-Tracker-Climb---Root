@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using MTCSharedModels.Models;
 using Mountain_Tracker_Climb___API.DBModelContexts;
+using System.Data.SqlClient;
+using Mountain_Tracker_Climb___API.Helpers;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
@@ -36,22 +38,43 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] ZoneArea Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.ZoneAreasTable.AddZoneArea(Values);
+            try 
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.ZoneAreasTable.AddZoneArea(Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpPut]
         public void Put(int id, [FromBody] ZoneArea Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.ZoneAreasTable.UpdateZoneArea(id, Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.ZoneAreasTable.UpdateZoneArea(id, Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpDelete]
         public void Delete(int id)
         {
+            try 
+            { 
             using (DBContext DB = new DBContext())
                 DB.ZoneAreasTable.DeleteZoneArea(id);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
     }
 }

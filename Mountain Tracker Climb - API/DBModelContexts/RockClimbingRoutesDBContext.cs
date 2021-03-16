@@ -23,9 +23,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf($"ClimbingWallID = {ClimbingWallID}");
         }
 
-        public RockClimbingRoute GetRockClimbingRoute(int id)
+        public RockClimbingRoute GetRockClimbingRoute(int ID)
         {
-            return GetListOf($"ID = {id}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
 
         public int AddRockClimbingRoute(RockClimbingRoute Values)

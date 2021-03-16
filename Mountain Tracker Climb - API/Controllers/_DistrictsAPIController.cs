@@ -1,8 +1,12 @@
 ﻿using Mountain_Tracker_Climb___API.DBModelContexts;
+using Mountain_Tracker_Climb___API.Helpers;
 using MTCSharedModels.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 
@@ -35,22 +39,43 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] District Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.DistrictsTable.AddDistrict(Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.DistrictsTable.AddDistrict(Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpPut]
-        public void Post(int id, [FromBody] District Values)
+        public void Put(int id, [FromBody] District Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.DistrictsTable.UpdateDistrict(id, Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.DistrictsTable.UpdateDistrict(id, Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpDelete]
         public void Delete(int id)
         {
-            using (DBContext DB = new DBContext())
-                DB.DistrictsTable.DeleteDistrict(id);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.DistrictsTable.DeleteDistrict(id);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
     }

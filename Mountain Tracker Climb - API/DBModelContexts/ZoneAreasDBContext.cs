@@ -23,9 +23,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf($"DistrictZoneID = {DistrictZoneID}");
         }
 
-        public ZoneArea GetZoneArea(int id)
+        public ZoneArea GetZoneArea(int ID)
         {
-            return GetListOf($"ID = {id}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
 
         public int AddZoneArea(ZoneArea Values)

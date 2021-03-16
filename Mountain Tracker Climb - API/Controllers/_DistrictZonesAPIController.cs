@@ -1,8 +1,11 @@
 ﻿using Mountain_Tracker_Climb___API.DBModelContexts;
+using Mountain_Tracker_Climb___API.Helpers;
 using MTCSharedModels.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
@@ -38,22 +41,43 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] DistrictZone Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.DistrictZonesTable.AddDistrictZone(Values);
+            try
+            {
+                using (DBContext DB = new DBContext())
+                    DB.DistrictZonesTable.AddDistrictZone(Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpPut]
         public void Put(int id, [FromBody] DistrictZone Values)
         {
-            using (DBContext DB = new DBContext())
-                DB.DistrictZonesTable.UpdateDistrictZone(id, Values);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.DistrictZonesTable.UpdateDistrictZone(id, Values);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
         [HttpDelete]
         public void Delete(int id)
         {
-            using (DBContext DB = new DBContext())
-                DB.DistrictZonesTable.DeleteDistrictZone(id);
+            try
+            { 
+                using (DBContext DB = new DBContext())
+                    DB.DistrictZonesTable.DeleteDistrictZone(id);
+            }
+            catch (SqlException e)
+            {
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+            }
         }
 
     }

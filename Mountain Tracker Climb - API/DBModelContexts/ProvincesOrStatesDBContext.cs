@@ -26,7 +26,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         public ProvinceOrState GetProvinceOrState(int ID)
         {
-            return GetListOf($"ID = {ID}").First();
+            return GetListOf($"ID = {ID}").FirstOrDefault();
         }
     }
 }

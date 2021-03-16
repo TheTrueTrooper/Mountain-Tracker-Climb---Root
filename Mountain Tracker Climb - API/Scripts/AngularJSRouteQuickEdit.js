@@ -29,6 +29,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
     //    //Not used
     //})
     .service("WebAPIServices", function ($http) {
+        //const HostURL = "http://mtntracker.com/Api/";
         const HostURL = "http://localhost:12699/Api/";
         const CountriesController = "Counties";
         const ProvincesOrStatesController = "ProvincesOrStates";
@@ -484,7 +485,16 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
         };
 
         function ErrorCallBack(result) {
-            $window.alert("Status: " + (result.status || "Error") + "\nMessage: " + (result.data.Message || 'Request failed for unknow reason.') + "\nExceptionMessage: " + (result.data.ExceptionMessage || 'Request failed for unknow reason.'));
+            $window.alert("Status: " + (result.status || "Error") + "\nMessage: " + (result.statusText || 'Request failed for unknow reason.'));
+        };
+
+        $scope.ThrowPerferedToTop = function (obj) {
+            var Value = obj.EnglishFullName;
+            if (obj.CountryCode === 'CA')
+                Value = "__" + obj.EnglishFullName;
+            else if (obj.CountryCode === 'US')
+                Value = "_" + obj.EnglishFullName;
+            return Value;
         };
 
         DisableButtons([ProvSelectEle,
@@ -914,6 +924,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             $scope.Gear.RoutesID = Route.ID;
             $scope.Gear.Add.RockClimbingRoutesID = $scope.Gear.RoutesID;
             $scope.Gear.RoutesList = Route.RoutesGear;
+            EnableButtons([RouteInfoEditEle]);;
         }
 
         $scope.SelectedGearType = function (ID) {
@@ -926,7 +937,8 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             else {
                 $scope.Gear.TypeList = [];
                 $scope.Gear.Add.GearSizeID = "null";
-                DisableButtons([SelectGearSizeEle]);
+                DisableButtons([RouteInfoSaveEle]);
+                EnableButtons([RouteInfoEditBoxEle]);
             }
         };
 
@@ -943,7 +955,7 @@ angular.module("NGRouteQuickEdit", ["ngRoute", "ngSanitize", "ngCookies"])
             WebAPIServices.RouteGear.Delete(RockClimbingRoutesID, GearSizeID).then(function (result) {
                 WebAPIServices.RouteGear.GetList($scope.Gear.RoutesID).then(function (result) {
                     $scope.Gear.RoutesList = result.data
-                    $scope.Routes.FullList[$scope.Routes.FullList.findIndex(x => x.ID === $scope.Gear.RoutesID)].RoutesGear = RoutesList;
+                    $scope.Routes.FullList[$scope.Routes.FullList.findIndex(x => x.ID === $scope.Gear.RoutesID)].RoutesGear = $scope.Gear.RoutesList;
                 });
             }, function (result) { ErrorCallBack(result) });
         };
