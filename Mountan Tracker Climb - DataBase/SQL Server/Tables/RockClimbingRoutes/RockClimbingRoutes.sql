@@ -15,7 +15,7 @@
 	--Normalized Data
 	[ID] INT NOT NULL PRIMARY KEY IDENTITY(0,1), 
     [EnglishFullName] VARCHAR(100) NOT NULL, 
-    [RouteCode] CHAR(10) NOT NULL,
+    [RouteCode] CHAR(5) NOT NULL,
 	[RouteWallNumber] INT NOT NULL,
 	[Rating] TINYINT NOT NULL,
 	[HieghtInMeters] FLOAT NOT NULL,
@@ -47,12 +47,10 @@
 	[Power] BIT NOT NULL DEFAULT 0,
 	[PockSlashHole] BIT NOT NULL DEFAULT 0,
 	[Crimpy] BIT NOT NULL DEFAULT 0,
-	[SeatStart] BIT NOT NULL DEFAULT 0, 
-    [Picture360] VARCHAR(100) NULL,
-	[Picture3603D] VARCHAR(100) NULL,
-	[RouteInfo] VARCHAR(1000) NULL
+	[SeatStart] BIT NOT NULL DEFAULT 0,
+	[RouteInfo] VARCHAR(5000) NULL
 
-	UNIQUE ([ClimbingWallID], [EnglishFullName])
-	UNIQUE ([ClimbingWallID], [RouteCode])
-	UNIQUE ([ClimbingWallID], [RouteWallNumber])
+	CONSTRAINT [UQ_RockClimbingRoutes_Name] UNIQUE ([ClimbingWallID], [EnglishFullName])
+	CONSTRAINT [UQ_RockClimbingRoutes_Code] UNIQUE ([ClimbingWallID], [RouteCode])
+	CONSTRAINT [UQ_RockClimbingRoutes_RouteWallNumber] UNIQUE ([ClimbingWallID], [RouteWallNumber])
 )

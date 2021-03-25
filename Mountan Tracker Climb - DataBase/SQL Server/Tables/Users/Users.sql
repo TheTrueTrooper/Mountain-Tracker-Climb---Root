@@ -2,7 +2,7 @@
 (
 	[ID] INT NOT NULL PRIMARY KEY IDENTITY(0,1), 
     [FirstName] NVARCHAR(50) NOT NULL, 
-    [MiddleName] NCHAR(50) NULL, 
+    [MiddleName] NVARCHAR(50) NULL, 
     [LastName] NVARCHAR(50) NOT NULL, 
     [UserName] NVARCHAR(50) NOT NULL, 
     [PrimaryPersonalEmail] VARCHAR(320) NOT NULL, 
@@ -29,7 +29,7 @@
     --[Picture] VARBINARY(16) NULL, 
     [ProfilePicturePath] VARCHAR(16) NULL, 
     [BannerPicturePath] VARCHAR(16) NULL, 
-    [Bio] NVARCHAR(250) NULL, 
+    [Bio] NVARCHAR(2500) NULL, 
 
     --linkable page to something extra
 	[ProfileURL] NVARCHAR(100) NULL

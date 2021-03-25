@@ -38,4 +38,46 @@ select Count(ID) from dbo.Gear
 insert into [RockClimbingRoutesGearLinkingTable] ([RockClimbingRoutesID], [GearSizeID], [NumberRequired]) values (1 ,1, 2)
 insert into [RockClimbingRoutesGearLinkingTable] ([RockClimbingRoutesID], [GearSizeID], [NumberRequired]) values (1 ,12, 30)
 
-select * from [ClimbingTypes]
+
+exec UserLogin @UserName = 'Aman', @HashedPassword = 'l/CUlG5fTJG2JfqVwF3I2smpglr9P/kmaBpRWferPKg='
+
+select DATEADD(day, 30, GETDATE())
+
+drop proc [dbo].[CheckTokenWithAccessLevel]
+go
+CREATE PROCEDURE [dbo].[CheckTokenWithAccessLevel]
+	@UserID int,
+	@UserToken CHAR(44),
+	@UserRequiredAccessLevelID int
+AS
+begin
+	--set up some more vars we need
+	declare @Valid as bit, @TokenID as int, @ExtendValue as int
+	--set our default stance as fail
+	set @Valid = 0
+	--clear old tokens to start
+	delete from UserAccessTokens where UserTokenValidTill < GETDATE()
+	--If we have a value after clearing old ones then we must have had a valid log on in time with this token
+	if(exists(select UAT.UserToken from Users as U
+		join UserAccessLevels as UAL on UAL.ID = U.AccessLevelID
+		join UserAccessTokens as UAT on U.ID = UAT.UserID
+			where not UAL.ID < @UserRequiredAccessLevelID and U.ID = @UserID and UAT.UserToken = @UserToken))
+		begin
+			--get the time to extend
+			select @ExtendValue = UAT.DaysValid from Users as U
+			join UserAccessLevels as UAL on UAL.ID = U.AccessLevelID
+			join UserAccessTokens as UAT on U.ID = UAT.UserID
+				where U.ID = @UserID and UAT.UserToken = @UserToken
+			--extend that much time
+			update UserAccessTokens
+			set
+			UserTokenValidTill = DATEADD(day, @ExtendValue, GETDATE())
+			where UserToken = @UserToken
+			--Set ourselves as a valid log on
+			set @Valid = 1
+		end
+	--return the results
+	select @Valid
+	RETURN 0
+end
+go

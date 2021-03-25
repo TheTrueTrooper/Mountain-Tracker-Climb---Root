@@ -5,8 +5,8 @@
 
 	[ID] INT NOT NULL PRIMARY KEY IDENTITY(0,1), 
     [EnglishFullName] VARCHAR(100) NOT NULL, 
-    [WallCode] CHAR(10) NOT NULL
+    [WallCode] CHAR(5) NOT NULL
 
-	UNIQUE ([AreaID], [EnglishFullName])
-	UNIQUE ([AreaID], [WallCode])
+	CONSTRAINT [UQ_ClimbingWalls_Name] UNIQUE ([AreaID], [EnglishFullName])
+	CONSTRAINT [UQ_ClimbingWalls_Code] UNIQUE ([AreaID], [WallCode])
 )

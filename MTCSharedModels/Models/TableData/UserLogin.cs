@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MTCSharedModels.Models.TableData
+namespace MTCSharedModels.Models
 {
-    class UserLogin
+    public class UserLogin
     {
+        [APIAlwaysRequired(nameof(UserName))]
         public string UserName { get; set; }
+        [APIAlwaysRequired(nameof(Password))]
         public string Password { get; set; }
     }
 }

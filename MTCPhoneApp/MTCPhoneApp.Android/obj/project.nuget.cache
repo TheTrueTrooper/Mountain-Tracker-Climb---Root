@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Yh2SUJWrgWOftI/QfgQjNb3jWoDU61+XTxv1mAfqnaa23qiELY9h0y9/ZlODDzVPv1Omm2JeAHPUjJ0GdfnlkA==",
+  "dgSpecHash": "2twGKH+V+qbXgi+rPxt403mLiREdlzCiV1lnBJqArqhAaergh0/YBwePPNO/RaFh6NkV8fBBX/jycgmx5yDZsg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Angelo's Tower PC\\source\\repos\\Mountain Tracker Climb - Root\\MTCPhoneApp\\MTCPhoneApp.Android\\MTCPhoneApp.Android.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Angelo's Tower PC\\.nuget\\packages\\newtonsoft.json\\11.0.1\\newtonsoft.json.11.0.1.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.androidx.activity\\1.1.0.5\\xamarin.androidx.activity.1.1.0.5.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.androidx.annotation\\1.1.0.8\\xamarin.androidx.annotation.1.1.0.8.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.androidx.appcompat\\1.2.0.5\\xamarin.androidx.appcompat.1.2.0.5.nupkg.sha512",

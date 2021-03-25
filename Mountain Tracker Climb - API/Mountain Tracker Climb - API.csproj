@@ -176,7 +176,8 @@
     <Compile Include="Controllers\_RockClimbingDifficultiesAPIController.cs" />
     <Compile Include="Controllers\_RockClimbingRoutesAPIController.cs" />
     <Compile Include="Controllers\_RouteGearAPIController.cs" />
-    <Compile Include="Controllers\_UserAPIController.cs" />
+    <Compile Include="Controllers\_LoginAPIController.cs" />
+    <Compile Include="Controllers\_UserAccountAPIController.cs" />
     <Compile Include="Controllers\_ZoneAreasAPIController.cs" />
     <Compile Include="Controllers\__TestingAPIController.cs" />
     <Compile Include="DBModelContexts\ClimbingTypeDBContext.cs" />
@@ -193,17 +194,31 @@
     <Compile Include="DBModelContexts\RootOrSharedContext\IDBRootContext.cs" />
     <Compile Include="DBModelContexts\RootOrSharedContext\RootDBContext.cs" />
     <Compile Include="DBModelContexts\ProvincesOrStatesDBContext.cs" />
+    <Compile Include="DBModelContexts\RootOrSharedContext\RootDBStoredProcContext.cs" />
     <Compile Include="DBModelContexts\RouteGearDBContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\CheckTokenWithAccessLevelDBContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\CheckTokenDBContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\CreateTokenDBContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\GetUsersSaltDBContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\UserLoginDBContext.cs" />
     <Compile Include="DBModelContexts\UserAccessLevelDBContext.cs" />
     <Compile Include="DBModelContexts\UserDBContext.cs" />
     <Compile Include="DBModelContexts\ZoneAreasDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\RegexHelpers.cs" />
     <Compile Include="Helpers\ControllerHelper.cs" />
     <Compile Include="Helpers\SecurityHelper.cs" />
+    <Compile Include="Models\CheckTokenWithAccessLevelProc.cs" />
+    <Compile Include="Models\CheckTokenProc.cs" />
+    <Compile Include="Models\CreateTokenProc.cs" />
     <Compile Include="Models\UserFullWithSecurity.cs" />
+    <Compile Include="Models\UserGetSaltProc.cs" />
+    <Compile Include="Models\UserLoginProc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\APISecurityOwnerAttribute.cs" />
+    <Compile Include="Security\APISecurityLevelAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

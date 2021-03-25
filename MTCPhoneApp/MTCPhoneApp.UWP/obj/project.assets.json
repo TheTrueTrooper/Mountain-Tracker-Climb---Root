@@ -230,6 +230,15 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler/2.2.8-rel-28605-00": {
         "type": "package",
         "dependencies": {
@@ -381,6 +390,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -389,6 +400,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     },
@@ -620,6 +641,15 @@
         },
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler/2.2.8-rel-28605-00": {
@@ -940,6 +970,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -948,6 +980,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     },
@@ -1179,6 +1221,15 @@
         },
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.2.10": {
@@ -1500,6 +1551,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -1508,6 +1561,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     },
@@ -1739,6 +1802,15 @@
         },
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler/2.2.8-rel-28605-00": {
@@ -2057,6 +2129,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -2065,6 +2139,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     },
@@ -2296,6 +2380,15 @@
         },
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler/2.2.8-rel-28605-00": {
@@ -2616,6 +2709,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -2624,6 +2719,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     },
@@ -2855,6 +2960,15 @@
         },
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler/2.2.8-rel-28605-00": {
@@ -3176,6 +3290,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -3184,6 +3300,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     },
@@ -3415,6 +3541,15 @@
         },
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler/2.2.8-rel-28605-00": {
@@ -3735,6 +3870,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -3743,6 +3880,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     },
@@ -3974,6 +4121,15 @@
         },
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler/2.2.8-rel-28605-00": {
@@ -4295,6 +4451,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "MTCSharedModels": "1.0.0",
+          "Newtonsoft.Json": "11.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.1874"
         },
@@ -4303,6 +4461,16 @@
         },
         "runtime": {
           "bin/placeholder/MTCPhoneApp.dll": {}
+        }
+      },
+      "MTCSharedModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MTCSharedModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MTCSharedModels.dll": {}
         }
       }
     }
@@ -4846,6 +5014,36 @@
         "lib/netstandard1.0/_._",
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
+      ]
+    },
+    "Newtonsoft.Json/11.0.1": {
+      "sha512": "pNN4l+J6LlpIvHOeNdXlwxv39NPJ2B5klz+Rd2UQZIx30Squ5oND1Yy3wEAUoKn0GPUj6Yxt9lxlYWQqfZcvKg==",
+      "type": "package",
+      "path": "newtonsoft.json/11.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.11.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec"
       ]
     },
     "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.2.10": {
@@ -9054,6 +9252,11 @@
       "type": "project",
       "path": "../MTCPhoneApp/MTCPhoneApp.csproj",
       "msbuildProject": "../MTCPhoneApp/MTCPhoneApp.csproj"
+    },
+    "MTCSharedModels/1.0.0": {
+      "type": "project",
+      "path": "../../MTCSharedModels/MTCSharedModels.csproj",
+      "msbuildProject": "../../MTCSharedModels/MTCSharedModels.csproj"
     }
   },
   "projectFileDependencyGroups": {

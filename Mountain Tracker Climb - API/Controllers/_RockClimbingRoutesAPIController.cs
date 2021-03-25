@@ -75,6 +75,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] RockClimbingRoute Values)
         {
+            ControllerHelper.CheckObjectForPostErrorException(Values);
             try 
             { 
                 using (DBContext DB = new DBContext())
@@ -82,13 +83,15 @@ namespace Mountain_Tracker_Climb___API.Controllers
             }
             catch (SqlException e)
             {
-                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e, ". There can be only one per Wall."));
             }
         }
 
         [HttpPut]
         public void Put(int id, [FromBody]RockClimbingRoute Values)
         {
+            ControllerHelper.ClearObjectsEmptyStrings(Values);
+            ControllerHelper.CheckObjectForPutErrorException(Values);
             try
             { 
                 using (DBContext DB = new DBContext())
@@ -96,7 +99,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
             }
             catch (SqlException e)
             {
-                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e, ". There can be only one per Wall."));
             }
         }
 

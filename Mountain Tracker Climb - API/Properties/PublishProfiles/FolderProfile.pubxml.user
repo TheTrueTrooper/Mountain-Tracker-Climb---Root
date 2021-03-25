@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>Z:\MtnClimberPub\ASP.NET</_PublishTargetUrl>
-    <History>True|2021-03-09T04:22:36.3493065Z;True|2021-03-08T18:06:07.2610664-08:00;True|2021-03-08T14:57:59.3623963-08:00;True|2021-03-08T13:45:46.4311010-08:00;True|2021-03-08T13:37:43.2246118-08:00;True|2021-03-08T13:17:47.5739668-08:00;True|2021-03-08T12:17:01.3326431-08:00;</History>
+    <History>True|2021-03-19T03:07:19.2401311Z;True|2021-03-17T14:21:05.2889103-07:00;True|2021-03-17T14:19:58.4796218-07:00;True|2021-03-08T20:22:36.3493065-08:00;True|2021-03-08T18:06:07.2610664-08:00;True|2021-03-08T14:57:59.3623963-08:00;True|2021-03-08T13:45:46.4311010-08:00;True|2021-03-08T13:37:43.2246118-08:00;True|2021-03-08T13:17:47.5739668-08:00;True|2021-03-08T12:17:01.3326431-08:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/HelpPage/HelpPage.css">
@@ -90,16 +90,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/27/2021 00:20:52</publishTime>
     </File>
     <File Include="bin/Mountain Tracker Climb - API.dll">
-      <publishTime>03/08/2021 18:05:44</publishTime>
+      <publishTime>03/18/2021 20:06:54</publishTime>
     </File>
     <File Include="bin/Mountain Tracker Climb - API.pdb">
-      <publishTime>03/08/2021 18:05:44</publishTime>
+      <publishTime>03/18/2021 20:06:54</publishTime>
     </File>
     <File Include="bin/MTCSharedModels.dll">
-      <publishTime>03/07/2021 16:22:23</publishTime>
+      <publishTime>03/18/2021 20:06:52</publishTime>
     </File>
     <File Include="bin/MTCSharedModels.pdb">
-      <publishTime>03/07/2021 16:22:23</publishTime>
+      <publishTime>03/18/2021 20:06:52</publishTime>
     </File>
     <File Include="bin/netstandard.dll">
       <publishTime>01/27/2021 00:20:52</publishTime>
@@ -660,7 +660,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/12/2021 14:53:03</publishTime>
     </File>
     <File Include="Scripts/AngularJSRouteQuickEdit.js">
-      <publishTime>03/08/2021 20:21:51</publishTime>
+      <publishTime>03/17/2021 14:19:29</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>01/26/2021 17:36:37</publishTime>
@@ -696,13 +696,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/10/2021 17:44:15</publishTime>
     </File>
     <File Include="Views/RouteQuickEditor/Index.cshtml">
-      <publishTime>03/03/2021 16:57:35</publishTime>
+      <publishTime>03/15/2021 19:31:54</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>01/26/2021 17:36:37</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>02/10/2021 17:46:18</publishTime>
+      <publishTime>03/09/2021 14:03:59</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>01/26/2021 17:36:37</publishTime>

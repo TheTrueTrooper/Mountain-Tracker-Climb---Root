@@ -7,6 +7,6 @@
     [EnglishFullName] VARCHAR(100) NOT NULL, 
     [RegionCode] CHAR(2) NOT NULL
 
-	UNIQUE ([CountryID], [EnglishFullName])
-	UNIQUE ([CountryID], [RegionCode])
+	CONSTRAINT [UQ_ProvincesOrStates_Name] UNIQUE ([CountryID], [EnglishFullName])
+	CONSTRAINT [UQ_ProvincesOrStates_Code] UNIQUE ([CountryID], [RegionCode])
 )

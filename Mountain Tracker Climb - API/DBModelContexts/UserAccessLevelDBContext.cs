@@ -13,7 +13,12 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         public UserAccessLevelDBContext(IDBRootContext Context) : base(Context.DB) { }
 
-        public UserAccessLevel GetZoneArea(int ID)
+        public IEnumerable<UserAccessLevel> GetUserAccessLevels()
+        {
+            return GetListOf();
+        }
+
+        public UserAccessLevel GetUserAccessLevel(int ID)
         {
             return GetListOf($"ID = {ID}").FirstOrDefault();
         }

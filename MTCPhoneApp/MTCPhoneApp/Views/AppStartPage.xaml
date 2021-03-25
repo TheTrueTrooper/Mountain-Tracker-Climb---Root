@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MTCPhoneApp.Views.AppStartPage">
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="AnimeClimber.jpg" HorizontalOptions="CenterAndExpand" HeightRequest="250"/>
+            <Label Text="Hello and welcome to"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" 
+                FontSize="Medium"/>
+            <Label Text="MTL Mountain Tracker App"
+                VerticalOptions="Start" 
+                HorizontalOptions="CenterAndExpand" 
+                FontSize="Large"/>
+            <Button>
+                
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

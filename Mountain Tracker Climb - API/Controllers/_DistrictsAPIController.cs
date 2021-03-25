@@ -39,6 +39,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] District Values)
         {
+            ControllerHelper.CheckObjectForPostErrorException(Values);
             try
             { 
                 using (DBContext DB = new DBContext())
@@ -46,13 +47,15 @@ namespace Mountain_Tracker_Climb___API.Controllers
             }
             catch (SqlException e)
             {
-                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e, ". There can be only one per Region."));
             }
         }
 
         [HttpPut]
         public void Put(int id, [FromBody] District Values)
         {
+            ControllerHelper.ClearObjectsEmptyStrings(Values);
+            ControllerHelper.CheckObjectForPutErrorException(Values);
             try
             { 
                 using (DBContext DB = new DBContext())
@@ -60,7 +63,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
             }
             catch (SqlException e)
             {
-                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e));
+                throw new HttpResponseException(ControllerHelper.MakeHttpGenericSQLErrorResposnse(e, ". There can be only one per Region."));
             }
         }
 

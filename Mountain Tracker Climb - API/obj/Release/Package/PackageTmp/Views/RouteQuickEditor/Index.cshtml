@@ -17,7 +17,7 @@
                 </label>
                 <select name="SelectCountry" id="SelectCountry" ng-model="Countries.SelectedID" ng-change="SelectedCountry(Countries.SelectedID)">
                     <option selected value="null">Select an option</option>
-                    <option ng-repeat="Country in Countries.FullList" value="{{Country.ID}}">{{Country.CountryCode}} - {{Country.EnglishFullName}}</option>
+                    <option ng-repeat="Country in Countries.FullList | orderBy:[ThrowPerferedToTop, 'CountryCode']" value="{{Country.ID}}">{{Country.CountryCode}} - {{Country.EnglishFullName}}</option>
                 </select>
                 <div>
                     <p>Handled by DB admin as static ISO standard table</p>

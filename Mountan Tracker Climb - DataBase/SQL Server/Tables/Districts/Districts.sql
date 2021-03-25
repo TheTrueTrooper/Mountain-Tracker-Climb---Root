@@ -5,8 +5,8 @@
 
 	[ID] INT NOT NULL PRIMARY KEY IDENTITY(0,1), 
     [EnglishFullName] VARCHAR(100) NOT NULL, 
-    [DistrictCode] CHAR(10) NOT NULL
+    [DistrictCode] CHAR(5) NOT NULL
 
-	UNIQUE ([RegionID], [EnglishFullName])
-	UNIQUE ([RegionID], [DistrictCode])
+	CONSTRAINT [UQ_Districts_Name] UNIQUE ([RegionID], [EnglishFullName])
+	CONSTRAINT [UQ_Districts_Code] UNIQUE ([RegionID], [DistrictCode])
 )

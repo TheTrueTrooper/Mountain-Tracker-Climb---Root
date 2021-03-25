@@ -49,6 +49,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPost]
         public void Post([FromBody] RouteGear Values)
         {
+            ControllerHelper.CheckObjectForPostErrorException(Values);
             try
             { 
                 using (DBContext DB = new DBContext())
@@ -63,6 +64,8 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [HttpPut]
         public void Put(int RockClimbingRoutesID, byte GearSizeID, [FromBody] RouteGear Values)
         {
+            ControllerHelper.ClearObjectsEmptyStrings(Values);
+            ControllerHelper.CheckObjectForPutErrorException(Values);
             try
             { 
                 using (DBContext DB = new DBContext())
