@@ -19,5 +19,11 @@ namespace Mountain_Tracker_Climb___API.Controllers
             ViewBag.Title = "Meet The Team";
             return View();
         }
+
+        public ActionResult About()
+        {
+            ViewBag.Title = "About";
+            return View();
+        }
     }
 }

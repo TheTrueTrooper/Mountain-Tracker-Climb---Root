@@ -1,5 +1,6 @@
 ﻿using Mountain_Tracker_Climb___API.DBModelContexts;
 using Mountain_Tracker_Climb___API.Helpers;
+using Mountain_Tracker_Climb___API.Security;
 using MTCSharedModels.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Web.Http;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
+    [SecurityLevel()]
     public class DistrictZonesController : ApiController
     {
 
@@ -39,6 +41,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [HttpPost]
+        [SecurityLevel("Admin")]
         public void Post([FromBody] DistrictZone Values)
         {
             ControllerHelper.CheckObjectForPostErrorException(Values);
@@ -54,6 +57,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [HttpPut]
+        [SecurityLevel("Admin")]
         public void Put(int id, [FromBody] DistrictZone Values)
         {
             ControllerHelper.ClearObjectsEmptyStrings(Values);
@@ -70,6 +74,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [HttpDelete]
+        [SecurityLevel("Admin")]
         public void Delete(int id)
         {
             try

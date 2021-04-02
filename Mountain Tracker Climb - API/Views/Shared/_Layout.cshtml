@@ -1,18 +1,30 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    int AdminLevel = Mountain_Tracker_Climb___API.Security.APISecurityLevelAttribute.AccessLevels["Admin"];
+    int AccessLevel = 255;
+    if (Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] != null)
+    {
+        AccessLevel = (int)Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.AccessLevelID];
+    }
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    @*<meta name="description" 
-          content="A Mountain Climbers Tracking web and phone app for use in all your mountain climbing planning. 
-          We have compiled comprehensive data on Mountains, Walls, and Routes. Additionally we have create a range of 
-          tools to transform this data for your planning and community needs." />
-    <meta name="keywords" content="Mountain Climbing, Tracking, Mountains, Wall, Routes, Climbing" />*@
+    <meta name="description" content="We providea community platform for mountain climbing that supplies users with the most efficient access to quality information for, the ability to plan and track their progress, and the space to participate deeper in the climbing culture; ultimately growing their own relationships and resources." />
+    <meta name="keywords" content="Mountain Climbing, Tracking, Mountains, Wall, Routes, Climbing" />
     <meta name="author" content="Angelo Sanches" />
+    <meta name="googlebot-news" content="nosnippet">
     <title>Mtn Tracker - @ViewBag.Title</title>
-    
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script src="~/Scripts/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular-cookies.js"></script>
+    <script src="~/Scripts/AngularJSMtnAPI.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -27,15 +39,45 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Meet The Team", "MeetTheTeam", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Route Quick Editor", "Index", "RouteQuickEditor", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    @if (@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] != null && !(AccessLevel > AdminLevel))
+                    {
+                        <li>@Html.ActionLink("Route Quick Editor", "Index", "RouteQuickEditor", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    }
+                    @if (@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] != null)
+                    {
+                        <li>@Html.ActionLink("Account", "Index", "Account", new { area = "" }, null)</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Meet The Team", "MeetTheTeam", "Home", new { area = "" }, null)</li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] != null)
+                    {
+                        <li>@Html.ActionLink((string)@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.User] ?? "Account", "Index", "Account", new { area = "" }, new { @class = "glyphicon glyphicon-user" })</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, new { @class = "glyphicon glyphicon-log-out" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Create Account", "Create", "Account", new { area = "" }, new { @class = "glyphicon glyphicon-user" })</li>
+                        <li>@Html.ActionLink("Login", "Index", "Login", new { area = "" }, new { @class = "glyphicon glyphicon-log-in" })</li>
+                    }
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
+        <div>
+            <div>
+                @if (@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] != null)
+                {
+                    <input id="@Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken" name="@Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken" type="hidden" value="@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken]">
+                }
+            </div>
+        </div>
         @RenderBody()
         <hr />
         <footer>

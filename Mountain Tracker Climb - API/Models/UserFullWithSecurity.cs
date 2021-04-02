@@ -9,7 +9,7 @@ namespace Mountain_Tracker_Climb___API.Models
     /// <summary>
     /// not included class that is keep at server level to keep safe 
     /// </summary>
-    internal class UserFullWithSecurity : UserFull
+    internal class UserFullWithSecurity : UserCreate
     {
         public string HashedPassword { get; set; }
         public string Salt { get; set; }

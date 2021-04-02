@@ -2,10 +2,6 @@
 @{
     ViewBag.Title = "Quick Route Editor";
 }
-<script src="~/Scripts/angular.js"></script>
-<script src="~/Scripts/angular-route.js"></script>
-<script src="~/Scripts/angular-sanitize.js"></script>
-<script src="~/Scripts/angular-cookies.js"></script>
 <script src="~/Scripts/AngularJSRouteQuickEdit.js"></script>
 <h2>MTL Quick Route Editor</h2>
 <div ng-app="NGRouteQuickEdit" ng-controller="RouteQuickEditController">
@@ -409,7 +405,7 @@
                         <label class="text-right">
                             Enter a Area Code
                         </label>
-                        <input ng-model="ZoneAreas.AddNew.AreaCode" />
+                        <div style="padding:0">W<input ng-model="ZoneAreas.AddNew.AreaCode" /></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -611,7 +607,7 @@
                         <label class="text-right">
                             Enter a Area Code
                         </label>
-                        <input ng-model="ZoneAreas.EditChanges.AreaCode" />
+                        <div style="padding:0">W<input ng-model="ZoneAreas.EditChanges.AreaCode" /></div>
                     </div>
                 </div>
                 <div class="modal-footer">

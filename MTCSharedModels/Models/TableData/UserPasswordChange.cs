@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MTCSharedModels.Models
+﻿namespace MTCSharedModels.Models
 {
     public class UserPasswordChange
     {
-        [APIAlwaysRequired]
-        public int? ID { get; set; }
-        [APIAlwaysRequired, APIMinimumLength(8, nameof(OldPassword)), APIMatchingField(nameof(NewPasswordPassword), nameof(OldPassword)), APIMaximumLength(50, nameof(OldPassword)), APIIllegalChars(StaticVars.AlphaCheck, nameof(OldPassword), StaticVars.AlphaErrorFixMessage)]
+        [APIAlwaysRequired(nameof(OldPassword))]
+        [APIMinimumLength(8, nameof(OldPassword))]
+        [APIMaximumLength(50, nameof(OldPassword))]
+        [APIIllegalChars(StaticVars.AlphaNumbericCheckWithDashesAndCommas, nameof(OldPassword), StaticVars.AlphaNumbericErrorFixMessageWithDashesAndCommas)]
         public string OldPassword { get; set; }
-        [APIAlwaysRequired, APIMinimumLength(8, nameof(NewPasswordPassword)), APIMaximumLength(50, nameof(NewPasswordPassword)), APIIllegalChars(StaticVars.AlphaCheck, nameof(NewPasswordPassword), StaticVars.AlphaErrorFixMessage)]
-        public string NewPasswordPassword { get; set; }
+        [APIAlwaysRequired(nameof(NewPassword))]
+        [APIMinimumLength(8, nameof(NewPassword))]
+        [APIMaximumLength(50, nameof(NewPassword))]
+        [APIIllegalChars(StaticVars.AlphaNumbericCheckWithDashesAndCommas, nameof(NewPassword), StaticVars.AlphaNumbericErrorFixMessageWithDashesAndCommas)]
+        [APIMatchingField(nameof(RepeatedPassword), nameof(NewPassword))]
+        public string NewPassword{ get; set; }
+        [APIAlwaysRequired(nameof(RepeatedPassword))]
+        [APIMinimumLength(8, nameof(RepeatedPassword))]
+        [APIMaximumLength(50, nameof(RepeatedPassword))]
+        [APIIllegalChars(StaticVars.AlphaNumbericCheckWithDashesAndCommas, nameof(RepeatedPassword), StaticVars.AlphaNumbericErrorFixMessageWithDashesAndCommas)]
+        public string RepeatedPassword { get; set; }
     }
 }

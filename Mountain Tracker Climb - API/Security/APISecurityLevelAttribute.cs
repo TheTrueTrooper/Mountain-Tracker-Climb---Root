@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,11 +13,14 @@ using Mountain_Tracker_Climb___API.App_Start;
 using Mountain_Tracker_Climb___API.DBModelContexts;
 using Mountain_Tracker_Climb___API.Models;
 using MTCSharedModels.Models;
+using WebGrease;
 
 namespace Mountain_Tracker_Climb___API.Security
 {
     public class APISecurityLevelAttribute : ActionFilterAttribute
     {
+        private static string LowestLevel;
+
         public static Dictionary<string, int> AccessLevels { get; private set; }
 
         public int RequiredAccessLevelID { get; set; }
@@ -30,9 +34,11 @@ namespace Mountain_Tracker_Climb___API.Security
                 {
                     AccessLevels.Add(UAL.EnglishName, UAL.ID);
                 }
+            //dynamic set
+            LowestLevel = AccessLevels.Where(X => X.Value == AccessLevels.Max(M => { return M.Value; })).FirstOrDefault().Key;
         }
 
-        public APISecurityLevelAttribute() : this("User")
+        public APISecurityLevelAttribute() : this(LowestLevel)
         {
         }
 
@@ -62,10 +68,21 @@ namespace Mountain_Tracker_Climb___API.Security
                     APISecurityLevelAttribute LevelAttr = actionContext.ActionDescriptor.GetCustomAttributes<APISecurityLevelAttribute>(true).FirstOrDefault();
                     if (LevelAttr == null)
                         LevelAttr = (APISecurityLevelAttribute)actionContext.ActionDescriptor.ControllerDescriptor.ControllerType.GetCustomAttribute(typeof(APISecurityLevelAttribute));
-                    string IDToken = actionContext.Request.Headers.Authorization.Parameter;
-                    //string IDToken = Encoding.UTF8.GetString(Convert.FromBase64String(RawToken));
-                    int ID = Convert.ToInt32(IDToken.Substring(0, 8), 16);
-                    string Token = IDToken.Substring(8, IDToken.Length - 8);
+                    string IDToken = null;
+                    int ID = 0;
+                    string Token = null;
+                    try
+                    {
+                        IDToken = actionContext.Request.Headers.Authorization.Parameter;
+                        //string IDToken = Encoding.UTF8.GetString(Convert.FromBase64String(RawToken));
+                        ID = Convert.ToInt32(IDToken.Substring(0, 8), 16);
+                        Token = IDToken.Substring(8, IDToken.Length - 8);
+                    }
+                    catch
+                    {
+                        actionContext.Response = Generate401();
+                    }
+
                     if (Token.Length != 44)
                         actionContext.Response = Generate401();
 
@@ -80,17 +97,31 @@ namespace Mountain_Tracker_Climb___API.Security
                             UserRequiredAccessLevelID = LevelAttr.RequiredAccessLevelID
                         });
                         //do the DB check.
-                        if (Result.Valid)
+                        if (!Result.Valid)
                             actionContext.Response = Generate401();
 
-                        actionContext.Request.Properties.Add(StaticVars.UserIDRequestProperty, ID);
-                        actionContext.Request.Properties.Add(StaticVars.TokenRequestProperty, Token);
-                        actionContext.Request.Properties.Add(StaticVars.AccessLevelIDProperty, Result.AccessLevelID);
+                        if (actionContext.Request.Properties.ContainsKey(StaticVars.UserID))
+                            actionContext.Request.Properties[StaticVars.UserID] = ID;
+                        else
+                            actionContext.Request.Properties.Add(StaticVars.UserID, ID);
+
+                        if (actionContext.Request.Properties.ContainsKey(StaticVars.IDToken))
+                            actionContext.Request.Properties[StaticVars.IDToken] = ID;
+                        else
+                            actionContext.Request.Properties.Add(StaticVars.IDToken, ID);
+
+                        if (actionContext.Request.Properties.ContainsKey(StaticVars.AccessLevelID))
+                            actionContext.Request.Properties[StaticVars.AccessLevelID] = ID;
+                        else
+                            actionContext.Request.Properties.Add(StaticVars.AccessLevelID, ID);
+
+                        Context.Dispose();
                     }
                     
                 }
                 catch(Exception e)
                 {
+                    Trace.WriteLine("APISecurityLevel Exception: " + e);
                     actionContext.Response = Generate401();
                 }
             }

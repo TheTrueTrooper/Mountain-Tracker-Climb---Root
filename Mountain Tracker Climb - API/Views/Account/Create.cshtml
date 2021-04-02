@@ -1,0 +1,87 @@
+﻿@model MTCSharedModels.Models.UserCreate
+@{
+    ViewBag.Title = "Create";
+}
+<script src="~/Scripts/AngularJSAccount.js"></script>
+<h2>Create New User</h2>
+<div ng-app="NGAccount" ng-controller="AccountCreationController">
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label for="Usr">User Name:</label>
+        </div>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="Usr" ng-model="NewUser.UserName">
+        </div>
+        <div class="col-sm-12 ErrorUserName">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label for="Pas">Password:</label>
+        </div>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" id="Pas" ng-model="NewUser.Password">
+        </div>
+        <div class="col-sm-12 ErrorPassword">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label for="Ema">Email:</label>
+        </div>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="Ema" ng-model="NewUser.PrimaryPersonalEmail">
+        </div>
+        <div class="col-sm-12 ErrorPrimaryPersonalEmail">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <!--MMMMMmmmm Pho-->
+            <label for="Pho">Phone Number:</label>
+        </div>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="Pho" ng-model="NewUser.PrimaryPhone">
+        </div>
+        <div class="col-sm-12 ErrorPrimaryPhone">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label for="FNa">First Name:</label>
+        </div>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="FNa" ng-model="NewUser.FirstName">
+        </div>
+        <div class="col-sm-12 ErrorFirstName">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label for="MNa">Middle Name:</label>
+        </div>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="MNa" ng-model="NewUser.MiddleName">
+        </div>
+        <div class="col-sm-12 ErrorMiddleName">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label for="LNa">Last Name:</label>
+        </div>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="LNa" ng-model="NewUser.LastName">
+        </div>
+        <div class="col-sm-12 ErrorLastName">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="button" class="form-control" id="CAc" value="Create Account" ng-click="Submit()">
+        </div>
+        <div class="col-sm-12 ErrorRoot">
+        </div>
+    </div>
+</div>
+

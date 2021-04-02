@@ -86,9 +86,57 @@ IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Provinces
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Countries') AND Type = N'U')
 	delete Countries where 1=1
 
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Users') AND Type = N'U')
+	delete UserAccessTokens where 1=1
+
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.Users') AND Type = N'U')
+	delete Users where 1=1
+
 IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.UserAccessLevels') AND Type = N'U')
 	delete UserAccessLevels where 1=1
 GO
+
+GO
+PRINT N'Altering [dbo].[Users]...';
+
+
+GO
+ALTER TABLE [dbo].[Users] ALTER COLUMN [BannerPictureBytes] VARBINARY (MAX) NULL;
+
+ALTER TABLE [dbo].[Users] ALTER COLUMN [ProfilePictureBytes] VARBINARY (MAX) NULL;
+
+
+GO
+PRINT N'Refreshing [dbo].[CheckToken]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[CheckToken]';
+
+
+GO
+PRINT N'Refreshing [dbo].[CheckTokenWithAccessLevel]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[CheckTokenWithAccessLevel]';
+
+
+GO
+PRINT N'Refreshing [dbo].[UserLogin]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[UserLogin]';
+
+
+GO
+PRINT N'Refreshing [dbo].[GetUserSalt]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[GetUserSalt]';
+
 
 GO
 /*

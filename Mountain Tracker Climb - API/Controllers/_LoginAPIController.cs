@@ -10,7 +10,7 @@ using Mountain_Tracker_Climb___API.DBModelContexts;
 using Mountain_Tracker_Climb___API.Helpers;
 using System.Data.SqlClient;
 
-namespace Mountain_Tracker_Climb___API.Controllers
+namespace Mountain_Tracker_Climb___API.Controllers.API
 {
     public class LoginController : ApiController
     {
@@ -18,7 +18,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         public UserLoginReturn Post([FromBody] UserLogin Values)
         {
             ControllerHelper.ClearObjectsEmptyStrings(Values);
-            ControllerHelper.CheckObjectForPostErrors(Values);
+            ControllerHelper.CheckObjectForPostErrorException(Values);
             UserLoginReturn Return;
             try
             {

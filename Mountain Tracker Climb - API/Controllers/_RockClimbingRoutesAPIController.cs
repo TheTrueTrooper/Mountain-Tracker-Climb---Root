@@ -8,10 +8,12 @@ using MTCSharedModels.Models;
 using Mountain_Tracker_Climb___API.DBModelContexts;
 using System.Data.SqlClient;
 using Mountain_Tracker_Climb___API.Helpers;
+using Mountain_Tracker_Climb___API.Security;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
     //RockClimbingRoutesDBContext
+    [SecurityLevel()]
     public class RockClimbingRoutesController : ApiController
     {
         [HttpGet]
@@ -73,6 +75,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [HttpPost]
+        [SecurityLevel("Admin")]
         public void Post([FromBody] RockClimbingRoute Values)
         {
             ControllerHelper.CheckObjectForPostErrorException(Values);
@@ -88,6 +91,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [HttpPut]
+        [SecurityLevel("Admin")]
         public void Put(int id, [FromBody]RockClimbingRoute Values)
         {
             ControllerHelper.ClearObjectsEmptyStrings(Values);
@@ -104,6 +108,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [HttpDelete]
+        [SecurityLevel("Admin")]
         public void Delete(int id)
         {
             try

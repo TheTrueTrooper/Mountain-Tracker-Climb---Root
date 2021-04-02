@@ -1,5 +1,6 @@
 ﻿using Mountain_Tracker_Climb___API.DBModelContexts;
 using Mountain_Tracker_Climb___API.Helpers;
+using Mountain_Tracker_Climb___API.Security;
 using MTCSharedModels.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Web.Http;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
+    [APISecurityLevel()]
     public class DistrictsController : ApiController
     {
         [HttpGet]
@@ -36,6 +38,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
                 return DB.DistrictsTable.GetDistrict(id);
         }
 
+        [APISecurityLevel("Admin")]
         [HttpPost]
         public void Post([FromBody] District Values)
         {
@@ -51,6 +54,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
             }
         }
 
+        [APISecurityLevel("Admin")]
         [HttpPut]
         public void Put(int id, [FromBody] District Values)
         {
@@ -67,6 +71,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
             }
         }
 
+        [APISecurityLevel("Admin")]
         [HttpDelete]
         public void Delete(int id)
         {

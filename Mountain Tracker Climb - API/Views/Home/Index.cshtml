@@ -1,10 +1,9 @@
 ﻿<div class="jumbotron">
-    <h1>Mountain Tracker&reg;&trade; Alpha</h1>
-    <h3>Welcome to Mountain Tracker</h3>
+    <h1 class="text-center">Mountain Tracker&reg;&trade; Alpha</h1>
+    <h3 class="text-center">Welcome to Mountain Tracker</h3>
     <blockquote>
         <p>
-            The Mountain Tracker Apps are a family of apps that are dedicated to creating, organizing, and delivering mountaineering data. Our team and their technical lead Angelo Sanches has worked hard to bring the vision of Ryan Shields to life as a global app that will unifi the world of rock moutaineering at the click of a button.<br>
-            We hope to use this data to create and bring together a community for rock climbing and other various mountaineering activities.
+            Mountain Tracker strives to give timeback to mountain climbers by providing accessible, reliable, and comprehensive climbing information in one place. But it's more than just a tool, it's a community. It's a place to connect with your community. It's a place to access education resources or partner with experienced climbers. It's the place you can go when you're having a bad day at work and you want to escape to something you love.
         </p>
         <footer>By Angelo Sanches, Ryan Shields, Armando Sanches, and Larra Caldie</footer>
     </blockquote>
@@ -13,7 +12,15 @@
     <div class="col-md-4">
         <h2>Get Started Here</h2>
         <p>Get started with planning here on the web site!</p>
-        <p><a class="btn btn-default" @*href=""*@>Login and Get Started &raquo;</a></p>
+        @if (Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] == null)
+        {
+            <p>@Html.ActionLink("Create a Account and Get Started \u00BB", "Create", "Account", new { }, new { @class = "btn btn-default" })</p>
+            <p>@Html.ActionLink("Or Login with Your to Get Started again \u00BB", "Index", "Login", new { }, new { @class = "btn btn-default" })</p>
+        }
+        else
+        {
+            <p>@Html.ActionLink("Get Started \u00BB", "Index", "Account", new { }, new { @class = "btn btn-default" })</p>
+        }
     </div>
     <div class="col-md-4">
         <h2>For Android</h2>

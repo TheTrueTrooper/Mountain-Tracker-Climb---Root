@@ -3,8 +3,10 @@ public class MonoPackageManager_Resources {
 	public static String[] Assemblies = new String[]{
 		/* We need to ensure that "MTCPhoneApp.Android.dll" comes first in this list. */
 		"MTCPhoneApp.Android.dll",
+		"MTCSharedModels.dll",
 		"FormsViewGroup.dll",
 		"MTCPhoneApp.dll",
+		"Newtonsoft.Json.dll",
 		"Xamarin.AndroidX.Activity.dll",
 		"Xamarin.AndroidX.Annotation.dll",
 		"Xamarin.AndroidX.AppCompat.AppCompatResources.dll",

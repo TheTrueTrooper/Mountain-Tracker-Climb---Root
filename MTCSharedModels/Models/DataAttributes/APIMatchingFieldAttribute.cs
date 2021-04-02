@@ -9,7 +9,7 @@
         public APIMatchingFieldAttribute(string FieldName, string ParamName)
         {
             this.FieldName = FieldName;
-            this.ErrorMessage = $"Your request's {ParamName} param doent match the {FieldName} param as required."; ;
+            this.ErrorMessage = $"{ParamName}:Your request's {ParamName} param dosen't match the {FieldName} param as required.;";
         }
     }
 }

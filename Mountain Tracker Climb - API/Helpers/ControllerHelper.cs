@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Http;
 using MTCSharedModels.Models;
+using MTCSharedModels.Models.Interfaces;
 
 namespace Mountain_Tracker_Climb___API.Helpers
 {
@@ -17,6 +22,8 @@ namespace Mountain_Tracker_Climb___API.Helpers
     {
         public static void ClearObjectsEmptyStrings<T>(T obj)
         {
+            if (obj == null)
+                return;
             Type OType = typeof(T);
             PropertyInfo[] Properties = OType.GetProperties();
             foreach (PropertyInfo P in Properties)
@@ -42,6 +49,8 @@ namespace Mountain_Tracker_Climb___API.Helpers
 
         private static List<string> CheckObjectForErrors<T>(T obj, bool SkipPostErrors)
         {
+            if (obj == null)
+                return new List<string>() { "Root:You have failed to provide any of the required parameters. Please check with the documentation for usage.;" };
             List<string> Errors = new List<string>();
             Type OType = typeof(T);
             PropertyInfo[] Properties = OType.GetProperties();
@@ -212,11 +221,11 @@ namespace Mountain_Tracker_Climb___API.Helpers
                     PropertyInfo MatchingField = OType.GetProperty(ErrorAttribute.FieldName);
                     if (MatchingField == null)
                         throw new Exception($"The field to match is not defined. Please check your names.");
-                    if (P.PropertyType.Name != MatchingField.Name)
+                    if (P.PropertyType.Name != MatchingField.PropertyType.Name)
                         throw new Exception($"The Property types do not match");
                     object Value = P.GetValue(obj);
                     object Value2 = MatchingField.GetValue(obj);
-                    if (Value != Value2)
+                    if (Value != null && !Value.Equals(Value2))
                     {
                         Errors.Add(ErrorAttribute.ErrorMessage);
                     }
@@ -226,6 +235,8 @@ namespace Mountain_Tracker_Climb___API.Helpers
                 return Errors;
             return null;
         }
+
+        
 
         public static bool CheckEmail(string Value)
         {
@@ -238,14 +249,16 @@ namespace Mountain_Tracker_Climb___API.Helpers
             if (Errors != null)
             {
                 HttpResponseMessage ErrorResposnse = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                string ErrorMessage = "The following errors were detected:\n";
+                string ErrorMessage = "The following errors were detected:";
                 foreach (string Error in Errors)
                 {
-                    ErrorMessage += $"{Error}\n";
+                    ErrorMessage += Error;
                 }
                 ErrorResposnse.StatusCode = HttpStatusCode.BadRequest;
-                ErrorResposnse.Content = new StringContent(ErrorMessage);
-                ErrorResposnse.ReasonPhrase = ErrorMessage.Replace("\n", " ");
+                ErrorResposnse.Content = new StringContent(ErrorMessage.Replace(";", "\n"));
+                if (ErrorMessage.Length > 512)
+                    ErrorMessage = ErrorMessage.Substring(0, 512);
+                ErrorResposnse.ReasonPhrase = ErrorMessage;
                 return ErrorResposnse;
             }
             return null;
@@ -328,6 +341,29 @@ namespace Mountain_Tracker_Climb___API.Helpers
                 };
             }
             return ErrorResposnse;
+        }
+
+        public static HttpResponseMessage GeneratePNGImageResponse(IPictureBytes Picture)
+        {
+            HttpResponseMessage Result = new HttpResponseMessage(HttpStatusCode.OK);
+            Result.Content = new ByteArrayContent(Picture.PictureRawBytes);
+            Result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            return Result;
+        }
+
+        public static async Task<MemoryStream> LoadFileToMemoryAsync(string Path)
+        {
+            MemoryStream Result = new MemoryStream();
+            using (Stream Reader = File.Open(Path, FileMode.Open, FileAccess.Read))
+            {
+                await Reader.CopyToAsync(Result);
+            }
+            return Result;
+        }
+
+        public static string MapVirtualPath(string VirtualPath)
+        {
+            return HttpContext.Current.Server.MapPath(VirtualPath);
         }
     }
 }

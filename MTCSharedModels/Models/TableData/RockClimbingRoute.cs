@@ -22,11 +22,14 @@ namespace MTCSharedModels.Models
 		public List<RouteGear> RoutesGear { get; set; } = null;
 		[SQLIdentityID]
 		public int? ID { get; set; }
-		[APIPostRequired(nameof(EnglishFullName)), APIMinimumLength(1, nameof(EnglishFullName)), APIMaximumLength(100, nameof(EnglishFullName))]
+		[APIPostRequired(nameof(EnglishFullName))]
+		[APIMinimumLength(1, nameof(EnglishFullName))]
+		[APIMaximumLength(100, nameof(EnglishFullName))]
 		public string EnglishFullName { get; set; }
-		[APIPostRequired(nameof(RouteCode)), APIMinimumLength(1, nameof(RouteCode)), APIMaximumLength(100, nameof(RouteCode)), APIIllegalChars(StaticVars.AlphaNumbericErrorFixMessageWithDashes, nameof(EnglishFullName), StaticVars.AlphaNumbericErrorFixMessageWithDashes)]
+		[APIPostRequired(nameof(RouteCode))]
+		[APIRegexCheck("[0-9][0-9][0-9]", "RouteCode Format", nameof(RouteCode), "Please ensure the route follows the following format '###' or '[0-9][0-9][0-9]'")]
 		public string RouteCode { get; set; }
-		[APIPostRequired(nameof(RouteWallNumber)), APIMinimumLength(1, nameof(RouteCode)), APIMaximumLength(5, nameof(RouteCode)), APIIllegalChars(StaticVars.AlphaNumbericErrorFixMessageWithDashes, nameof(EnglishFullName), StaticVars.AlphaNumbericErrorFixMessageWithDashes)]
+		[APIPostRequired(nameof(RouteWallNumber))]
 		public int? RouteWallNumber { get; set; }
 		[APIPostRequired(nameof(Rating))]
 		public byte? Rating { get; set; }

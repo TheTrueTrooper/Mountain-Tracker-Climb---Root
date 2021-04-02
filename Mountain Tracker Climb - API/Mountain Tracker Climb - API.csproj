@@ -162,6 +162,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\_ClimbingTypesAPIController.cs" />
     <Compile Include="Controllers\_ClimbingWallsAPIController.cs" />
     <Compile Include="Controllers\_DistrictsAPIController.cs" />
@@ -177,6 +179,8 @@
     <Compile Include="Controllers\_RockClimbingRoutesAPIController.cs" />
     <Compile Include="Controllers\_RouteGearAPIController.cs" />
     <Compile Include="Controllers\_LoginAPIController.cs" />
+    <Compile Include="Controllers\_PartnersAPIController.cs" />
+    <Compile Include="Controllers\_UserAccountSecurityAPIController.cs" />
     <Compile Include="Controllers\_UserAccountAPIController.cs" />
     <Compile Include="Controllers\_ZoneAreasAPIController.cs" />
     <Compile Include="Controllers\__TestingAPIController.cs" />
@@ -202,6 +206,8 @@
     <Compile Include="DBModelContexts\StoredProcs\GetUsersSaltDBContext.cs" />
     <Compile Include="DBModelContexts\StoredProcs\UserLoginDBContext.cs" />
     <Compile Include="DBModelContexts\UserAccessLevelDBContext.cs" />
+    <Compile Include="DBModelContexts\UserBannerPictureDBContext.cs" />
+    <Compile Include="DBModelContexts\UserProfilePictureDBContext.cs" />
     <Compile Include="DBModelContexts\UserDBContext.cs" />
     <Compile Include="DBModelContexts\ZoneAreasDBContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -217,8 +223,8 @@
     <Compile Include="Models\UserGetSaltProc.cs" />
     <Compile Include="Models\UserLoginProc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\APISecurityOwnerAttribute.cs" />
     <Compile Include="Security\APISecurityLevelAttribute.cs" />
+    <Compile Include="Security\SecurityLevelAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -240,6 +246,8 @@
     <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\AngularJSAccount.js" />
+    <Content Include="Scripts\AngularJSMtnAPI.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -273,6 +281,12 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="StaticImages\Values_Community.PNG" />
+    <Content Include="StaticImages\Values_Inclusivity.PNG" />
+    <Content Include="StaticImages\Values_Innovation.PNG" />
+    <Content Include="StaticImages\Values_Reliablity.PNG" />
+    <Content Include="StaticImages\Values_Respect.PNG" />
+    <Content Include="StaticImages\Values_Sustainablity.PNG" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -289,6 +303,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\RouteQuickEditor\Index.cshtml" />
     <Content Include="Views\Home\MeetTheTeam.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

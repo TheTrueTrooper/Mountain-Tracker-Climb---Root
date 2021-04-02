@@ -1,5 +1,4 @@
-﻿
-namespace MTCSharedModels.Models
+﻿namespace MTCSharedModels.Models
 {
     public class RouteGear
     {

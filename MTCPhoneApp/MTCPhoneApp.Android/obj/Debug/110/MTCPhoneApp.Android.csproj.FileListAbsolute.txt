@@ -572,3 +572,8 @@ C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneAp
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\obj\Debug\110\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\obj\Debug\110\stamp\_ResolveLibraryProjectImports.stamp
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\obj\Debug\110\res\drawable\animeclimber.jpg
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\bin\Debug\MTCSharedModels.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\bin\Debug\MTCSharedModels.pdb
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\obj\Debug\110\android\assets\MTCSharedModels.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\obj\Debug\110\android\assets\MTCSharedModels.pdb
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\MTCPhoneApp\MTCPhoneApp.Android\obj\Debug\110\android\assets\Newtonsoft.Json.dll

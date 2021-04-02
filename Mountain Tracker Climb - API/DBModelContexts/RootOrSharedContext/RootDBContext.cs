@@ -8,7 +8,6 @@ using Mountain_Tracker_Climb___API.App_Start;
 using System.Reflection;
 using MTCSharedModels.Models;
 using System.Net.Http.Headers;
-using WebGrease.Css.Extensions;
 
 namespace Mountain_Tracker_Climb___API.DBModelContexts
 {
@@ -85,11 +84,41 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return $"select {DBStringListOfColumns} from {DBTable} where {Where}";
         }
 
+        protected string BasicSelect(int TopAmount, string Where = null)
+        {
+            if (Where == null)
+                return $"select top {TopAmount} {DBStringListOfColumns} from {DBTable}";
+            return $"select top {TopAmount} {DBStringListOfColumns} from {DBTable} where {Where}";
+        }
+
+        protected string BasicSelect(int Amount, int Page, string Where = null)
+        {
+            Page *= Amount;
+            if (Where == null)
+                return $"select {DBStringListOfColumns} from {DBTable} limit {Amount} offest {Page}";
+            return $"select {DBStringListOfColumns} from {DBTable} where {Where} limit {Amount} offest {Page}";
+        }
+
         protected string BasicSelect(string Columns, string Table, string Where = null)
         {
             if (Where == null)
                 return $"select {Columns} from {Table}";
             return $"select {Columns} from {Table} where {Where}";
+        }
+
+        protected string BasicSelect(string Columns, string Table, int TopAmount, string Where = null)
+        {
+            if (Where == null)
+                return $"select top {TopAmount} {Columns} from {Table}";
+            return $"select top {TopAmount} {Columns} from {Table} where {Where}";
+        }
+
+        protected string BasicSelect(string Columns, string Table, int Amount, int Page, string Where = null)
+        {
+            Page *= Amount;
+            if (Where == null)
+                return $"select {Columns} from {Table} limit {Amount} offest {Page}";
+            return $"select {Columns} from {Table} where {Where} limit {Amount} offest {Page}";
         }
 
         protected string[] GenerateInsertValueString(T Object)
@@ -145,6 +174,11 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                                 Return += $"{x.Name} = 1,";
                             else
                                 Return += $"{x.Name} = 0,";
+                        }
+                        else if (x.PropertyType.FullName == typeof(byte[]).FullName)
+                        {
+                            string Value = BitConverter.ToString((byte[])x.GetValue(Object)).Replace("-", "");
+                            Return += $"{x.Name} = 0x{Value},";
                         }
                         else
                             Return += $"{x.Name} = {Obj},";
@@ -263,6 +297,18 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return Return;
         }
 
+        protected string BasicUpdate(string Values, string Where)
+        {
+            return $"update {DBTable} set {Values} where {Where}";
+            //UPDATE suppliers SET supplier_id = 50,supplier_name = 'Apple',city = 'Cupertino' WHERE supplier_name = 'Google';
+        }
+
+        protected string BasicUpdate(string Table, string Values, string Where)
+        {
+            return $"update {Table} set {Values} where {Where}";
+            //UPDATE suppliers SET supplier_id = 50,supplier_name = 'Apple',city = 'Cupertino' WHERE supplier_name = 'Google';
+        }
+
         protected string BasicUpdate(string Table, T Object, string Where)
         {
             string Values = GenerateUpdateValueString(Object);
@@ -287,19 +333,18 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return $"delete {DBTable} where {Where}";
         }
 
-        protected IEnumerable<T> GetListOf()
+        protected IEnumerable<T> GetResult(string QueryString)
         {
             List<T> Items = new List<T>();
-            string QueryString = BasicSelect();
             Type TType = typeof(T);
-            PropertyInfo[] Properties = TType.GetProperties().Where(x=> !Attribute.IsDefined(x, typeof(SQLIgnoreAttribute))).ToArray();
+            PropertyInfo[] Properties = TType.GetProperties().Where(x => !Attribute.IsDefined(x, typeof(SQLIgnoreAttribute))).ToArray();
             using (SqlCommand Command = new SqlCommand(QueryString, DB))
             using (SqlDataReader DataReader = Command.ExecuteReader())
                 while (DataReader.Read())
                 {
                     int i = 0;
                     T NewObj = new T();
-                    Properties.ForEach(x =>
+                    Array.ForEach(Properties, x =>
                     {
                         if (DataReader[i] == null || DataReader[i] == DBNull.Value)
                             x.SetValue(NewObj, null);
@@ -312,31 +357,46 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return Items;
         }
 
+        protected IEnumerable<T> GetListOf()
+        {
+            string QueryString = BasicSelect();
+            return GetResult(QueryString);
+        }
+
+        protected IEnumerable<T> GetListOf(int Amount, bool FromTop = true)
+        {
+            string QueryString = BasicSelect(Amount);
+            if (!FromTop)
+                QueryString.Replace("top", "last");
+            return GetResult(QueryString);
+        }
+
+        protected IEnumerable<T> GetListOf(int Amount, int Page)
+        {
+            string QueryString = BasicSelect(Amount, Page);
+            return GetResult(QueryString);
+        }
+
         protected IEnumerable<T> GetListOf(string Where)
         {
-            List<T> Items = new List<T>();
             string QueryString = BasicSelect(Where);
-            Type TType = typeof(T);
-            PropertyInfo[] Properties = TType.GetProperties().Where(x => !Attribute.IsDefined(x, typeof(SQLIgnoreAttribute))).ToArray();
-            using (SqlCommand Command = new SqlCommand(QueryString, DB))
-            using (SqlDataReader DataReader = Command.ExecuteReader())
-                while (DataReader.Read())
-                {
-                    int i = 0;
-                    T NewObj = new T();
-                    Properties.ForEach(x =>
-                    {
-                        if(DataReader[i] == null || DataReader[i] == DBNull.Value)
-                            x.SetValue(NewObj, null);
-                        else
-                            x.SetValue(NewObj, DataReader[i]);
-                        i++;
-                    });
-                    Items.Add(NewObj);
-                }
-            return Items;
+            return GetResult(QueryString);
         }
-        
+
+        protected IEnumerable<T> GetListOf(int Amount, string Where, bool FromTop = true)
+        {
+            string QueryString = BasicSelect(Amount, Where);
+            if (!FromTop)
+                QueryString.Replace("top", "last");
+            return GetResult(QueryString);
+        }
+
+        protected IEnumerable<T> GetListOf(int Amount, int Page, string Where)
+        {
+            string QueryString = BasicSelect(Amount, Page, Where);
+            return GetResult(QueryString);
+        }
+
         protected int InsertData(T Object)
         {
             string QueryString = BasicInsert(Object);
@@ -361,6 +421,12 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
         protected int DeleteData(string Where)
         {
             string QueryString = BasicDelete(Where);
+            using (SqlCommand Command = new SqlCommand(QueryString, DB))
+                return Command.ExecuteNonQuery();
+        }
+
+        protected int ExecuteCustomNonQuery(string QueryString)
+        {
             using (SqlCommand Command = new SqlCommand(QueryString, DB))
                 return Command.ExecuteNonQuery();
         }

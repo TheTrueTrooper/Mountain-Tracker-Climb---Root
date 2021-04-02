@@ -6,9 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using MTCSharedModels.Models;
 using Mountain_Tracker_Climb___API.DBModelContexts;
+using Mountain_Tracker_Climb___API.Security;
 
 namespace Mountain_Tracker_Climb___API.Controllers
 {
+    [SecurityLevel()]
     public class GearController : ApiController
     {
         [HttpGet]

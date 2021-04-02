@@ -25,10 +25,10 @@
 	[Salt] CHAR(44) NOT NULL, 
 
 	--Profile stuff
-	--Size is 2 to the 16 - 1 = 65,536 - 1 bytes 
+	--Size is 2 to the 30 - 1 = 65,536 - 1 bytes 
     --[Picture] VARBINARY(16) NULL, 
-    [ProfilePicturePath] VARCHAR(16) NULL, 
-    [BannerPicturePath] VARCHAR(16) NULL, 
+    [ProfilePictureBytes] VARBINARY(max) NULL, -- Size is 2 to the 20 - 1 = 1,048,576 - 1 bytes ~= 1024 KB to fit 400x400(640KBpng or 960KBtiff) easy
+    [BannerPictureBytes] VARBINARY(max) NULL, -- Size is 2 to the 22 - 1 = 4,194,304 - 1 bytes ~= 4MB Kb to fit 1548x400(2.480MBpng or 3.720MBtiff) easy
     [Bio] NVARCHAR(2500) NULL, 
 
     --linkable page to something extra

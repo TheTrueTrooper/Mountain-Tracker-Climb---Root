@@ -3,15 +3,11 @@
     [System.AttributeUsage(System.AttributeTargets.Property, Inherited = true)]
     public class APIEmailAttribute : System.Attribute
     {
-        public string ErrorMessage { get; set; } = $"Your requests param has failed its Email check.";
-
-        public APIEmailAttribute()
-        {
-        }
+        public string ErrorMessage { get; set; }
 
         public APIEmailAttribute(string ParamName)
         {
-            ErrorMessage = $"Your requests {ParamName} param has failed its Email check. If you believe your email is valid please contact the help desk.";
+            ErrorMessage = $"{ParamName}:Your requests {ParamName} param has failed its Email check. If you believe your email is valid please contact the help desk.;";
         }
     }
 }

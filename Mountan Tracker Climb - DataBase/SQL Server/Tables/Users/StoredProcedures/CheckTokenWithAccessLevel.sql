@@ -12,13 +12,11 @@ begin
 	delete from UserAccessTokens where UserTokenValidTill < GETDATE()
 	--If we have a value after clearing old ones then we must have had a valid log on in time with this token
 	if(exists(select UAT.UserToken from Users as U
-		join UserAccessLevels as UAL on UAL.ID = U.AccessLevelID
 		join UserAccessTokens as UAT on U.ID = UAT.UserID
-			where not UAL.ID < @UserRequiredAccessLevelID and U.ID = @UserID and UAT.UserToken = @UserToken))
+			where not U.AccessLevelID > @UserRequiredAccessLevelID and U.ID = @UserID and UAT.UserToken = @UserToken))
 		begin
 			--get the time to extend
 			select @ExtendValue = UAT.DaysValid, @AccessLevelID = U.AccessLevelID from Users as U
-			join UserAccessLevels as UAL on UAL.ID = U.AccessLevelID
 			join UserAccessTokens as UAT on U.ID = UAT.UserID
 				where U.ID = @UserID and UAT.UserToken = @UserToken
 			--extend that much time

@@ -1,0 +1,207 @@
+﻿
+@{
+}
+<script src="~/Scripts/AngularJSAccount.js"></script>
+<div ng-app="NGAccount" ng-controller="AccountEditorController">
+    <input type="hidden" ng-init="Init(@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.UserID])">
+    <div style="background-size:100%;background-image: url({{Banner}}); background-color: aliceblue; height: 400px; width: 100%; opacity: 20; position: absolute; top: 0px; left: 0; z-index: -20"></div>
+    <div class="media" style="padding-top:90px">
+        <div class="media-left">
+            <img ng-click="EditProfilePicture()" ng-src="{{ProfilePicture}}" class="img-rounded media-object ProfilePictureImage">
+        </div>
+        <div class="media-body">
+            <h1 class="media-heading">Welcome {{User.UserName}}</h1>
+            <h4 class="media-heading">Info</h4>
+            <ul class="list-group">
+                <li class="list-group-item">User Name: {{User.UserName}}</li>
+                <li ng-click="EditFirstName()" class="list-group-item">First Name: {{User.FirstName}}</li>
+                <li ng-click="EditMiddleName()" class="list-group-item">Middle Name: {{User.MiddleName}}</li>
+                <li ng-click="EditLastName()" class="list-group-item">Last Name: {{User.LastName}}</li>
+                <li ng-click="EditURL()" class="list-group-item">URL: <a href="{{User.ProfileURL}}">{{User.ProfileURL}}</a></li>
+                <li ng-click="ChangeAccountType()" class="list-group-item">User Account Type: @Mountain_Tracker_Climb___API.Security.SecurityLevelAttribute.AccessLevelNames[(int)Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.AccessLevelID]]</li>
+                <li ng-click="EditKeepPrivate()" class="list-group-item">Keep Profile Private: {{User.KeepPrivate}}</li>
+            </ul>
+            <input type="button" ng-click="EditBanner()" value="Change Banner Picture">
+        </div>
+        <div class="media-bottom">
+            <h3 class="media-heading">Bio</h3>
+            <ul class="list-group">
+                <li ng-click="EditBio()" class="list-group-item" style="min-height:200px">{{User.Bio}}</li>
+            </ul>
+        </div>
+        <div class="media-bottom row">
+            <div class="col-lg-2">
+                <h3 class="media-heading">Friends</h3>
+                <ul class="list-group">
+                    <li ng-click="ViewFullFriendsList()" class="list-group-item" style="min-height:200px">This will maybe be a spot for friends</li>
+                </ul>
+            </div>
+            <div class="col-lg-10">
+                <h3 class="media-heading">Feed</h3>
+                <ul class="list-group">
+                    <li class="list-group-item" style="min-height:200px">This will maybe be a feed</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="UploadProfilePictureModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Photo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            <img ng-src="{{ProfilePicturePreview}}" class="center-block img-rounded ProfilePictureImage">
+                        </label>
+                        <input onchange="angular.element(this).scope().LoadProfilePicturePreview()" type="file" accept=".png,.PNG" id="UploadProfilePictureFile" name="UploadProfilePictureFile" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="UploadProfilePictureButton" name="UploadProfilePictureButton" disabled class="btn btn-default" ng-click="UploadProfilePicture()">Upload Photo</button>
+                    <button type="button" class="btn btn-default" ng-click="DeleteProfilePicture()">Delete Photo</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="UploadBannerModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Banner</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="text-right">
+                            <img ng-src="{{BannerPreview}}" class="center-block img-rounded ProfilePictureImage">
+                        </label>
+                        <input onchange="angular.element(this).scope().LoadBannerPreview()" type="file" accept=".png,.PNG" id="UploadBannerFile" name="UploadBannerFile" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="UploadBannerButton" name="UploadBannerButton" disabled class="btn btn-default" ng-click="UploadBanner()">Upload Photo</button>
+                    <button type="button" class="btn btn-default" ng-click="DeleteBanner()">Delete Photo</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditFirstNameModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter Your First Name</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" ng-model="Edit.FirstName" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="SaveFirstNameEdit()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditMiddleNameModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter Your Middle Name</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" ng-model="Edit.MiddleName" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="SaveMiddleNameEdit()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditLastNameModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter Your Last Name</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" ng-model="Edit.LastName" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="SaveLastNameEdit()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditURLModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter Your URL</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="url" ng-model="Edit.ProfileURL" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="SaveProfileURLEdit()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditKeepPrivateModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Set Your Privacy Settings</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="checkbox" ng-model="Edit.KeepPrivate" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="SaveKeepPrivateEdit()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="EditBioModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Say something about your self</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" ng-model="Edit.Bio" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="SaveBioEdit()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -37,7 +37,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
 
         UserLoginReturn Login(UserLogin Login)
         {
-            string Salt = GetUserSaltStoredProc.GetSalt(new UserGetSaltProc() { UserName = Login.UserName }).Salt;
+            string Salt = GetUserSaltStoredProc.GetSalt(new UserGetSaltProc() { UserName = Login.UserName })?.Salt;
+            if (Salt == null)
+                return null;
             UserLoginProcReturn Result = LoginStoredProc.Login(new UserLoginProc() { UserName = Login.UserName, HashedPassword = SecurityHelper.PasswordToSaltedHash(Login.Password, Salt) });
             if (Result.Success == true)
             {
@@ -73,9 +75,9 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             return GetListOf();
         }
 
-        public IEnumerable<UserFullWithSecurity> GetListOfUsers(int AccessLevelID)
+        public IEnumerable<UserFullWithSecurity> GetListOfUsers(string NameSearch)
         {
-            return GetListOf($"AccessLevelID = {AccessLevelID}");
+            return GetListOf($"UserName Like '%{NameSearch}%'");
         }
 
         public UserFullWithSecurity GetUser(int ID)

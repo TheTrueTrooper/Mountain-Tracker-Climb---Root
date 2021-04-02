@@ -15,3 +15,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.ValuesMediaImage {
+    width:200px !important;
+    height:200px !important;
+    object-fit:cover !important; 
+}
+
+.ProfilePictureImage {
+    width: 400px !important;
+    height: 400px !important;
+    object-fit: cover !important;
+}

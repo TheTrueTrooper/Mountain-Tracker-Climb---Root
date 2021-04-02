@@ -9,13 +9,13 @@
         public APIRegexCheckAttribute(string Regex, string CheckIsFor, string ParamName)
         {
             this.Regex = Regex;
-            ErrorMessage = $"Your requests {ParamName} param has failed its check for {CheckIsFor} check.";
+            ErrorMessage = $"{ParamName}:Your requests {ParamName} param has failed its check for {CheckIsFor} check.;";
         }
 
         public APIRegexCheckAttribute(string Regex, string CheckIsFor, string ParamName, string AdditionalComments)
         {
             this.Regex = Regex;
-            ErrorMessage = $"Your requests {ParamName} param has failed its check for {CheckIsFor} check. {AdditionalComments}";
+            ErrorMessage = $"{ParamName}:Your requests {ParamName} param has failed its check for {CheckIsFor} check. {AdditionalComments};";
         }
     }
 }

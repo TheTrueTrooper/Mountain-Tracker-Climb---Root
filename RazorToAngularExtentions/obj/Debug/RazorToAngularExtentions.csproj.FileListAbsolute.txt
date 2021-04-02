@@ -1,0 +1,2 @@
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\RazorToAngularExtentions\obj\Debug\RazorToAngularExtentions.csprojAssemblyReference.cache
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\RazorToAngularExtentions\obj\Debug\RazorToAngularExtentions.csproj.CoreCompileInputs.cache

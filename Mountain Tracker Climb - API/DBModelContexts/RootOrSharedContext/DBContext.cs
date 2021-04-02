@@ -49,6 +49,8 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
         public GearDBContext GearTable { get; }
         public UserAccessLevelDBContext UserAccessLevelTable { get; }
         public UserDBContext UserTable { get; }
+        public UserBannerPictureDBContext BannerPictures { get; }
+        public UserProfilePictureDBContext ProfilePictures { get; }
 
 
 
@@ -71,7 +73,8 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             GearTable = new GearDBContext(GearSizesTable);
             UserAccessLevelTable = new UserAccessLevelDBContext(GearTable);
             UserTable = new UserDBContext(UserAccessLevelTable);
-
+                BannerPictures = new UserBannerPictureDBContext(UserTable);
+                ProfilePictures = new UserProfilePictureDBContext(UserTable);
 
             TokenChecker = new TokenCheckerDBContext(UserAccessLevelTable);
         }

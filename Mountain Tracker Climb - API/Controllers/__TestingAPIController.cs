@@ -13,12 +13,9 @@ namespace Mountain_Tracker_Climb___API.Controllers
     public class TestingController : ApiController
     {
         [HttpGet]
-        public string GetSalt()
+        public UserCreate GetTest()
         {
-            string SaltValue = SecurityHelper.GetCode(); // "9r6ylzybFpClyRzSq8J1f9onNJV6MpviRuaNu/pgn+M="; //SecurityHelper.GetCode();
-            string Password = "Mycookkies";
-            string Value = SecurityHelper.PasswordToSaltedHash(Password, SaltValue);
-            return Value;
+            return new UserCreate();
         }
     }
 }

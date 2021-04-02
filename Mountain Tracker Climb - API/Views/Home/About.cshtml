@@ -1,0 +1,126 @@
+﻿<div class="jumbotron">
+    <h1 class="text-center">Mountain Tracker&reg;&trade; Alpha</h1>
+    <h3 class="text-center">About Us</h3>
+    <blockquote>
+        <p>
+            Mountain Tracker was created by climbers for climbers. When we aren't climbing, we're dreaming about climbing.
+            <br/>
+            <br/>One thing every climber knows is that time is one of the most important factors to any climbing day. Whether it's planning a trip with a large group, finding your way to that day's objective or simply seeing what routes are in the area, time is important.
+            <br/>
+            <br/>Mountain Tracker strives to give that timeback to climbers by providing accessible, reliable, and comprehensive climbing information in one place. But it's more than just a tool, it's a community. It's a place to connect with your community. It's a place to access education resources or partner with experienced climbers. It's the place you can go when you're having a bad day at work and you want to escape to something you love.
+            <br/>
+            <br/>We believe the climbing community members are the heart that keeps this sport alive. Mountain Tracker wants to help grow that community and progress their values, so we can all climb as often and as long as we dream.
+            <br/>
+            <br/>We hope to use this data to create and bring together a community for rock climbing and other various mountaineering activities.
+        </p>
+        <footer>By Angelo Sanches, Ryan Shields, Armando Sanches, and Larra Caldie</footer>
+    </blockquote>
+</div>
+<div class="jumbotron">
+    <h3 class="text-center">What We Value</h3>
+    <div class="media">
+        <div class="media-left">
+            <img src="~/StaticImages/Values_Inclusivity.PNG" class="ValuesMediaImage media-object img-rounded">
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">OurValuesInclusivity</h4>
+            <ul>
+                <li>We provide a place for everyone.</li>
+                <li>We make information accessible.</li>
+                <li>We support diversity and equality.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">Sustainability</h4>
+            <ul>
+                <li>We protect the environment.</li>
+                <li>We incorporate sustainable business practices.</li>
+                <li>We provide tools and awareness around preserving climbing nature.</li>
+            </ul>
+        </div>
+        <div class="media-right">
+            <img src="~/StaticImages/Values_Sustainablity.PNG" class="ValuesMediaImage media-object img-rounded">
+        </div>
+    </div>
+    <div class="media">
+        <div class="media-left">
+            <img src="~/StaticImages/Values_Respect.PNG" class="ValuesMediaImage media-object img-rounded">
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">Respect</h4>
+            <ul>
+                <li>We honour Indigenous History.</li>
+                <li>We recognize those who have contributed to the history of climbing.</li>
+                <li>We fund and promote community volunteer programs.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">Innovation</h4>
+            <ul>
+                <li>We integrate technology with climbing.</li>
+                <li>We use mixed media to support the climbing community.</li>
+                <li>We offer innovative, unique, and interactive tools.</li>
+            </ul>
+        </div>
+        <div class="media-right">
+            <img src="~/StaticImages/Values_Innovation.PNG" class="ValuesMediaImage media-object img-rounded">
+        </div>
+    </div>
+    <div class="media">
+        <div class="media-left">
+            <img src="~/StaticImages/Values_Reliablity.PNG" class="ValuesMediaImage media-object img-rounded">
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">Reliability</h4>
+            <ul>
+                <li>We are accessible.</li>
+                <li>We invest in our information database.</li>
+                <li>We are accountable for the service we provide.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">Community</h4>
+            <ul>
+                <li>We promote safe practice.</li>
+                <li>We provide a community platform.</li>
+                <li>We engage with the broader community.</li>
+                <li>We provide access to education resources.</li>
+                <li>We recognize the community's contributions to climbing.</li>
+            </ul>
+        </div>
+        <div class="media-right">
+            <img src="~/StaticImages/Values_Community.PNG" class="ValuesMediaImage media-object img-rounded">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Get Started Here</h2>
+        <p>Get started with planning here on the web site!</p>
+        @if (Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] == null)
+        {
+            <p>@Html.ActionLink("Create a Account and Get Started \u00BB", "Create", "Account", new { }, new { @class = "btn btn-default" })</p>
+            <p>@Html.ActionLink("Or Login with Your to Get Started again \u00BB", "Index", "Login", new { }, new { @class = "btn btn-default" })</p>
+        }
+        else
+        {
+            <p>@Html.ActionLink("Get Started \u00BB", "Index", "Account", new { }, new { @class = "btn btn-default" })</p>
+        }
+    </div>
+    <div class="col-md-4">
+        <h2>For Android</h2>
+        <p>Have an android? Get it from the Google Play Store here and start planning and viewing from your phone!</p>
+        <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>For iOS</h2>
+        <p>Have a IPhone? Get it from the App Store here and start planning and viewing from your phone!</p>
+        <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+    </div>
+</div>
