@@ -1,5 +1,4 @@
 ﻿using MTCSharedModels.Models.Interfaces;
-using System;
 using System.IO;
 
 namespace MTCSharedModels.Models

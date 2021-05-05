@@ -164,6 +164,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\_ClimbingTypesAPIController.cs" />
     <Compile Include="Controllers\_ClimbingWallsAPIController.cs" />
     <Compile Include="Controllers\_DistrictsAPIController.cs" />
@@ -179,7 +180,8 @@
     <Compile Include="Controllers\_RockClimbingRoutesAPIController.cs" />
     <Compile Include="Controllers\_RouteGearAPIController.cs" />
     <Compile Include="Controllers\_LoginAPIController.cs" />
-    <Compile Include="Controllers\_PartnersAPIController.cs" />
+    <Compile Include="Controllers\_UserDMsAPIController.cs" />
+    <Compile Include="Controllers\_UserFriendsAPIController.cs" />
     <Compile Include="Controllers\_UserAccountSecurityAPIController.cs" />
     <Compile Include="Controllers\_UserAccountAPIController.cs" />
     <Compile Include="Controllers\_ZoneAreasAPIController.cs" />
@@ -199,7 +201,13 @@
     <Compile Include="DBModelContexts\RootOrSharedContext\RootDBContext.cs" />
     <Compile Include="DBModelContexts\ProvincesOrStatesDBContext.cs" />
     <Compile Include="DBModelContexts\RootOrSharedContext\RootDBStoredProcContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\AcceptFriendRequestDBContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\CheckIfFriendOrRequestedDBContext.cs" />
+    <Compile Include="DBModelContexts\UserDMsDBContext.cs" />
+    <Compile Include="Helpers\MiscellaneousHelpers.cs" />
+    <Compile Include="Helpers\SQLHelper.cs" />
     <Compile Include="DBModelContexts\RouteGearDBContext.cs" />
+    <Compile Include="DBModelContexts\StoredProcs\CheckIfFriendDBContext.cs" />
     <Compile Include="DBModelContexts\StoredProcs\CheckTokenWithAccessLevelDBContext.cs" />
     <Compile Include="DBModelContexts\StoredProcs\CheckTokenDBContext.cs" />
     <Compile Include="DBModelContexts\StoredProcs\CreateTokenDBContext.cs" />
@@ -207,6 +215,7 @@
     <Compile Include="DBModelContexts\StoredProcs\UserLoginDBContext.cs" />
     <Compile Include="DBModelContexts\UserAccessLevelDBContext.cs" />
     <Compile Include="DBModelContexts\UserBannerPictureDBContext.cs" />
+    <Compile Include="DBModelContexts\UserFriendsDBContext.cs" />
     <Compile Include="DBModelContexts\UserProfilePictureDBContext.cs" />
     <Compile Include="DBModelContexts\UserDBContext.cs" />
     <Compile Include="DBModelContexts\ZoneAreasDBContext.cs" />
@@ -216,6 +225,7 @@
     <Compile Include="Helpers\RegexHelpers.cs" />
     <Compile Include="Helpers\ControllerHelper.cs" />
     <Compile Include="Helpers\SecurityHelper.cs" />
+    <Compile Include="Models\AcceptFriendRequestProc.cs" />
     <Compile Include="Models\CheckTokenWithAccessLevelProc.cs" />
     <Compile Include="Models\CheckTokenProc.cs" />
     <Compile Include="Models\CreateTokenProc.cs" />
@@ -246,6 +256,7 @@
     <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\AngularJSMessages.js" />
     <Content Include="Scripts\AngularJSAccount.js" />
     <Content Include="Scripts\AngularJSMtnAPI.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -307,6 +318,13 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Account\ProfileSearch.cshtml" />
+    <Content Include="Views\Account\ProfileView.cshtml" />
+    <Content Include="Views\Account\AccountNotFound.cshtml" />
+    <Content Include="Views\Account\Partners.cshtml" />
+    <Content Include="Views\Messages\Index.cshtml" />
+    <Content Include="Views\Messages\DirectMessage.cshtml" />
+    <Content Include="Views\Messages\GroupMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

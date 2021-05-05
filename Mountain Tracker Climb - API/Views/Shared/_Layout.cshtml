@@ -47,6 +47,9 @@
                     @if (@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.IDToken] != null)
                     {
                         <li>@Html.ActionLink("Account", "Index", "Account", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("User Search", "ProfileSearch", "Account", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Climbing Partners", "Partners", "Account", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Messages", "Index", "Messages", new { area = "" }, null)</li>
                     }
                     else
                     {

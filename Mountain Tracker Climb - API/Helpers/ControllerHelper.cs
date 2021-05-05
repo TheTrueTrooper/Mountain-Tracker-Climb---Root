@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Http;
+using Mountain_Tracker_Climb___API.App_Start;
+using Mountain_Tracker_Climb___API.Security;
 using MTCSharedModels.Models;
 using MTCSharedModels.Models.Interfaces;
 
@@ -354,7 +356,7 @@ namespace Mountain_Tracker_Climb___API.Helpers
         public static async Task<MemoryStream> LoadFileToMemoryAsync(string Path)
         {
             MemoryStream Result = new MemoryStream();
-            using (Stream Reader = File.Open(Path, FileMode.Open, FileAccess.Read))
+            using (Stream Reader = File.Open(Path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 await Reader.CopyToAsync(Result);
             }
@@ -364,6 +366,51 @@ namespace Mountain_Tracker_Climb___API.Helpers
         public static string MapVirtualPath(string VirtualPath)
         {
             return HttpContext.Current.Server.MapPath(VirtualPath);
+        }
+
+        public static void EnsureOwnerShip(this ApiController This, int id, string OverRideLevel = "Admin")
+        {
+            if (OverRideLevel != null)
+            {
+                object CurrentUserIDBoxed;
+                This.Request.Properties.TryGetValue(StaticVars.UserID, out CurrentUserIDBoxed);
+                object AccessLevelIDBoxed;
+                This.Request.Properties.TryGetValue(StaticVars.AccessLevelID, out AccessLevelIDBoxed);
+
+                if ((CurrentUserIDBoxed == null || (int)CurrentUserIDBoxed != id) || ((int)CurrentUserIDBoxed != id) && (AccessLevelIDBoxed != null || (int)AccessLevelIDBoxed > APISecurityLevelAttribute.AccessLevels[OverRideLevel]))
+                    throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+            else
+            {
+                object CurrentUserIDBoxed;
+                This.Request.Properties.TryGetValue(StaticVars.UserID, out CurrentUserIDBoxed);
+
+                if (CurrentUserIDBoxed == null || (int)CurrentUserIDBoxed != id)
+                    throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+        }
+
+        public static bool CheckOwnerShip(this ApiController This, int id, string OverRideLevel = "Admin")
+        {
+            if (OverRideLevel != null)
+            {
+                object CurrentUserIDBoxed;
+                This.Request.Properties.TryGetValue(StaticVars.UserID, out CurrentUserIDBoxed);
+                object AccessLevelIDBoxed;
+                This.Request.Properties.TryGetValue(StaticVars.AccessLevelID, out AccessLevelIDBoxed);
+
+                if (CurrentUserIDBoxed == null && ((int)CurrentUserIDBoxed != id || (AccessLevelIDBoxed == null && (int)CurrentUserIDBoxed > APISecurityLevelAttribute.AccessLevels[OverRideLevel])))
+                    return false;
+            }
+            else
+            {
+                object CurrentUserIDBoxed;
+                This.Request.Properties.TryGetValue(StaticVars.UserID, out CurrentUserIDBoxed);
+
+                if (CurrentUserIDBoxed == null && ((int)CurrentUserIDBoxed != id))
+                    return false;
+            }
+            return true;
         }
     }
 }

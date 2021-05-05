@@ -691,6 +691,37 @@ begin
 end
 go
 
+print '>>>Reseeding Users'
+DBCC CHECKIDENT ('Users', RESEED, 0)
+print '<<<Reseeded Users'
+print '>>>Recalling Users'
+INSERT INTO Users
+SELECT 
+[FirstName],
+[MiddleName],
+[LastName],
+[UserName],
+[PrimaryPersonalEmail],
+[EmailValidated],
+[PrimaryPhone],
+[PhoneValidated],
+[KeepPrivate],
+[MetricOverImperial],
+[CountryID],
+[ProvinceID],
+[AccessLevelID],
+[HashedPassword],
+[Salt],
+[ProfilePictureBytes],
+[BannerPictureBytes],
+[Bio],
+[ProfileURL] FROM TempSavedUsers
+print '<<<Users Recalled'
+print '<<<Dropping Users Temp'
+IF EXISTS(SELECT 1 FROM sys.Objects WHERE  Object_id = OBJECT_ID(N'dbo.TempSavedUsers') AND Type = N'U')
+	drop table TempSavedUsers
+print '>>>Users Temp Dropped'
+
 --Quick Test Data build
 declare @Testing bit = 0
 if(@Testing = 1)

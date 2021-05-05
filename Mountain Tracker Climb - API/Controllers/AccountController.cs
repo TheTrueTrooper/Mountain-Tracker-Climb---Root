@@ -12,6 +12,8 @@ namespace Mountain_Tracker_Climb___API.Controllers
 {
     public class AccountController : Controller
     {
+        [HttpGet]
+        [Route("Account/Create")]
         public ActionResult Create()
         {
             if (Session[StaticVars.IDToken] != null)
@@ -21,6 +23,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
             return View(User);
         }
 
+        [HttpGet]
         [SecurityLevel()]
         public ActionResult Index()
         {
@@ -28,11 +31,41 @@ namespace Mountain_Tracker_Climb___API.Controllers
             return View();
         }
 
-        //[SecurityLevel()]
-        //public ActionResult Edit()
-        //{
-        //    ViewBag.Title = "Edit";
-        //    return View();
-        //}
+        [HttpGet]
+        [SecurityLevel()]
+        [Route("Account/{ID}")]
+        public ActionResult ProfileView(int ID)
+        {
+            ViewBag.Title = "Profile View";
+            ViewBag.UserID = ID;
+            return View();
+        }
+
+        [HttpGet]
+        [SecurityLevel()]
+        [Route("Account/Partners")]
+        public ActionResult Partners()
+        {
+            ViewBag.Title = "Profile View";
+            return View();
+        }
+
+        [HttpGet]
+        [SecurityLevel()]
+        [Route("Account/ProfileSearch")]
+        public ActionResult ProfileSearch(string Search)
+        {
+            ViewBag.Title = "Profile Search";
+            ViewBag.SearchName = Search;
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Account/AccountNotFound")]
+        public ActionResult AccountNotFound()
+        {
+            ViewBag.Title = "Account Not Found";
+            return View();
+        }
     }
 }

@@ -20,11 +20,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [NonAction]
         void EnsureOwnerShip(int id)
         {
-            object CurrentUserIDBoxed;
-            Request.Properties.TryGetValue(StaticVars.UserID, out CurrentUserIDBoxed);
-
-            if (CurrentUserIDBoxed == null && (int)CurrentUserIDBoxed != id)
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            this.EnsureOwnerShip(id, null);
         }
 
         [APISecurityLevel()]

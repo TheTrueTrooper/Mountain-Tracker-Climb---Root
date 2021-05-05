@@ -57,13 +57,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
         [NonAction]
         void EnsureOwnerShip(int id)
         {
-            object CurrentUserIDBoxed;
-            Request.Properties.TryGetValue(StaticVars.UserID, out CurrentUserIDBoxed);
-            object AccessLevelIDBoxed;
-            Request.Properties.TryGetValue(StaticVars.AccessLevelID, out AccessLevelIDBoxed);
-
-            if (CurrentUserIDBoxed == null && ((int)CurrentUserIDBoxed != id || (AccessLevelIDBoxed == null && (int)CurrentUserIDBoxed > APISecurityLevelAttribute.AccessLevels["Moderater"])))
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            this.EnsureOwnerShip(id, "Moderater");
         }
 
         [APISecurityLevel()]
@@ -76,7 +70,7 @@ namespace Mountain_Tracker_Climb___API.Controllers
                 User = DB.UserTable.GetUser(id);
 
                 if (User == null)
-                    return "No user found!";
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
 
                 /*  'Unrestricted Admin',
                     'Admin'
@@ -84,52 +78,21 @@ namespace Mountain_Tracker_Climb___API.Controllers
                     'Guide'
                     'PayedUser'
                     'User'*/
-
-                //will check if it is user
                 object CurrentUserIDBoxed;
                 Request.Properties.TryGetValue(StaticVars.UserID, out CurrentUserIDBoxed);
-                object AccessLevelIDBoxed;
-                Request.Properties.TryGetValue(StaticVars.AccessLevelID, out AccessLevelIDBoxed);
-                if (CurrentUserIDBoxed != null && AccessLevelIDBoxed != null && ((int)CurrentUserIDBoxed  == User.ID || (int)CurrentUserIDBoxed <= APISecurityLevelAttribute.AccessLevels["Moderater"]))
-                    return new UserFull()
-                    {
-                        ID = User.ID,
-                        UserName = User.UserName,
-                        KeepPrivate = User.KeepPrivate,
-                        FirstName = User.FirstName,
-                        MiddleName = User.MiddleName,
-                        LastName = User.LastName,
-                        ProfileURL = User.ProfileURL,
-                        Bio = User.Bio,
-                        AccessLevelID = User.AccessLevelID,
-                        UserAccessLevel = DB.UserAccessLevelTable.GetUserAccessLevel(User.AccessLevelID.Value),
-                        EmailValidated = User.EmailValidated,
-                        PhoneValidated = User.PhoneValidated,
-                        PrimaryPersonalEmail = User.PrimaryPersonalEmail,
-                        PrimaryPhone = User.PrimaryPhone
-                        //leave password null as it is only for setting it in a update
-                    };
+                bool IsFriend = DB.FriendChecker.CheckIfFriend((int)CurrentUserIDBoxed, id).IsFriend;
+
+
+
+                //will check if it is user
+                if (this.CheckOwnerShip(User.ID.Value, "Moderater") || IsFriend || ((int)CurrentUserIDBoxed) == id)
+                    return MiscellaneousHelpers.ToFullUser(User);
             }
             //if ir is not the user there are two states based on if it is private or not.
             if (User.KeepPrivate.Value)
-                return new UserInfoPrivate()
-                {
-                    ID = User.ID,
-                    UserName = User.UserName,
-                    KeepPrivate = User.KeepPrivate
-                };
+                return MiscellaneousHelpers.ToPrivateUser(User);
             else
-                return new UserInfoPublic()
-                {
-                    ID = User.ID,
-                    UserName = User.UserName,
-                    KeepPrivate = User.KeepPrivate,
-                    FirstName = User.FirstName,
-                    MiddleName = User.MiddleName,
-                    LastName = User.LastName,
-                    ProfileURL = User.ProfileURL,
-                    Bio = User.Bio
-                };
+                return MiscellaneousHelpers.ToPublicUser(User);
         }
 
         [HttpGet]
@@ -143,6 +106,8 @@ namespace Mountain_Tracker_Climb___API.Controllers
             if (PictureRaw != null && PictureRaw.ProfilePictureBytes != null)
                 return ControllerHelper.GeneratePNGImageResponse(PictureRaw);
 
+            if (PictureRaw == null)
+                PictureRaw = new UserProfilePicture();
 
             using (MemoryStream PictureFileMemory = await ControllerHelper.LoadFileToMemoryAsync(ControllerHelper.MapVirtualPath("~/StaticImages/Values_Sustainablity.PNG")))
             {
@@ -207,6 +172,16 @@ namespace Mountain_Tracker_Climb___API.Controllers
             }
         }
 
+        [APISecurityLevel()]
+        [HttpDelete]
+        [Route("Api/UserAccount/{id}/ProfilePicture")]
+        public void DeleteProfilePicture(int id)
+        {
+            EnsureOwnerShip(id);
+            using (DBContext DB = new DBContext())
+                DB.ProfilePictures.DeleteUserProfilePicture(id);
+        }
+
         [HttpGet]
         [Route("Api/UserAccount/{id}/BannerPicture")]
         public async Task<HttpResponseMessage> GetBannerPicture(int id)
@@ -217,6 +192,9 @@ namespace Mountain_Tracker_Climb___API.Controllers
 
             if (PictureRaw != null && PictureRaw.BannerPictureBytes != null)
                 return ControllerHelper.GeneratePNGImageResponse(PictureRaw);
+
+            if (PictureRaw == null)
+                PictureRaw = new UserBannerPicture();
 
             using (MemoryStream PictureFileMemory = await ControllerHelper.LoadFileToMemoryAsync(ControllerHelper.MapVirtualPath("~/StaticImages/Values_Sustainablity.PNG")))
             {
@@ -267,23 +245,31 @@ namespace Mountain_Tracker_Climb___API.Controllers
         }
 
         [APISecurityLevel()]
-        [HttpGet]
-        public IEnumerable<UserInfoPrivate> Get(string NameSearch)
+        [HttpDelete]
+        [Route("Api/UserAccount/{id}/BannerPicture")]
+        public void DeleteBannerPicture(int id)
         {
-            IEnumerable<UserFullWithSecurity> User;
-            List<UserInfoPrivate> Return = new List<UserInfoPrivate>();
+            EnsureOwnerShip(id);
+            using (DBContext DB = new DBContext())
+                DB.BannerPictures.DeleteUserBannerPicture(id);
+        }
+
+        [APISecurityLevel()]
+        [HttpGet]
+        public IEnumerable<object> Get(string NameSearch)
+        {
+            IEnumerable<UserFullWithSecurity> Users;
+            List<object> Return = new List<object>();
             using (DBContext DB = new DBContext())
             {
-                User = DB.UserTable.GetListOfUsers(NameSearch);
-                foreach(UserFullWithSecurity FU in User)
+                Users = DB.UserTable.GetListOfUsers(NameSearch);
+                foreach(UserFullWithSecurity User in Users)
                 {
+                    if (User.KeepPrivate.Value)
+                        Return.Add(MiscellaneousHelpers.ToPrivateUser(User));
+                    else
+                        Return.Add(MiscellaneousHelpers.ToPublicUser(User));
                     //return shorter data for faster consumption
-                    Return.Add(new UserInfoPrivate()
-                    {
-                        ID = FU.ID,
-                        UserName = FU.UserName,
-                        KeepPrivate = FU.KeepPrivate
-                    });
                 }
             }
             //if ir is not the user there are two states based on if it is private or not.
@@ -339,7 +325,10 @@ namespace Mountain_Tracker_Climb___API.Controllers
                 PrimaryPhone = Values.PrimaryPhone,
                 Bio = Values.Bio,
                 ProfileURL = Values.ProfileURL,
-                KeepPrivate = Values.KeepPrivate
+                KeepPrivate = Values.KeepPrivate,
+                MetricOverImperial = Values.MetricOverImperial,
+                CountryID = Values.CountryID,
+                ProvinceID = Values.ProvinceID
             };
 
             try 

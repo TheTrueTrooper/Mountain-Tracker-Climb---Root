@@ -95,6 +95,7 @@
     <Folder Include="SQL Server\Tables\UserAccessTokens" />
     <Folder Include="SQL Server\Tables\UserAccessLevels" />
     <Folder Include="SQL Server\Tables\Users\StoredProcedures" />
+    <Folder Include="SQL Server\Tables\UserFriends\StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SQL Server\Tables\Countries\Countries.sql" />
@@ -132,6 +133,8 @@
     <Build Include="SQL Server\Tables\Users\StoredProcedures\CheckTokenWithAccessLevel.sql" />
     <Build Include="SQL Server\Tables\Users\StoredProcedures\CreateToken.sql" />
     <Build Include="SQL Server\Tables\Users\StoredProcedures\CheckToken.sql" />
+    <Build Include="SQL Server\Tables\UserFriends\StoredProcedures\AcceptFriendRequest.sql" />
+    <Build Include="SQL Server\Tables\UserFriends\StoredProcedures\CheckIfFriend.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Mountan Tracker Climb - DataBase.refactorlog" />

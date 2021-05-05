@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Conversations";
+}
+<script src="~/Scripts/AngularJSMessages.js"></script>
+<div ng-app="NGMessages" ng-controller="MessagesListController">
+    <h2>Conversations</h2>
+    <input type="hidden" class="input-lg" ng-init="Init(@Session[Mountain_Tracker_Climb___API.App_Start.StaticVars.UserID])" ng-model="SearchingName" ng-change="SearchName()">
+    <div class="row">
+        <div class="col-lg-6">
+            <input class="btn btn-default" type="button" value="Start new direct message" ng-click="DMFriend()"/>
+        </div>
+        <div class="col-lg-6">
+            <input disabled class="btn btn-default" type="button" value="Start new group message (Comming Soon)" />
+        </div>
+    </div>
+    <div>
+        <h2>Group Message Conversations</h2>
+        <h2>Direct Message Conversations</h2>
+        <div ng-repeat="(Key, Value) in DirectMessages.MessagesBetweenUser">
+            <a href="{{Value.User.URL}}" style="text-decoration:none;color:inherit;">
+                <div class="media-left">
+                    <img ng-src="{{Value.User.ProfilePicture}}" class="img-rounded media-object" style="width:100px;height:100px;border-radius:50%;border:inset">
+                </div>
+                <div class="media-body">
+                    <h3 ng-if="!Value.HasUnseen" class="media-heading">{{Value.User.UserName}}</h3>
+                    <h3 ng-if="Value.HasUnseen" class="media-heading">{{Value.User.UserName}} - Unread Messages !</h3>
+                    <p>
+                        {{Value.LastMessage.Time.toUTCString()}}<br />
+                        {{Value.LastMessage.Message}}
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div id="NewDirectMessage" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Send Message To</h4>
+                </div>
+                <div class="modal-body">
+                    <div ng-repeat="Friend in FriendData.Friends">
+                        <div class="media-left">
+                            <a href="{{Friend.URL}}" style="text-decoration:none;color:inherit;">
+                                <img ng-src="{{Friend.ProfilePicture}}" class="img-rounded media-object" style="width:50px;height:50px;border-radius:50%;border:inset">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <a href="{{Friend.URL}}" style="text-decoration:none;color:inherit;">
+                                <h4 class="media-heading">{{Friend.UserName}}</h4>
+                                <p>Users Name: {{Friend.FirstName}} {{Friend.MiddleName}} {{Friend.LastName}}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

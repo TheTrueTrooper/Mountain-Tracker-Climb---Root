@@ -177,15 +177,6 @@ angular.module("NGRouteQuickEdit", ["NGMtnWebAPI", "ngRoute", "ngSanitize", "ngC
             }
         };
 
-        $scope.ThrowPerferedToTop = function (obj) {
-            var Value = obj.EnglishFullName;
-            if (obj.CountryCode === 'CA')
-                Value = "__" + obj.EnglishFullName;
-            else if (obj.CountryCode === 'US')
-                Value = "_" + obj.EnglishFullName;
-            return Value;
-        };
-
         DisableButtons([ProvSelectEle,
             RegionSelectEle, RegionAddEle, RegionAddEle, RegionEditEle, RegionDeleteEle,
             DistrictSelectEle, DistrictAddEle, DistrictEditEle, DistrictDeleteEle,
@@ -216,6 +207,15 @@ angular.module("NGRouteQuickEdit", ["NGMtnWebAPI", "ngRoute", "ngSanitize", "ngC
             $scope.Gear.Add.GearID = "null";
             $scope.Gear.Add.GearSizeID = "null";
         });
+
+        $scope.ThrowPerferedToTop = function (obj) {
+            var Value = obj.EnglishFullName;
+            if (obj.CountryCode === 'CA')
+                Value = "__" + obj.EnglishFullName;
+            else if (obj.CountryCode === 'US')
+                Value = "_" + obj.EnglishFullName;
+            return Value;
+        };
 
         $scope.SelectedCountry = function (ID) {
             if (!isNaN(ID)) {

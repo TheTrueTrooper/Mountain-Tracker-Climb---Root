@@ -133,18 +133,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                 if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)) && !Attribute.IsDefined(x, typeof(SQLInsertIgnoreAttribute)) && !Attribute.IsDefined(x, typeof(SQLIdentityIDAttribute)) && !Attribute.IsDefined(x, typeof(SQLComputedColumnAttribute)))
                 {
                        Return[0] += $"{x.Name},";
-                    if (x.PropertyType.Name == typeof(string).Name)
-                        Return[1] += $"'{x.GetValue(Object)}',";
-                    else if (x.PropertyType.FullName == typeof(bool?).FullName)
-                    {
-                        bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
-                        if (Value)
-                            Return[1] += $"1,";
-                        else
-                            Return[1] += $"0,";
-                    }
-                    else
-                        Return[1] += $"{x.GetValue(Object)},";
+                       Return[1] += $"{SQLHelper.ObjectAsSQLString(x.GetValue(Object))},";
                 }
             }
             Return[0] = Return[0].Remove(Return[0].Length - 1, 1);
@@ -165,23 +154,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                 {
                     object Obj = x.GetValue(Object);
                     if (Obj != null)
-                        if (x.PropertyType.Name == typeof(string).Name)
-                            Return += $"{x.Name} = '{Obj}',";
-                        else if (x.PropertyType.FullName == typeof(bool?).FullName)
-                        {
-                            bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
-                            if (Value)
-                                Return += $"{x.Name} = 1,";
-                            else
-                                Return += $"{x.Name} = 0,";
-                        }
-                        else if (x.PropertyType.FullName == typeof(byte[]).FullName)
-                        {
-                            string Value = BitConverter.ToString((byte[])x.GetValue(Object)).Replace("-", "");
-                            Return += $"{x.Name} = 0x{Value},";
-                        }
-                        else
-                            Return += $"{x.Name} = {Obj},";
+                        Return += $"{x.Name} = {SQLHelper.ObjectAsSQLString(Obj)},";
                 }
             }
             Return = Return.Remove(Return.Length - 1, 1);
@@ -201,18 +174,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                     Return.Add(x.Name, new List<string>());
                     foreach (T Object in ObjectList)
                     {
-                        if (x.PropertyType.Name == typeof(string).Name)
-                            Return[x.Name].Add($"'{x.GetValue(Object)}'");
-                        else if (x.PropertyType.FullName == typeof(bool?).FullName)
-                        {
-                            bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
-                            if (Value)
-                                Return[x.Name].Add($"1");
-                            else
-                                Return[x.Name].Add($"0");
-                        }
-                        else
-                            Return[x.Name].Add($"{x.GetValue(Object)}");
+                        Return[x.Name].Add($"{SQLHelper.ObjectAsSQLString(x.GetValue(Object))}");
                     }
                 }
             }
@@ -425,10 +387,26 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                 return Command.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// incase you have a special nonquery not based off of the class
+        /// </summary>
+        /// <param name="QueryString">the query string</param>
+        /// <returns>int return of nonquery</returns>
         protected int ExecuteCustomNonQuery(string QueryString)
         {
             using (SqlCommand Command = new SqlCommand(QueryString, DB))
                 return Command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// incase you have a special query not based off of the class
+        /// </summary>
+        /// <param name="QueryString">the query string</param>
+        /// <returns>reader return of the query</returns>
+        protected SqlDataReader ExecuteCustomQuery(string QueryString)
+        {
+            using (SqlCommand Command = new SqlCommand(QueryString, DB))
+                return Command.ExecuteReader();
         }
 
         public void Dispose()

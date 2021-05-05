@@ -42,6 +42,8 @@ angular.module("NGMtnWebAPI", [])
         const GearSizesController = "GearSizes";
         const RouteGearController = "RouteGear";
         const UserAccountController = "UserAccount";
+        const UserPartnerController = "UserPartner";
+        const UserDMsController = "UserDMs";
 
         function GetRoot(URL) {
             var Index = URL.indexOf("/");
@@ -76,12 +78,22 @@ angular.module("NGMtnWebAPI", [])
                 }
             },
             ProvincesOrStates: {
+                GetAll: function () {
+                    return $http.get(HostURL + ProvincesOrStatesController, { responseType: "json" });
+                },
                 /**
                  * @param {any} CountryID The ID of the country
                  * @returns {object} A object containing all of the data
-                 */
+                */
                 GetList: function (CountryID) {
                     return $http.get(HostURL + ProvincesOrStatesController + "?CountryID=" + CountryID, { responseType: "json" });
+                },
+                /**
+                 * @param {any} ID The ID of the Prov
+                 * @returns {object} A object containing all of the data
+                 */
+                Get: function (ID) {
+                    return $http.get(HostURL + ProvincesOrStatesController + "/" + ID, { responseType: "json" });
                 }
             },
             Regions: {
@@ -365,7 +377,7 @@ angular.module("NGMtnWebAPI", [])
                  * @returns {object} A object containing all of the data
                  */
                 Update: function (ID, EditedUser) {
-                    return $http.put(HostURL + UserAccountController + "/" + ID, EditedRouteGear, { responseType: "json" });
+                    return $http.put(HostURL + UserAccountController + "/" + ID, EditedUser, { responseType: "json" });
                 },
                 /**
                  * @param {any} RockClimbingRoutesID The ID of the User to delete
@@ -379,7 +391,10 @@ angular.module("NGMtnWebAPI", [])
                     return $http.put(HostURL + UserAccountController + "/" + ID + "/ProfilePicture", Data, { transformRequest: angular.identity, headers: { 'Content-Type': undefined }, responseType: "json" });
                 },
                 GetProfilePicture: function (ID) {
-                    return $http.get(HostURL + UserAccountController + "/" + ID + "/ProfilePicture", { });
+                    return $http.get(HostURL + UserAccountController + "/" + ID + "/ProfilePicture", {});
+                },
+                DeleteProfilePicture: function (ID) {
+                    return $http.delete(HostURL + UserAccountController + "/" + ID + "/ProfilePicture", { responseType: "json" });
                 },
                 UploadBannerPicture: function (ID, File) {
                     var Data = new FormData();
@@ -388,11 +403,110 @@ angular.module("NGMtnWebAPI", [])
                     return $http.put(HostURL + UserAccountController + "/" + ID + "/BannerPicture", Data, { transformRequest: angular.identity, headers: { 'Content-Type': undefined }, responseType: "json" });
                 },
                 GetBannerPicture: function (ID) {
-                    return $http.get(HostURL + UserAccountController + "/" + ID + "/BannerPicture", {});
+                    return $http.get(HostURL + UserAccountController + "/" + ID + "/BannerPicture", { responseType: "json"});
+                },
+                DeleteBannerPicture: function (ID) {
+                    return $http.delete(HostURL + UserAccountController + "/" + ID + "/BannerPicture", {});
                 },
                 Delete: function (ID) {
                     return $http.delete(HostURL + UserAccountController + "/" + ID, { responseType: "json" });
                 }
+            },
+            UserPartner: {
+                /**
+                 * @param {any} ID The ID of the User
+                 * @returns {object} A object containing all of the data
+                 */
+                Get: function (ID) {
+                    return $http.get(HostURL + UserPartnerController + "/" + ID, { responseType: "json" });
+                },
+                /**
+                 * @param {any} UserID 
+                 * @param {any} FriendID
+                 * @returns {object} A object containing all of the data
+                 */
+                CheckFriendShip: function (UserID, FriendID) {
+                    return $http.get(HostURL + UserPartnerController + "?UserID=" + UserID + "&FriendID=" + FriendID, { responseType: "json" });
+                },
+                /**
+                 * @param {any} UserID 
+                 * @param {any} FriendID
+                 * @returns {object} A object containing all of the data
+                 */
+                CheckForFriendRequest: function (UserID, FriendID) {
+                    return $http.get(HostURL + UserPartnerController + "?UserID=" + UserID + "&FriendID=" + FriendID + "&Requests", { responseType: "json" });
+                },
+                /**
+                 * @param {object} NewUser The data for the new User to add
+                 * @returns {object} A object containing all of the data
+                 */
+                Accept: function (NewUser) {
+                    return $http.put(HostURL + UserPartnerController, NewUser, { responseType: "json" });
+                },
+                /**
+                 * @param {object} NewUser The data for the new User to add
+                 * @returns {object} A object containing all of the data
+                 */
+                Add: function (NewUser) {
+                    return $http.post(HostURL + UserPartnerController, NewUser, { responseType: "json" });
+                },
+                Delete: function (UserFromID, UserToID) {
+                    return $http.delete(HostURL + UserPartnerController + "?UserFromID=" + UserFromID + "&UserToID=" + UserToID, { responseType: "json" });
+                }
+            },
+            UserDMs: {
+                /**
+                 * @param {any} ID The ID of the User
+                 * @returns {object} A object containing all of the data
+                 */
+                GetAll: function (ID) {
+                    return $http.get(HostURL + UserDMsController + "/" + ID, { responseType: "json" });
+                },
+                /**
+                 * @param {any} ID The ID of the User
+                 * @returns {object} A object containing all of the data
+                 */
+                Get: function (ID, WithUserID) {
+                    return $http.get(HostURL + UserDMsController + "/" + ID + "?WithUserID=" + WithUserID, { responseType: "json" });
+                },
+                /**
+                 * @param {any} MessageID The ID of the Message to update
+                 * @param {any} GearSizeID The ID of the Gear Size to delete
+                 * @returns {object} A object containing all of the data
+                 */
+                Update: function (MessageID, EditedUser) {
+                    return $http.put(HostURL + UserAccountController + "/" + MessageID, EditedUser, { responseType: "json" });
+                },
+                /**
+                 * @param {object} NewMessage The data for the new Message to add
+                 * @returns {object} A object containing all of the data
+                 */
+                Add: function (NewMessage) {
+                    return $http.post(HostURL + UserDMsController, NewMessage, { responseType: "json" });
+                },
+                Delete: function (MessageID, UserFromID) {
+                    return $http.delete(HostURL + UserPartnerController + "?MessageID=" + MessageID + "&UserFromID=" + UserFromID, { responseType: "json" });
+                }
+            }
+        };
+    })
+    .factory('AccountHelper', function (MtnWebAPIServicesHelper) {
+        var ServerRoot = MtnWebAPIServicesHelper.ServerRoot;
+        //var ServerAPIRoot = MtnWebAPIServicesHelper.ServerRoot
+        var APIAccountsRoot = MtnWebAPIServicesHelper.ServerRoot + '/Api/UserAccount/';
+        var ViewAccountsRoot = MtnWebAPIServicesHelper.ServerRoot + '/Account/';
+        return {
+            ContentURL: function (ItemPath) {
+                return ServerRoot + ItemPath;
+            },
+            GetProfilePictureURL: function (UsersID) {
+                return APIAccountsRoot + UsersID + '/ProfilePicture'
+            },
+            GetBannerPictureURL: function (UsersID) {
+                return APIAccountsRoot + UsersID + '/BannerPicture'
+            },
+            GetProfileURL: function (UsersID) {
+                return ViewAccountsRoot + UsersID
             }
         };
     })
@@ -408,6 +522,9 @@ angular.module("NGMtnWebAPI", [])
         return {
             APIRoot: Root + "/Api/",
             ServerRoot: Root,
+            ContentURL: function (ItemPath) {
+                return ServerRoot + ItemPath;
+            },
             QuickErrorHandle: function (result) {
                 $window.alert("Status: " + (result.status || "Error") + "\nMessage: " + (result.statusText || 'Request failed for unknow reason.'));
             },

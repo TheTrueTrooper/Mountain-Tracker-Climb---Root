@@ -1,0 +1,37 @@
+﻿
+@{
+    string Search = null;
+    if (ViewBag.SearchName != null)
+    {
+        Search = (string)ViewBag.SearchName;
+    }
+    ViewBag.Title = "Profile Search";
+}
+<script src="~/Scripts/AngularJSAccount.js"></script>
+<div ng-app="NGAccount" ng-controller="AccountProfileSearchController">
+   <h2>Profile Search</h2>
+   <input type="text" class="input-lg" ng-init="Init('@Search')" ng-model="SearchingName" ng-change="SearchName()">
+   <div>
+       <div ng-repeat="Result in SearchResults">
+           <a href="{{Result.URL}}" style="text-decoration:none;color:inherit;">
+               <div class="media-left">
+                   <img ng-src="{{Result.ProfilePicture}}" class="img-rounded media-object" style="width:150px;height:150px;border-radius:50%;border:inset">
+               </div>
+               <div class="media-body">
+                   <h4 class="media-heading">{{Result.UserName}}</h4>
+                   <ul class="list-group">
+                       <li ng-if="!Result.KeepPrivate" ng-click="" class="list-group-item">
+                           <p>
+                               First Name: {{Result.FirstName}} {{Result.MiddleName}} {{Result.LastName}}
+                               <br />Region: {{PrintUserCountry(Result)}}
+                               <br />Bio: {{Result.Bio}}
+                           </p>
+                       </li>
+                       <li ng-if="Result.KeepPrivate" class="list-group-item"><p>User {{Result.UserName}} has their profile set to Private<br /><br /></p></li>
+                   </ul>
+               </div>
+           </a>
+       </div>
+   </div>
+</div>
+

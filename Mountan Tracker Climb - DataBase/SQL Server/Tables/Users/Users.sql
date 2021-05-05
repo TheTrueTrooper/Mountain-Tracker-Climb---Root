@@ -10,6 +10,12 @@
 	[PrimaryPhone] VARCHAR(15) NOT NULL, 
     [PhoneValidated] BIT NOT NULL DEFAULT 0, -- Have they validated their phone for 2 step verification or for a more valid account
     [KeepPrivate] BIT NOT NULL DEFAULT 0, 
+    [MetricOverImperial] BIT NOT NULL DEFAULT 1, 
+
+    [CountryID] TINYINT NULL DEFAULT NULL,
+    CONSTRAINT [FK_Users_Countries] FOREIGN KEY ([CountryID]) REFERENCES [Countries]([ID]),
+    [ProvinceID] SMALLINT NULL DEFAULT NULL,
+    CONSTRAINT [FK_Users_ProvincesOrStates] FOREIGN KEY ([ProvinceID]) REFERENCES [ProvincesOrStates]([ID]),
 
     --Security
 

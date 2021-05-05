@@ -6,7 +6,12 @@
 	[UserToID] INT NOT NULL,
 	CONSTRAINT [FK_UserFriends_Users_To] FOREIGN KEY ([UserToID]) REFERENCES [Users]([ID]),
 
-	[Accepted] Bit,
+	[RequestCreationDate] Datetime NOT NULL Default GETDATE(),
+	[RequestAcceptDate] Datetime Default NULL,
 
-	Primary Key([UserFromID], [UserToID])
+	[Accepted] Bit NOT NULL Default 0,
+
+	Primary Key([UserFromID], [UserToID]), 
+
+    CONSTRAINT [CK_UserFriends_CannotFriendSelf] CHECK (not UserFromID = UserToID)
 )

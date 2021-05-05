@@ -22,5 +22,9 @@
         public string Bio { get; set; }
         [SQLInsertIgnore]
         public string ProfileURL { get; set; }
+        [SQLInsertIgnore]
+        public byte? CountryID { get; set; }
+        [SQLInsertIgnore]
+        public short? ProvinceID { get; set; }
     }
 }

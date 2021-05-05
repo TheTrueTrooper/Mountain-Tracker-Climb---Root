@@ -16,5 +16,7 @@
         public byte? AccessLevelID { get; set; }
         [SQLIgnore]
         public UserAccessLevel UserAccessLevel { get; set; }
+        [SQLInsertIgnore]
+        public bool? MetricOverImperial { get; set; }
     }
 }

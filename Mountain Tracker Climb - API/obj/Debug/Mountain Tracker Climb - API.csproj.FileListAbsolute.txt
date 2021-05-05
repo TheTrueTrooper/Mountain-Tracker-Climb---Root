@@ -47,43 +47,6 @@ C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain T
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\roslyn\vbc.rsp
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\roslyn\VBCSCompiler.exe
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Antlr3.Runtime.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.AspNet.TelemetryCorrelation.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Newtonsoft.Json.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Diagnostics.DiagnosticSource.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Net.Http.Formatting.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Helpers.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.WebHost.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Mvc.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Optimization.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Razor.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Razor.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\WebGrease.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Newtonsoft.Json.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Net.Http.Formatting.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Helpers.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.WebHost.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Mvc.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Optimization.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Razor.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Razor.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Antlr3.Runtime.pdb
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.csprojAssemblyReference.cache
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.csproj.CoreCompileInputs.cache
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.csproj.CopyComplete
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.dll
-C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.pdb
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.Win32.Primitives.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\netstandard.dll
@@ -180,5 +143,42 @@ C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain T
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Xml.XmlSerializer.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Xml.XPath.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Xml.XPath.XDocument.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Antlr3.Runtime.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\MTCSharedModels.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Newtonsoft.Json.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Net.Http.Formatting.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Helpers.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.WebHost.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Mvc.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Optimization.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Razor.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Razor.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\WebGrease.dll
 C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\MTCSharedModels.pdb
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Newtonsoft.Json.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Net.Http.Formatting.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Helpers.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Http.WebHost.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Mvc.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Optimization.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.Razor.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Web.WebPages.Razor.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Antlr3.Runtime.pdb
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.csprojAssemblyReference.cache
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.csproj.CoreCompileInputs.cache
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.csproj.CopyComplete
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.dll
+C:\Users\Angelo's Tower PC\source\repos\Mountain Tracker Climb - Root\Mountain Tracker Climb - API\obj\Debug\Mountain Tracker Climb - API.pdb

@@ -49,9 +49,13 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
         public GearDBContext GearTable { get; }
         public UserAccessLevelDBContext UserAccessLevelTable { get; }
         public UserDBContext UserTable { get; }
-        public UserBannerPictureDBContext BannerPictures { get; }
-        public UserProfilePictureDBContext ProfilePictures { get; }
-
+            public UserBannerPictureDBContext BannerPictures { get; }
+            public UserProfilePictureDBContext ProfilePictures { get; }
+        public UserFriendsDBContext UserFriendsTable { get; }
+            public CheckIfFriendDBContext FriendChecker { get; }
+            public CheckIfFriendOrRequestedDBContext FriendRequestChecker { get; }
+            public AcceptFriendRequestDBContext FriendAcceptor { get; }
+        public UserDMsDBContext UserDMTable { get; }
 
 
         public TokenCheckerDBContext TokenChecker { get; }
@@ -75,6 +79,11 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
             UserTable = new UserDBContext(UserAccessLevelTable);
                 BannerPictures = new UserBannerPictureDBContext(UserTable);
                 ProfilePictures = new UserProfilePictureDBContext(UserTable);
+            UserFriendsTable = new UserFriendsDBContext(UserTable);
+                FriendChecker = new CheckIfFriendDBContext(UserFriendsTable);
+                FriendRequestChecker = new CheckIfFriendOrRequestedDBContext(UserFriendsTable);
+                FriendAcceptor = new AcceptFriendRequestDBContext(UserFriendsTable);
+            UserDMTable = new UserDMsDBContext(UserFriendsTable);
 
             TokenChecker = new TokenCheckerDBContext(UserAccessLevelTable);
         }

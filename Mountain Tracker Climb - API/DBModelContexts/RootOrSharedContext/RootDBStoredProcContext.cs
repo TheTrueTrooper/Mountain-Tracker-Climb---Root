@@ -45,22 +45,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                 //Type T = x.PropertyType;
                 if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)))
                 {
-                    object Obj = x.GetValue(Object);
-                    if (Obj != null)
-                        if (x.PropertyType.Name == typeof(string).Name)
-                            Return += $"@{x.Name} = '{Obj}',";
-                        else if (x.PropertyType.FullName == typeof(bool?).FullName)
-                        {
-                            bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
-                            if (Value)
-                                Return += $"@{x.Name} = 1,";
-                            else
-                                Return += $"@{x.Name} = 0,";
-                        }
-                        else
-                            Return += $"@{x.Name} = {Obj},";
-                    else
-                        Return += $"@{x.Name} = NULL,";
+                    Return += $"@{x.Name} = {SQLHelper.ObjectAsSQLString(x.GetValue(Object))},";
                 }
             }
             Return = Return.Remove(Return.Length - 1, 1);
@@ -134,22 +119,7 @@ namespace Mountain_Tracker_Climb___API.DBModelContexts
                 //Type T = x.PropertyType;
                 if (!Attribute.IsDefined(x, typeof(SQLIgnoreAttribute)))
                 {
-                    object Obj = x.GetValue(Object);
-                    if (Obj != null)
-                        if (x.PropertyType.Name == typeof(string).Name)
-                            Return += $"@{x.Name} = '{Obj}',";
-                        else if (x.PropertyType.FullName == typeof(bool?).FullName)
-                        {
-                            bool Value = (bool)Convert.ChangeType(x.GetValue(Object), typeof(bool));
-                            if (Value)
-                                Return += $"@{x.Name} = 1,";
-                            else
-                                Return += $"@{x.Name} = 0,";
-                        }
-                        else
-                            Return += $"@{x.Name} = {Obj},";
-                    else
-                        Return += $"@{x.Name} = NULL,";
+                    Return += $"@{x.Name} = {SQLHelper.ObjectAsSQLString(x.GetValue(Object))},";
                 }
             }
             Return = Return.Remove(Return.Length - 1, 1);
